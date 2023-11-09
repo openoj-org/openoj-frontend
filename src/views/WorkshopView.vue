@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import BaseView from './BaseView.vue'
-import WorkshopMain from '@/components/WorkshopMain.vue'
+import WorkshopMain from '@/components/main/WorkshopMain.vue'
 </script>
 
 <template>

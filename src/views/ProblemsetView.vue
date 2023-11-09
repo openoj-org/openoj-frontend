@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import BaseView from './BaseView.vue'
-import HomeMain from '@/components/ProblemsetMain.vue'
+import HomeMain from '@/components/main/ProblemsetMain.vue'
 </script>
 
 <template>

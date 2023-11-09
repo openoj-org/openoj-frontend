@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import BaseView from './BaseView.vue'
-import SubmissionsMain from '@/components/SubmissionsMain.vue'
+import SubmissionsMain from '@/components/main/SubmissionsMain.vue'
 </script>
 
 <template>
