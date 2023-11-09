@@ -1,3 +1,18 @@
 {
-  "oj_name": "OpenOJ"
+  "slogan": "Openness builds the future",
+  "login": "Login",
+  "register": "Register",
+  "searchHint": "Search",
+  "problemSet": "Problemset",
+  "workshop": "Workshop",
+  "submissions": "Submissions",
+  "users": "User List",
+  "forum": "Forum",
+  "menuExpand": "Expand",
+  "menuCollapse": "Collapse",
+  "myProfile": "Profile",
+  "myWorkshop": "My Workshop",
+  "mySubmission": "My Submissions",
+  "myDiscussion": "My Discussions",
+  "logout": "Logout"
 }

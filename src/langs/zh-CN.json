@@ -1,3 +1,18 @@
 {
-  "oj_name": "OpenOJ"
+  "slogan": "开放构建未来",
+  "login": "登录",
+  "register": "注册",
+  "searchHint": "搜索",
+  "problemSet": "官方题库",
+  "workshop": "创意工坊",
+  "submissions": "评测",
+  "users": "用户列表",
+  "forum": "论坛",
+  "menuExpand": "展开",
+  "menuCollapse": "收起",
+  "myProfile": "详细资料",
+  "myWorkshop": "我的工坊",
+  "mySubmission": "我的评测",
+  "myDiscussion": "我的讨论",
+  "logout": "注销"
 }
