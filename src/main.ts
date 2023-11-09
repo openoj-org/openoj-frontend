@@ -14,7 +14,6 @@ import router from './router'
 import en from './langs/en.json'
 import zh_CN from './langs/zh-CN.json'
 
-
 i18next.use(LanguageDetector).init({
   detection: {
     // do not use cache to detect language, so it is easy to change language in code for debugging
