@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import TheWelcome from '../components/TheWelcome.vue'
+import BaseView from './BaseView.vue'
+import HomeMain from '@/components/HomeMain.vue'
 </script>
 
 <template>
-  <main>
-    <TheWelcome />
-  </main>
+  <BaseView>
+    <HomeMain />
+  </BaseView>
 </template>
