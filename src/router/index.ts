@@ -3,6 +3,7 @@ import HomeView from '@/views/HomeView.vue'
 import ProblemsetView from '@/views/ProblemsetView.vue'
 import WorkshopView from '@/views/WorkshopView.vue'
 import SubmissionsView from '@/views/SubmissionsView.vue'
+import UsersView from '@/views/UsersView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -26,6 +27,11 @@ const router = createRouter({
       path: '/submissions',
       name: 'submissions',
       component: SubmissionsView
+    },
+    {
+      path: '/users',
+      name: 'users',
+      component: UsersView
     }
     // {
     //   path: '/about',
