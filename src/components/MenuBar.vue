@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-menu router id="main-menu" class="el-menu-vertical-demo" :collapse="isCollapse">
+    <el-menu router id="main-menu" class="el-menu-vertical-demo" :collapse="isCollapse.collapse">
       <el-menu-item index="/problemset">
         <el-icon><Collection /></el-icon>
         <template #title>{{ $t('problemSet') }}</template>
@@ -25,22 +25,23 @@
       id="extra-menu"
       default-active="2"
       class="el-menu-vertical-demo"
-      :collapse="isCollapse"
+      :collapse="isCollapse.collapse"
       active-text-color="#303133"
     >
       <el-menu-item index="1" @click="switchCollapse">
         <el-icon>
-          <Expand v-if="isCollapse" />
+          <Expand v-if="isCollapse.collapse" />
           <Fold v-else />
         </el-icon>
-        <template #title>{{ isCollapse ? $t('menuExpand') : $t('menuCollapse') }}</template>
+        <template #title>{{
+          isCollapse.collapse ? $t('menuExpand') : $t('menuCollapse')
+        }}</template>
       </el-menu-item>
     </el-menu>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
 import {
   ChatLineRound,
   Collection,
@@ -50,10 +51,11 @@ import {
   MagicStick,
   User
 } from '@element-plus/icons-vue'
+import { useMenuCollapseStore } from '@/stores/menuCollapse'
 
-const isCollapse = ref(true)
+const isCollapse = useMenuCollapseStore()
 function switchCollapse() {
-  isCollapse.value = !isCollapse.value
+  isCollapse.flip()
 }
 </script>
 
