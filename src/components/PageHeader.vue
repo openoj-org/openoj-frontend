@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useGet } from '@/stores/local'
+import { useGetItem } from '@/stores/local'
 import global from '@/assets/global.json'
 import { useRouter } from 'vue-router'
 import { ref, computed } from 'vue'
@@ -9,10 +9,10 @@ const toMain = () => {
   router.push('/')
 }
 const isLoggedIn = computed(() => {
-  return useGet('login') == 'true'
+  return useGetItem('login') == 'true'
 })
 const myUsername = computed(() => {
-  if (isLoggedIn.value) return useGet('username')
+  if (isLoggedIn.value) return useGetItem('username')
   return ''
 })
 const searchContent = ref('')
