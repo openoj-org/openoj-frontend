@@ -26,7 +26,7 @@ useRequestGet('/user/info', { id: route.params.id })
 </script>
 
 <template>
-  <BaseView inside :title="$t('myProfile')">
+  <BaseView inside :title="username">
     <template v-slot:breadcrumb>
       <el-skeleton :rows="1" animated v-if="!loaded" />
       <el-breadcrumb :separator-icon="ArrowRight" v-else>
