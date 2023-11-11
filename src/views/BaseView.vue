@@ -8,9 +8,9 @@ const props = defineProps({
   inside: Boolean,
   title: String
 })
-if (props.title) document.title = `${props.title} - ${global.ojName}`
+if (props.title) document.title = `${props.title} | ${global.ojName}`
 watch(props, () => {
-  if (props.title) document.title = `${props.title} - ${global.ojName}`
+  if (props.title) document.title = `${props.title} | ${global.ojName}`
 })
 </script>
 
