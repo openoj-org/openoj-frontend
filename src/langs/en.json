@@ -32,5 +32,15 @@
   "submit": "Submit",
   "canNotBeEmpty": "{{value}} can not be empty",
   "passwordNotMatch": "The two passwords entered do not match",
-  "somethingSuccess": "{{value}} success"
+  "somethingSuccess": "{{value}} success",
+  "userInfo": "User Info",
+  "character": "Character",
+  "root": "root",
+  "manager": "Manager",
+  "trustedUser": "Trusted User",
+  "commonUser": "Common User",
+  "bannedUser": "Banned User",
+  "registerTime": "Register Time",
+  "timeFormat": "{{year}}-{{month}}-{{day}} {{hour}}:{{minute}}:{{second}}",
+  "problemPassNumber": "Number of Problem Passed"
 }

@@ -32,5 +32,15 @@
   "submit": "提交",
   "canNotBeEmpty": "{{value}}不能为空",
   "passwordNotMatch": "两次输入的密码不一致",
-  "somethingSuccess": "{{value}}成功"
+  "somethingSuccess": "{{value}}成功",
+  "userInfo": "用户信息",
+  "character": "角色",
+  "root": "root",
+  "manager": "管理员",
+  "trustedUser": "受信用户",
+  "commonUser": "普通用户",
+  "bannedUser": "封禁用户",
+  "registerTime": "加入于",
+  "timeFormat": "{{year}}年{{month}}月{{day}}日 {{hour}}:{{minute}}:{{second}}",
+  "problemPassNumber": "通过题目数"
 }

@@ -75,7 +75,7 @@ function logout() {
               </el-button>
               <template #dropdown>
                 <el-dropdown-menu>
-                  <el-dropdown-item
+                  <el-dropdown-item @click="$router.push(`/user/${loginInfo.id}`)"
                     ><el-icon class="el-icon--left"><Document /></el-icon
                     >{{ $t('myProfile') }}</el-dropdown-item
                   >
