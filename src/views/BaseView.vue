@@ -1,10 +1,14 @@
 <script setup lang="ts">
 import PageHeader from '@/components/PageHeader.vue'
 import MenuBar from '@/components/MenuBar.vue'
+import global from '@/assets/global.json'
 const props = defineProps({
   // true if there should be an extra blank on the top of the main page
-  inside: Boolean
+  inside: Boolean,
+  title: String
 })
+
+if (props.title) document.title = `${props.title} - ${global.ojName}`
 </script>
 
 <template>

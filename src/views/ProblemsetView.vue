@@ -5,7 +5,7 @@ import HomeMain from '@/components/main/ProblemsetMain.vue'
 </script>
 
 <template>
-  <BaseView>
+  <BaseView :title="$t('problemSet')">
     <template v-slot:breadcrumb>
       <el-breadcrumb :separator-icon="ArrowRight">
         <el-breadcrumb-item :to="{ path: '/problemset' }">

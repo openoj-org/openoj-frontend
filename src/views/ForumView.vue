@@ -5,7 +5,7 @@ import ForumMain from '@/components/main/ForumMain.vue'
 </script>
 
 <template>
-  <BaseView>
+  <BaseView :title="$t('forum')">
     <template v-slot:breadcrumb>
       <el-breadcrumb :separator-icon="ArrowRight">
         <el-breadcrumb-item :to="{ path: '/forum' }">

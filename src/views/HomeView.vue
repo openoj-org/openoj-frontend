@@ -4,7 +4,7 @@ import HomeMain from '@/components/main/HomeMain.vue'
 </script>
 
 <template>
-  <BaseView>
+  <BaseView :title="$t('homepage')">
     <HomeMain />
   </BaseView>
 </template>

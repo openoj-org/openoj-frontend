@@ -5,7 +5,7 @@ import ForgetPasswordMain from '@/components/main/ForgetPasswordMain.vue'
 </script>
 
 <template>
-  <BaseView inside>
+  <BaseView inside :title="$t('forgetPassword')">
     <template v-slot:breadcrumb>
       <el-breadcrumb :separator-icon="ArrowRight">
         <el-breadcrumb-item :to="{ path: '/forget-password' }">

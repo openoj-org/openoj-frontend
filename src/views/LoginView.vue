@@ -5,7 +5,7 @@ import { ArrowRight } from '@element-plus/icons-vue'
 </script>
 
 <template>
-  <BaseView inside>
+  <BaseView inside :title="$t('login')">
     <template v-slot:breadcrumb>
       <el-breadcrumb :separator-icon="ArrowRight">
         <el-breadcrumb-item :to="{ path: '/login' }">

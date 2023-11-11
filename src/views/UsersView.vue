@@ -5,7 +5,7 @@ import UsersMain from '@/components/main/UsersMain.vue'
 </script>
 
 <template>
-  <BaseView>
+  <BaseView :title="$t('users')">
     <template v-slot:breadcrumb>
       <el-breadcrumb :separator-icon="ArrowRight">
         <el-breadcrumb-item :to="{ path: '/users' }">
