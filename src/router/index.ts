@@ -60,7 +60,7 @@ const router = createRouter({
       component: UserView
     },
     {
-      path: '/user/:id/modify',
+      path: '/user/modify',
       name: 'user-modify',
       component: ModifyProfileView
     },

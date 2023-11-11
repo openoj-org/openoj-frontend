@@ -48,7 +48,7 @@
   "timeFormat": "{{year}}-{{month}}-{{day}} {{hour}}:{{minute}}:{{second}}",
   "problemPassNumber": "Number of Problem Passed",
   "modifyPersonalProfile": "Modify My Profile",
-  "onlyModifyYourProfileHint": "You can only modify your own profile.",
+  "notLoginHint": "Not logged in yet.",
   "modify": "Modify",
   "remainModifyTime": "There is still {{value}} left before modification can be made",
   "remainDay": "d",

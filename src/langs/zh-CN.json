@@ -48,7 +48,7 @@
   "timeFormat": "{{year}}年{{month}}月{{day}}日 {{hour}}:{{minute}}:{{second}}",
   "problemPassNumber": "通过题目数",
   "modifyPersonalProfile": "修改我的资料",
-  "onlyModifyYourProfileHint": "你只能修改自己的资料。",
+  "notLoginHint": "还没有登录。",
   "modify": "修改",
   "remainModifyTime": "距离可以修改还有{{value}}",
   "remainDay": "天",

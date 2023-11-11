@@ -58,7 +58,7 @@ useRequestGet('/user/info', { id: route.params.id })
     <el-button
       type="primary"
       v-if="loaded && loginInfo.login && loginInfo.id == $route.params.id"
-      @click="$router.push(`${$route.path}/modify`)"
+      @click="$router.push(`/user/modify`)"
     >
       {{ $t('modifyPersonalProfile') }}
     </el-button>

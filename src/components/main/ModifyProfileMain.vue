@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
 import { useLoginInfoStore } from '@/stores/loginInfo'
-import { useRoute } from 'vue-router'
 import { useRequestGet, useRequestPost } from '@/script/service'
 import { ElMessage } from 'element-plus'
 import { t } from 'i18next'
@@ -12,11 +11,8 @@ import router from '@/router'
 import sha512 from 'crypto-js/sha512'
 
 const loginInfo = useLoginInfoStore()
-const route = useRoute()
 const dialogVisible = ref(false)
-console.log(loginInfo.id)
-console.log(route.params.id)
-dialogVisible.value = !loginInfo.login || loginInfo.id != route.params.id
+dialogVisible.value = !loginInfo.login
 
 const usernameFormRef = ref<FormInstance>()
 const passwordFormRef = ref<FormInstance>()
@@ -111,8 +107,8 @@ const passcodeRules = reactive<FormRules<typeof form>>({
   ]
 })
 
-if (loginInfo.login && loginInfo.id == route.params.id) {
-  useRequestGet('/user/info', { id: route.params.id })
+if (loginInfo.login) {
+  useRequestGet('/user/info', { id: loginInfo.id })
     .then((result) => {
       if (result.data.success == false) {
         ElMessage.error(result.data.message)
@@ -301,7 +297,7 @@ function changeSignature() {
 
 <template>
   <el-dialog v-model="dialogVisible" :title="$t('tips')" width="30%" :show-close="false">
-    <span>{{ $t('onlyModifyYourProfileHint') }}</span>
+    <span>{{ $t('notLoginHint') }}</span>
     <template #footer>
       <span class="dialog-footer">
         <el-button
@@ -320,7 +316,7 @@ function changeSignature() {
   </el-dialog>
   <div class="form-box">
     <el-skeleton :rows="5" animated v-if="!loaded" />
-    <div v-if="loaded && loginInfo.login && loginInfo.id == route.params.id">
+    <div v-if="loaded && loginInfo.login">
       <el-descriptions :title="$t('modifySomething', { value: $t('username') })"> </el-descriptions>
       <el-form ref="usernameFormRef" :model="form" :rules="usernameRules" label-width="120px">
         <el-form-item
