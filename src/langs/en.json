@@ -48,7 +48,7 @@
   "registerTime": "Register Time",
   "timeFormat": "{{year}}-{{month}}-{{day}} {{hour}}:{{minute}}:{{second}}",
   "problemPassNumber": "Number of Problem Passed",
-  "modifyPersonalProfile": "Modify My Profile",
+  "modifyPersonalProfile": "Modify Profile",
   "notLoginHint": "Not logged in yet.",
   "modify": "Modify",
   "remainModifyTime": "There is still {{value}} left before modification can be made",
