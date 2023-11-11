@@ -10,6 +10,9 @@
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="login(formRef)">{{ $t('login') }}</el-button>
+          <el-button type="primary" text @click="$router.push('/forget-password')">{{
+            $t('forgetPassword')
+          }}</el-button>
         </el-form-item>
       </el-form>
       <div class="text-center">
