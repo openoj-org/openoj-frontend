@@ -10,7 +10,11 @@ import { t } from 'i18next'
 import { useLoginInfoStore } from '@/stores/loginInfo'
 const router = useRouter()
 const loginInfo = useLoginInfoStore()
+
+const loaded = ref(false)
 loginInfo.flush()
+loaded.value = true
+
 const toMain = () => {
   router.push('/')
 }
@@ -61,7 +65,7 @@ function logout() {
             </template>
           </el-input>
         </el-col>
-        <el-col :span="9" v-if="loginInfo.login">
+        <el-col :span="9" v-if="loaded && loginInfo.login">
           <div>
             <el-dropdown>
               <el-button text type="primary">
@@ -96,7 +100,7 @@ function logout() {
             </el-dropdown>
           </div>
         </el-col>
-        <el-col :span="12" v-else>
+        <el-col :span="12" v-else-if="loaded && !loginInfo.login">
           <div>
             <el-button @click="$router.push('/login')">
               {{ $t('login') }}
