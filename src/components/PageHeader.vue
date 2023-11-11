@@ -1,21 +1,40 @@
 <script setup lang="ts">
-import { useGetItem } from '@/stores/local'
+import { useGetItem, useSetItem } from '@/stores/local'
 import global from '@/assets/global.json'
 import { useRouter } from 'vue-router'
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import { Document, Search, SwitchButton } from '@element-plus/icons-vue'
+import { useRequestPost } from '@/script/service'
+import { ElMessage } from 'element-plus'
+import { t } from 'i18next'
+import { useLoginInfoStore } from '@/stores/loginInfo'
 const router = useRouter()
+const loginInfo = useLoginInfoStore()
+loginInfo.flush()
 const toMain = () => {
   router.push('/')
 }
-const isLoggedIn = computed(() => {
-  return useGetItem('login') == 'true'
-})
-const myUsername = computed(() => {
-  if (isLoggedIn.value) return useGetItem('username')
-  return ''
-})
 const searchContent = ref('')
+
+function logout() {
+  useRequestPost('/user/logout', { cookie: useGetItem('cookie') })
+    .then((result) => {
+      if (result.data.success == false) {
+        ElMessage.error(result.data.message)
+      } else {
+        ElMessage.success(t('somethingSuccess', { value: t('logout') }))
+        useSetItem('login', null)
+        useSetItem('username', null)
+        useSetItem('id', null)
+        useSetItem('cookie', null)
+        loginInfo.flush()
+      }
+    })
+    .catch((err) => {
+      console.log(err)
+      ElMessage.error(t('unknownError'))
+    })
+}
 </script>
 
 <template>
@@ -42,12 +61,12 @@ const searchContent = ref('')
             </template>
           </el-input>
         </el-col>
-        <el-col :span="9" v-if="isLoggedIn">
+        <el-col :span="9" v-if="loginInfo.login">
           <div>
             <el-dropdown>
               <el-button text type="primary">
                 <el-icon class="el-icon--left"><User /></el-icon>
-                {{ myUsername }}
+                {{ loginInfo.username }}
                 <el-icon class="el-icon--right"><arrow-down /></el-icon>
               </el-button>
               <template #dropdown>
@@ -68,7 +87,7 @@ const searchContent = ref('')
                     ><el-icon class="el-icon--left"><ChatLineRound /></el-icon
                     >{{ $t('myDiscussion') }}</el-dropdown-item
                   >
-                  <el-dropdown-item divided
+                  <el-dropdown-item divided @click="logout"
                     ><el-icon class="el-icon--left"><SwitchButton /></el-icon
                     >{{ $t('logout') }}</el-dropdown-item
                   >
@@ -77,7 +96,7 @@ const searchContent = ref('')
             </el-dropdown>
           </div>
         </el-col>
-        <el-col :span="9" v-else>
+        <el-col :span="12" v-else>
           <div>
             <el-button @click="$router.push('/login')">
               {{ $t('login') }}
