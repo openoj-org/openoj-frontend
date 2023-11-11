@@ -28,7 +28,7 @@ useRequestGet('/user/info', { id: route.params.id })
 <template>
   <BaseView inside>
     <template v-slot:breadcrumb>
-      <el-skeleton :rows="1" animated v-if="!loaded"/>
+      <el-skeleton :rows="1" animated v-if="!loaded" />
       <el-breadcrumb :separator-icon="ArrowRight" v-else>
         <el-breadcrumb-item :to="{ path: '/users' }">
           {{ $t('users') }}

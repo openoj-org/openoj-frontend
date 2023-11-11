@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import RegisterMain from '@/components/main/RegisterMain.vue';
+import RegisterMain from '@/components/main/RegisterMain.vue'
 import BaseView from './BaseView.vue'
-import { ArrowRight } from '@element-plus/icons-vue';
+import { ArrowRight } from '@element-plus/icons-vue'
 </script>
 
 <template>
@@ -13,6 +13,6 @@ import { ArrowRight } from '@element-plus/icons-vue';
         </el-breadcrumb-item>
       </el-breadcrumb>
     </template>
-    <RegisterMain/>
+    <RegisterMain />
   </BaseView>
 </template>

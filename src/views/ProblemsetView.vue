@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ArrowRight } from '@element-plus/icons-vue';
+import { ArrowRight } from '@element-plus/icons-vue'
 import BaseView from './BaseView.vue'
 import HomeMain from '@/components/main/ProblemsetMain.vue'
 </script>
