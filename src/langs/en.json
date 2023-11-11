@@ -25,6 +25,7 @@
   "chooseSuffix": "Choose Suffix",
   "mailSuffix": "Mail Suffix",
   "username":"Username",
+  "usernameOrMail":"Username/Mail",
   "password":"Password",
   "repeatPassword":"Repeat Password",
   "signature":"Signature",
