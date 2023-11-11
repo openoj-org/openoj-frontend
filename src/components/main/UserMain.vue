@@ -5,6 +5,7 @@ import { useRequestGet } from '@/script/service'
 import { useRoute } from 'vue-router'
 import { t } from 'i18next'
 import { useLoginInfoStore } from '@/stores/loginInfo'
+import { characterTranslate, timeIntToString } from '@/script/transform'
 const route = useRoute()
 const loginInfo = useLoginInfoStore()
 const loaded = ref(false)
@@ -16,26 +17,6 @@ const userInfo = reactive({
   pass: 0,
   mail: ''
 })
-
-function characterTranslate(type: number): string {
-  if (type == 0) return t('root')
-  else if (type == 1) return t('manager')
-  else if (type == 2) return t('trustedUser')
-  else if (type == 3) return t('commonUser')
-  return t('bannedUser')
-}
-
-function timeIntToString(time: number): string {
-  const date = new Date(time)
-  return t('timeFormat', {
-    year: date.getFullYear(),
-    month: date.getMonth() + 1,
-    day: date.getDate(),
-    hour: date.getHours().toString().padStart(2, '0'),
-    minute: date.getMinutes().toString().padStart(2, '0'),
-    second: date.getSeconds().toString().padStart(2, '0')
-  })
-}
 
 useRequestGet('/user/info', { id: route.params.id })
   .then((result) => {
