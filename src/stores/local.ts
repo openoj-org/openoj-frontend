@@ -1,7 +1,7 @@
 import global from '../assets/global.json'
 
 export function useSetItem(key: string, value: string | null) {
-  if (value == null) localStorage.removeItem(key)
+  if (value == null) localStorage.removeItem(global.localStoragePrefix + key)
   else localStorage.setItem(global.localStoragePrefix + key, value)
 }
 
