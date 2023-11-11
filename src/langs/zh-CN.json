@@ -42,5 +42,7 @@
   "bannedUser": "封禁用户",
   "registerTime": "加入于",
   "timeFormat": "{{year}}年{{month}}月{{day}}日 {{hour}}:{{minute}}:{{second}}",
-  "problemPassNumber": "通过题目数"
+  "problemPassNumber": "通过题目数",
+  "modifyPersonalProfile": "修改我的资料",
+  "onlyModifyYourProfileHint": "你只能修改自己的资料。"
 }

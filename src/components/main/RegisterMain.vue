@@ -1,5 +1,5 @@
 <template>
-  <el-dialog v-model="dialogVisible" :title="$t('tips')" width="30%">
+  <el-dialog v-model="dialogVisible" :title="$t('tips')" width="30%" :show-close="false">
     <span>{{ $t('notAllowedRegisterHint') }}</span>
     <template #footer>
       <span class="dialog-footer">

@@ -5,6 +5,7 @@ import WorkshopView from '@/views/WorkshopView.vue'
 import SubmissionsView from '@/views/SubmissionsView.vue'
 import UsersView from '@/views/UsersView.vue'
 import UserView from '@/views/UserView.vue'
+import ModifyProfileView from '@/views/ModifyProfileView.vue'
 import ForumView from '@/views/ForumView.vue'
 import RegisterView from '@/views/RegisterView.vue'
 import LoginView from '@/views/LoginView.vue'
@@ -51,6 +52,11 @@ const router = createRouter({
       path: '/user/:id',
       name: 'user',
       component: UserView
+    },
+    {
+      path: '/user/:id/modify',
+      name: 'user-modify',
+      component: ModifyProfileView
     },
     {
       path: '/forum',

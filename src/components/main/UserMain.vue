@@ -4,8 +4,9 @@ import { ElMessage } from 'element-plus'
 import { useRequestGet } from '@/script/service'
 import { useRoute } from 'vue-router'
 import { t } from 'i18next'
-import { dataType } from 'element-plus/es/components/table-v2/src/common.mjs'
+import { useLoginInfoStore } from '@/stores/loginInfo'
 const route = useRoute()
+const loginInfo = useLoginInfoStore()
 const loaded = ref(false)
 const userInfo = reactive({
   username: '',
@@ -73,6 +74,13 @@ useRequestGet('/user/info', { id: route.params.id })
         {{ userInfo.signature }}
       </el-descriptions-item>
     </el-descriptions>
+    <el-button
+      type="primary"
+      v-if="loaded && loginInfo.login && loginInfo.id == $route.params.id"
+      @click="$router.push(`${$route.path}/modify`)"
+    >
+      {{ $t('modifyPersonalProfile') }}
+    </el-button>
   </div>
 </template>
 

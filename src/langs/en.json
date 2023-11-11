@@ -42,5 +42,7 @@
   "bannedUser": "Banned User",
   "registerTime": "Register Time",
   "timeFormat": "{{year}}-{{month}}-{{day}} {{hour}}:{{minute}}:{{second}}",
-  "problemPassNumber": "Number of Problem Passed"
+  "problemPassNumber": "Number of Problem Passed",
+  "modifyPersonalProfile": "Modify My Profile",
+  "onlyModifyYourProfileHint": "You can only modify your own profile."
 }
