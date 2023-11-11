@@ -29,6 +29,7 @@ function logout() {
         ElMessage.success(t('somethingSuccess', { value: t('logout') }))
         useSetItem('login', null)
         useSetItem('username', null)
+        useSetItem('character', null)
         useSetItem('id', null)
         useSetItem('cookie', null)
         loginInfo.flush()

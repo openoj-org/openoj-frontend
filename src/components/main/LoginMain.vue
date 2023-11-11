@@ -79,6 +79,7 @@ async function login(formEl: FormInstance | undefined) {
             ElMessage.success(t('somethingSuccess', { value: t('login') }))
             useSetItem('login', 'true')
             useSetItem('username', result.data.username)
+            useSetItem('character', result.data.character)
             useSetItem('id', result.data.id)
             useSetItem('cookie', result.data.cookie)
             loginInfo.flush()

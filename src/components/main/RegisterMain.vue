@@ -230,10 +230,11 @@ async function submit(formEl: FormInstance | undefined) {
             ElMessage.error(result.data.message)
           } else {
             sessionId2 = result.data.sessionId
+            const username = form.username
             const passwordHash = sha512(form.password).toString()
             useRequestPost('/user/register', {
               sessionId: sessionId2,
-              username: form.username,
+              username: username,
               passwordCode: passwordHash,
               signature: form.signature
             })
@@ -243,7 +244,8 @@ async function submit(formEl: FormInstance | undefined) {
                 } else {
                   ElMessage.success(t('somethingSuccess', { value: t('register') }))
                   useSetItem('login', 'true')
-                  useSetItem('username', form.username)
+                  useSetItem('username', username)
+                  useSetItem('character', '3')
                   useSetItem('id', result.data.id)
                   useSetItem('cookie', result.data.cookie)
                   loginInfo.flush()
