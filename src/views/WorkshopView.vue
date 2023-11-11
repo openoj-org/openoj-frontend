@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ArrowRight } from '@element-plus/icons-vue';
 import BaseView from './BaseView.vue'
 import WorkshopMain from '@/components/main/WorkshopMain.vue'
 </script>
@@ -6,7 +7,7 @@ import WorkshopMain from '@/components/main/WorkshopMain.vue'
 <template>
   <BaseView>
     <template v-slot:breadcrumb>
-      <el-breadcrumb separator="/">
+      <el-breadcrumb :separator-icon="ArrowRight">
         <el-breadcrumb-item :to="{ path: '/workshop' }">
           {{ $t('workshop') }}
         </el-breadcrumb-item>
