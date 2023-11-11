@@ -1,5 +1,6 @@
 {
   "slogan": "Openness builds the future",
+  "unknownError": "Unknown error",
   "login": "Login",
   "register": "Register",
   "searchHint": "Search",
@@ -14,5 +15,21 @@
   "myWorkshop": "My Workshop",
   "mySubmission": "My Submissions",
   "myDiscussion": "My Discussions",
-  "logout": "Logout"
+  "logout": "Logout",
+  "tips": "Tips",
+  "notAllowedRegisterHint": "This site does not support account registration, please contact the administrator.",
+  "confirm":"Confirm",
+  "mail": "Mail",
+  "passcode": "Passcode",
+  "sendPasscode": "Send Passcode",
+  "chooseSuffix": "Choose Suffix",
+  "mailSuffix": "Mail Suffix",
+  "username":"Username",
+  "password":"Password",
+  "repeatPassword":"Repeat Password",
+  "signature":"Signature",
+  "submit": "Submit",
+  "canNotBeEmpty": "{{value}} can not be empty",
+  "passwordNotMatch": "The two passwords entered do not match",
+  "somethingSuccess": "{{value}} success"
 }

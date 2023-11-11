@@ -1,5 +1,6 @@
 {
   "slogan": "开放构建未来",
+  "unknownError": "未知错误",
   "login": "登录",
   "register": "注册",
   "searchHint": "搜索",
@@ -14,5 +15,21 @@
   "myWorkshop": "我的工坊",
   "mySubmission": "我的评测",
   "myDiscussion": "我的讨论",
-  "logout": "注销"
+  "logout": "注销",
+  "tips": "提示",
+  "notAllowedRegisterHint": "本站不支持注册账号，请联系管理员。",
+  "confirm":"确认",
+  "mail": "邮箱",
+  "passcode": "验证码",
+  "sendPasscode": "发送验证码",
+  "chooseSuffix": "选择后缀",
+  "mailSuffix": "邮箱后缀",
+  "username":"用户名",
+  "password":"密码",
+  "repeatPassword":"确认密码",
+  "signature":"个性签名",
+  "submit": "提交",
+  "canNotBeEmpty": "{{value}}不能为空",
+  "passwordNotMatch": "两次输入的密码不一致",
+  "somethingSuccess": "{{value}}成功"
 }
