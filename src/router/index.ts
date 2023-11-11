@@ -10,6 +10,7 @@ import ForumView from '@/views/ForumView.vue'
 import RegisterView from '@/views/RegisterView.vue'
 import LoginView from '@/views/LoginView.vue'
 import ForgetPasswordView from '@/views/ForgetPasswordView.vue'
+import UserManageView from '@/views/UserManageView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -58,6 +59,11 @@ const router = createRouter({
       path: '/user/:id',
       name: 'user',
       component: UserView
+    },
+    {
+      path: '/user/:id/manage',
+      name: 'user-manage',
+      component: UserManageView
     },
     {
       path: '/user/modify',

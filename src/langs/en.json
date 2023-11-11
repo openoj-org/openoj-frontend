@@ -56,5 +56,13 @@
   "remainHour": "h",
   "remainMinute": "min",
   "newSomething": "New {{value}}",
-  "modifySomething": "Modify {{value}}"
+  "modifySomething": "Modify {{value}}",
+  "authorityManagement": "Authority Management",
+  "onlyManagerCanManageHint": "Only managers and above can perform permission management operations.",
+  "somethingSetting": "{{value}} Setting",
+  "setToSomething": "Set as {{value}}",
+  "setNotSomething": "Remove {{value}}",
+  "warning": "Warning",
+  "dangerousAction": "{{value}} is a dangerous operation, are you sure to execute it?",
+  "cancel": "Cancel"
 }

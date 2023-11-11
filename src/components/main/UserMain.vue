@@ -62,6 +62,13 @@ useRequestGet('/user/info', { id: route.params.id })
     >
       {{ $t('modifyPersonalProfile') }}
     </el-button>
+    <el-button
+      type="danger"
+      v-if="loaded && loginInfo.login && loginInfo.character <= 1"
+      @click="$router.push(`${route.path}/manage`)"
+    >
+      {{ $t('authorityManagement') }}
+    </el-button>
   </div>
 </template>
 

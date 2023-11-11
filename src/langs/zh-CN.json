@@ -56,5 +56,13 @@
   "remainHour": "小时",
   "remainMinute": "分钟",
   "newSomething": "新{{value}}",
-  "modifySomething": "修改{{value}}"
+  "modifySomething": "修改{{value}}",
+  "authorityManagement": "权限管理",
+  "onlyManagerCanManageHint": "只有管理员及以上用户才能进行权限管理操作。",
+  "somethingSetting": "{{value}}设置",
+  "setToSomething": "设置为{{value}}",
+  "setNotSomething": "解除{{value}}",
+  "warning": "警告",
+  "dangerousAction": "{{value}}是一个危险操作，确认执行吗？",
+  "cancel": "取消"
 }
