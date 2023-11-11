@@ -32,6 +32,7 @@ function logout() {
         useSetItem('id', null)
         useSetItem('cookie', null)
         loginInfo.flush()
+        router.push('/')
       }
     })
     .catch((err) => {
