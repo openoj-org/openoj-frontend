@@ -64,5 +64,13 @@
   "setNotSomething": "Remove {{value}}",
   "warning": "Warning",
   "dangerousAction": "{{value}} is a dangerous operation, are you sure to execute it?",
-  "cancel": "Cancel"
+  "cancel": "Cancel",
+  "instanceSettings": "Instance Settings",
+  "onlyRootCanManageInstanceHint": "Only root can perform instance management operations.",
+  "instanceInfo": "Instance Info",
+  "allowRegister": "Allow Register",
+  "yes": "Yes",
+  "no": "No",
+  "mailSuffixLimit": "E-mail Suffix Limitation",
+  "somethingSwitch": "Switch {{value}}"
 }

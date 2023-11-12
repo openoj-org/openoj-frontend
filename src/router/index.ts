@@ -11,6 +11,7 @@ import RegisterView from '@/views/RegisterView.vue'
 import LoginView from '@/views/LoginView.vue'
 import ForgetPasswordView from '@/views/ForgetPasswordView.vue'
 import UserManageView from '@/views/UserManageView.vue'
+import InstanceSettingsView from '@/views/InstanceSettingsView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -74,6 +75,11 @@ const router = createRouter({
       path: '/forum',
       name: 'forum',
       component: ForumView
+    },
+    {
+      path: '/instance-settings',
+      name: 'instance-settings',
+      component: InstanceSettingsView
     }
     // {
     //   path: '/about',

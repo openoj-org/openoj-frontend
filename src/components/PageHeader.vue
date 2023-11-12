@@ -97,6 +97,13 @@ function logout() {
                     <el-icon class="el-icon--left"><EditPen /></el-icon>
                     {{ $t('modifyPersonalProfile') }}
                   </el-dropdown-item>
+                  <el-dropdown-item
+                    v-if="loginInfo.character == 0"
+                    @click="$router.push('/instance-settings')"
+                  >
+                    <el-icon class="el-icon--left"><Setting /></el-icon>
+                    {{ $t('instanceSettings') }}
+                  </el-dropdown-item>
                   <el-dropdown-item divided @click="logout"
                     ><el-icon class="el-icon--left"><SwitchButton /></el-icon
                     >{{ $t('logout') }}</el-dropdown-item
