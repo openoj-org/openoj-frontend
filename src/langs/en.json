@@ -25,6 +25,7 @@
   "sendPasscode": "Send Passcode",
   "chooseSuffix": "Choose Suffix",
   "mailSuffix": "Mail Suffix",
+  "id": "ID",
   "username": "Username",
   "usernameOrMail": "Username or Mail",
   "password": "Password",
@@ -48,6 +49,7 @@
   "registerTime": "Register Time",
   "timeFormat": "{{year}}-{{month}}-{{day}} {{hour}}:{{minute}}:{{second}}",
   "problemPassNumber": "Number of Problem Passed",
+  "pass": "Number of Problem Passed",
   "modifyPersonalProfile": "Modify Profile",
   "notLoginHint": "Not logged in yet.",
   "modify": "Modify",
@@ -72,5 +74,8 @@
   "yes": "Yes",
   "no": "No",
   "mailSuffixLimit": "E-mail Suffix Limitation",
-  "somethingSwitch": "Switch {{value}}"
+  "somethingSwitch": "Switch {{value}}",
+  "keyword": "Keyword",
+  "keywordOfSomething": "Keyword of {{value}}",
+  "search": "Search"
 }

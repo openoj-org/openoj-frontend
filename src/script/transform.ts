@@ -30,3 +30,10 @@ export function timeDeltaIntToString(time: number): string {
     return hours.toString() + t('remainHour')
   } else return minutes.toString() + t('remainMinute')
 }
+
+export function max(a: number, b: number): number {
+  return a > b ? a : b
+}
+export function min(a: number, b: number): number {
+  return a < b ? a : b
+}
