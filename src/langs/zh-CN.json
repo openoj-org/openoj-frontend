@@ -75,6 +75,9 @@
   "no": "否",
   "mailSuffixLimit": "邮箱后缀限制",
   "somethingSwitch": "{{value}}开关",
+  "batchRegister": "批量注册",
+  "usernamePrefix": "用户名前缀",
+  "count": "数量",
   "keyword": "关键词",
   "keywordOfSomething": "{{value}}关键词",
   "search": "搜索"

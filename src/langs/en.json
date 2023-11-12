@@ -75,6 +75,9 @@
   "no": "No",
   "mailSuffixLimit": "E-mail Suffix Limitation",
   "somethingSwitch": "Switch {{value}}",
+  "batchRegister": "Batch Registration",
+  "usernamePrefix": "Username Prefix",
+  "count": "Count",
   "keyword": "Keyword",
   "keywordOfSomething": "Keyword of {{value}}",
   "search": "Search"

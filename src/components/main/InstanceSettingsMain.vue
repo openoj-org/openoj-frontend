@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { useRequestGet, useRequestPost } from '@/script/service'
 import { useLoginInfoStore } from '@/stores/loginInfo'
-import { ElInput, ElMessage, ElMessageBox } from 'element-plus'
+import { ElInput, ElMessage, ElMessageBox, type FormInstance, type FormRules } from 'element-plus'
 import { t } from 'i18next'
-import { nextTick, ref, type Ref } from 'vue'
+import { nextTick, reactive, ref, type Ref } from 'vue'
 import { useRouter } from 'vue-router'
+import sha512 from 'crypto-js/sha512'
+import { result } from 'lodash'
 
 const router = useRouter()
 const loginInfo = useLoginInfoStore()
@@ -146,6 +148,105 @@ function mailSuffixLimitSet(newHaveList: boolean, newSuffixList?: string[]) {
       ElMessage.info(t('cancel'))
     })
 }
+
+const formRef = ref<FormInstance>()
+
+const form = reactive({
+  usernamePrefix: '',
+  password: '',
+  repeatPassword: '',
+  count: 0
+})
+
+function checkPassword(rule: any, value: any, callback: any) {
+  if (form.repeatPassword != '') {
+    // possibly change password to match
+    if (formRef.value) formRef.value.validateField('repeatPassword', () => null)
+  }
+  callback()
+}
+
+function checkRepeatPassword(rule: any, value: any, callback: any) {
+  if (form.password != form.repeatPassword) callback(new Error(t('passwordNotMatch')))
+  callback()
+}
+const rules = reactive<FormRules<typeof form>>({
+  usernamePrefix: [
+    {
+      required: true,
+      message: t('canNotBeEmpty', { value: t('usernamePrefix') }),
+      trigger: 'blur'
+    }
+  ],
+  password: [
+    {
+      required: true,
+      message: t('canNotBeEmpty', { value: t('newPassword') }),
+      trigger: 'blur'
+    },
+    {
+      validator: checkPassword,
+      trigger: 'blur'
+    }
+  ],
+  repeatPassword: [
+    {
+      required: true,
+      message: t('canNotBeEmpty', { value: t('repeatNewPassword') }),
+      trigger: 'blur'
+    },
+    {
+      validator: checkRepeatPassword,
+      trigger: 'blur'
+    }
+  ],
+  count: [
+    {
+      required: true,
+      message: t('canNotBeEmpty', { value: t('count') }),
+      trigger: 'blur'
+    }
+  ]
+})
+
+async function batchRegister(formEl: FormInstance | undefined) {
+  if (!formEl) return
+  await formEl.validate((valid, fields) => {
+    if (valid) {
+      ElMessageBox.confirm(t('dangerousAction', { value: t('batchRegister') }), t('warning'), {
+        confirmButtonText: t('confirm'),
+        cancelButtonText: t('cancel'),
+        type: 'warning'
+      })
+        .then(() => {
+          const passwordCode = sha512(form.password).toString()
+          useRequestPost('/user/generate-user', {
+            cookie: loginInfo.cookie,
+            usernamePrefix: form.usernamePrefix,
+            passwordCode: passwordCode,
+            count: form.count
+          })
+            .then((result) => {
+              if (result.data.success == false) {
+                ElMessage.error(result.data.message)
+              } else {
+                ElMessage.success(t('somethingSuccess', { value: t('batchRegister') }))
+                router.push('/')
+              }
+            })
+            .catch((error) => {
+              console.log(error)
+              ElMessage.error(t('unknownError'))
+            })
+        })
+        .catch(() => {
+          ElMessage.info(t('cancel'))
+        })
+    } else {
+      console.log('error submit!', fields)
+    }
+  })
+}
 </script>
 <template>
   <el-dialog v-model="dialogVisible" :title="$t('tips')" width="30%" :show-close="false">
@@ -227,6 +328,27 @@ function mailSuffixLimitSet(newHaveList: boolean, newSuffixList?: string[]) {
           $t('modifySomething', { value: $t('mailSuffixLimit') })
         }}</el-button>
       </div>
+      <el-divider />
+      <el-descriptions :title="$t('batchRegister')"> </el-descriptions>
+      <el-form ref="formRef" :model="form" :rules="rules" label-width="120px">
+        <el-form-item :label="$t('usernamePrefix')" prop="usernamePrefix">
+          <el-input type="username" v-model="form.usernamePrefix"></el-input>
+        </el-form-item>
+        <el-form-item :label="$t('password')" prop="password">
+          <el-input type="password" v-model="form.password"></el-input>
+        </el-form-item>
+        <el-form-item :label="$t('repeatPassword')" prop="repeatPassword">
+          <el-input type="password" v-model="form.repeatPassword"></el-input>
+        </el-form-item>
+        <el-form-item :label="$t('count')" prop="count">
+          <el-input type="number" v-model="form.count"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="danger" @click="batchRegister(formRef)">{{
+            $t('batchRegister')
+          }}</el-button>
+        </el-form-item>
+      </el-form>
     </div>
   </div>
 </template>
