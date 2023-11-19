@@ -28,3 +28,4 @@ coverage
 
 # lock file
 yarn.lock
+package-lock.json
