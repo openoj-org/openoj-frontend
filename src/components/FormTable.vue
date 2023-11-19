@@ -57,7 +57,7 @@ const getTable = () => {
   let Query: { [index: string]: any } = toRaw(tableMeta)
   Query.start = start.value
   Query.end = end.value - 1
-  console.log(Query)
+  // console.log(Query)
   emit('flushTableData', Query)
 }
 

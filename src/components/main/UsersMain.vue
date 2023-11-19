@@ -98,11 +98,3 @@ const getTable = (tableMeta: { [index: string]: any }) => {
     "
   ></FormTable>
 </template>
-
-<style scoped>
-.box {
-  margin: 0 auto;
-  min-width: 600px;
-  max-width: 1200px;
-}
-</style>
