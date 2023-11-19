@@ -88,10 +88,12 @@ function rowClick(row: any) {
   <div class="box">
     <ElDescriptions :title="$t('somethingSetting', { value: $t('keyword') })"> </ElDescriptions>
     <ElForm :inline="true" :model="tableMeta">
-      <ElFormItem>
+      <ElFormItem
+        v-for="meta in searchMeta"
+        :key="meta.name"
+        style="margin-left: 0; margin-right: 12px"
+      >
         <ElInput
-          v-for="meta in searchMeta"
-          :key="meta.name"
           v-model="tableMeta[`${meta.name}Keyword`]"
           :placeholder="$t('keywordOfSomething', { value: $t(meta.name) })"
         >
