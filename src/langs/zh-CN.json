@@ -80,5 +80,11 @@
   "count": "数量",
   "keyword": "关键词",
   "keywordOfSomething": "{{value}}关键词",
-  "search": "搜索"
+  "search": "搜索",
+  "title": "标题",
+  "source": "来源",
+  "tags": "标签",
+  "score": "分数",
+  "grade": "难度",
+  "passRate": "通过率"
 }

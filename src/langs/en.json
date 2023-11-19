@@ -80,5 +80,11 @@
   "count": "Count",
   "keyword": "Keyword",
   "keywordOfSomething": "Keyword of {{value}}",
-  "search": "Search"
+  "search": "Search",
+  "title": "Title",
+  "source": "Source",
+  "tags": "Tags",
+  "score": "Score",
+  "grade": "Grade",
+  "passRate": "Passing Rate"
 }
