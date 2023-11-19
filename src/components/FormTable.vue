@@ -10,9 +10,12 @@ import {
   ElInput,
   ElSkeleton,
   ElTable,
-  ElTableColumn
+  ElTableColumn,
+  ElTag,
+  ElText
 } from 'element-plus'
 import { useRouter } from 'vue-router'
+import { getScoreType } from '@/script/transform'
 
 const router = useRouter()
 const eachpageCount = 10
@@ -29,6 +32,7 @@ const props = defineProps<{
     name: string
     showName?: string
     sortable: boolean
+    type?: string
   }[]
   tableData: any[]
 }>()
@@ -121,7 +125,27 @@ function rowClick(row: any) {
           :prop="column.name"
           :label="$t(column.showName == undefined ? column.name : column.showName)"
           :sortable="column.sortable ? 'custom' : false"
-        />
+        >
+          <template #default="scope">
+            <ElText v-if="column.type == undefined"> {{ scope.row[column.name] }} </ElText>
+            <ElText
+              tag="b"
+              :type="getScoreType(scope.row[column.name])"
+              v-if="column.type == 'score' && scope.row[column.name] != undefined"
+            >
+              {{ scope.row[column.name] }}
+            </ElText>
+            <span v-if="column.type == 'tags'">
+              <ElTag
+                style="margin-right: 6px; margin-bottom: 6px"
+                v-for="tag in scope.row[column.name]"
+                :key="tag"
+              >
+                {{ tag }}
+              </ElTag>
+            </span>
+          </template>
+        </ElTableColumn>
       </ElTable>
       <el-pagination
         :page-size="eachpageCount"
