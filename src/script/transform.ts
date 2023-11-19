@@ -31,9 +31,8 @@ export function timeDeltaIntToString(time: number): string {
   } else return minutes.toString() + t('remainMinute')
 }
 
-export function max(a: number, b: number): number {
-  return a > b ? a : b
-}
-export function min(a: number, b: number): number {
-  return a < b ? a : b
+export function getScoreType(score: number) {
+  if (score == 100) return 'success'
+  else if (score >= 60) return 'warning'
+  else return 'danger'
 }
