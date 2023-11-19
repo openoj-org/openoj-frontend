@@ -86,5 +86,8 @@
   "tags": "Tags",
   "score": "Score",
   "grade": "Grade",
-  "passRate": "Passing Rate"
+  "passRate": "Passing Rate",
+  "timeLimit": "Time Limit",
+  "memoryLimit": "Memory Limit",
+  "submitCount": "Number of Submissions"
 }

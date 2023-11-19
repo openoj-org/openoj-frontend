@@ -86,5 +86,8 @@
   "tags": "标签",
   "score": "分数",
   "grade": "难度",
-  "passRate": "通过率"
+  "passRate": "通过率",
+  "timeLimit": "时间限制",
+  "memoryLimit": "空间限制",
+  "submitCount": "提交数"
 }

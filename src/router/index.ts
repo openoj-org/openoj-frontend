@@ -12,6 +12,7 @@ import LoginView from '@/views/LoginView.vue'
 import ForgetPasswordView from '@/views/ForgetPasswordView.vue'
 import UserManageView from '@/views/UserManageView.vue'
 import InstanceSettingsView from '@/views/InstanceSettingsView.vue'
+import ProblemView from '@/views/ProblemView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -40,6 +41,11 @@ const router = createRouter({
       path: '/problemset',
       name: 'problemset',
       component: ProblemsetView
+    },
+    {
+      path: '/problem/:id',
+      name: 'problem',
+      component: ProblemView
     },
     {
       path: '/workshop',
