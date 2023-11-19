@@ -10,12 +10,10 @@ import {
   ElInput,
   ElSkeleton,
   ElTable,
-  ElTableColumn,
-  ElTag,
-  ElText
+  ElTableColumn
 } from 'element-plus'
 import { useRouter } from 'vue-router'
-import { getScoreType } from '@/script/transform'
+import SemiText from './semiText/SemiText.vue'
 
 const router = useRouter()
 const eachpageCount = 10
@@ -127,23 +125,7 @@ function rowClick(row: any) {
           :sortable="column.sortable ? 'custom' : false"
         >
           <template #default="scope">
-            <ElText v-if="column.type == undefined"> {{ scope.row[column.name] }} </ElText>
-            <ElText
-              tag="b"
-              :type="getScoreType(scope.row[column.name])"
-              v-if="column.type == 'score' && scope.row[column.name] != undefined"
-            >
-              {{ scope.row[column.name] }}
-            </ElText>
-            <span v-if="column.type == 'tags'">
-              <ElTag
-                style="margin-right: 6px; margin-bottom: 6px"
-                v-for="tag in scope.row[column.name]"
-                :key="tag"
-              >
-                {{ tag }}
-              </ElTag>
-            </span>
+            <SemiText :type="column.type" :value="scope.row[column.name]" />
           </template>
         </ElTableColumn>
       </ElTable>
