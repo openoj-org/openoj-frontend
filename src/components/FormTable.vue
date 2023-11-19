@@ -27,6 +27,7 @@ const props = defineProps<{
   }[]
   columnMeta: {
     name: string
+    showName?: string
     sortable: boolean
   }[]
   tableData: any[]
@@ -118,7 +119,7 @@ function rowClick(row: any) {
           v-for="column in columnMeta"
           :key="column.name"
           :prop="column.name"
-          :label="$t(column.name)"
+          :label="$t(column.showName == undefined ? column.name : column.showName)"
           :sortable="column.sortable ? 'custom' : false"
         />
       </ElTable>
