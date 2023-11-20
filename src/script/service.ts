@@ -1,8 +1,9 @@
 import axios from 'axios'
 import global from '@/assets/global.json'
 import FileSaver from 'file-saver'
-import { ElMessage } from 'element-plus'
+import { ElMessage, ElMessageBox } from 'element-plus'
 import { t } from 'i18next'
+import type { Router } from 'vue-router'
 
 const request = axios.create({
   baseURL: global.backendUrl,
@@ -29,5 +30,45 @@ export function useRequestDownload(url: string, query: object, filename: string)
     .catch((err) => {
       console.log(err)
       ElMessage.error(t('unknownError'))
+    })
+}
+
+export function useRequestDangerousAction(
+  url: string,
+  query: object,
+  actionName: string,
+  router: Router,
+  link: string
+) {
+  ElMessageBox.confirm(
+    t('dangerousAction', {
+      value: actionName
+    }),
+    t('warning'),
+    {
+      confirmButtonText: t('confirm'),
+      cancelButtonText: t('cancel'),
+      type: 'warning'
+    }
+  )
+    .then(() => {
+      useRequestPost(url, query)
+        .then((result) => {
+          if (result.data.success) {
+            ElMessage.success(
+              t('somethingSuccess', {
+                value: actionName
+              })
+            )
+            router.push(link)
+          } else ElMessage.error(result.data.message)
+        })
+        .catch((error) => {
+          console.log(error)
+          ElMessage.error(t('unknownError'))
+        })
+    })
+    .catch(() => {
+      ElMessage.info(t('cancel'))
     })
 }

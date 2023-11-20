@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useRequestGet, useRequestPost } from '@/script/service'
+import { useRequestGet, useRequestPost, useRequestDangerousAction } from '@/script/service'
 import { useLoginInfoStore } from '@/stores/loginInfo'
 import { ElInput, ElMessage, ElMessageBox, type FormInstance, type FormRules } from 'element-plus'
 import { t } from 'i18next'
@@ -43,42 +43,16 @@ if (loginInfo.login && loginInfo.character == 0) {
 }
 
 function allowRegisterSet(allow: boolean) {
-  ElMessageBox.confirm(
-    t('dangerousAction', {
-      value: t(allow ? 'setToSomething' : 'setNotSomething', { value: t('allowRegister') })
-    }),
-    t('warning'),
+  useRequestDangerousAction(
+    '/user/allow-register',
     {
-      confirmButtonText: t('confirm'),
-      cancelButtonText: t('cancel'),
-      type: 'warning'
-    }
+      cookie: loginInfo.cookie,
+      allow: allow
+    },
+    t(allow ? 'setToSomething' : 'setNotSomething', { value: t('allowRegister') }),
+    router,
+    '/'
   )
-    .then(() => {
-      useRequestPost('/user/allow-register', {
-        cookie: loginInfo.cookie,
-        allow: allow
-      })
-        .then((result) => {
-          if (result.data.success) {
-            ElMessage.success(
-              t('somethingSuccess', {
-                value: t(allow ? 'setToSomething' : 'setNotSomething', {
-                  value: t('allowRegister')
-                })
-              })
-            )
-            router.push('/')
-          } else ElMessage.error(result.data.message)
-        })
-        .catch((error) => {
-          console.log(error)
-          ElMessage.error(t('unknownError'))
-        })
-    })
-    .catch(() => {
-      ElMessage.info(t('cancel'))
-    })
 }
 const inputValue = ref('')
 const inputVisible = ref(false)
@@ -104,49 +78,22 @@ const handleInputConfirm = () => {
 }
 
 function mailSuffixLimitSet(newHaveList: boolean, newSuffixList?: string[]) {
-  ElMessageBox.confirm(
-    t('dangerousAction', {
-      value: t('modifySomething', { value: t('mailSuffixLimit') })
-    }),
-    t('warning'),
-    {
-      confirmButtonText: t('confirm'),
-      cancelButtonText: t('cancel'),
-      type: 'warning'
-    }
+  useRequestDangerousAction(
+    '/user/set-mail-suffix-list',
+    newHaveList
+      ? {
+          cookie: loginInfo.cookie,
+          haveList: newHaveList
+        }
+      : {
+          cookie: loginInfo.cookie,
+          haveList: newHaveList,
+          suffixList: newSuffixList
+        },
+    t('modifySomething', { value: t('mailSuffixLimit') }),
+    router,
+    '/'
   )
-    .then(() => {
-      useRequestPost(
-        '/user/set-mail-suffix-list',
-        newHaveList
-          ? {
-              cookie: loginInfo.cookie,
-              haveList: newHaveList
-            }
-          : {
-              cookie: loginInfo.cookie,
-              haveList: newHaveList,
-              suffixList: newSuffixList
-            }
-      )
-        .then((result) => {
-          if (result.data.success) {
-            ElMessage.success(
-              t('somethingSuccess', {
-                value: t('modifySomething', { value: t('mailSuffixLimit') })
-              })
-            )
-            router.push('/')
-          } else ElMessage.error(result.data.message)
-        })
-        .catch((error) => {
-          console.log(error)
-          ElMessage.error(t('unknownError'))
-        })
-    })
-    .catch(() => {
-      ElMessage.info(t('cancel'))
-    })
 }
 
 const formRef = ref<FormInstance>()
@@ -213,35 +160,19 @@ async function batchRegister(formEl: FormInstance | undefined) {
   if (!formEl) return
   await formEl.validate((valid, fields) => {
     if (valid) {
-      ElMessageBox.confirm(t('dangerousAction', { value: t('batchRegister') }), t('warning'), {
-        confirmButtonText: t('confirm'),
-        cancelButtonText: t('cancel'),
-        type: 'warning'
-      })
-        .then(() => {
-          const passwordCode = sha512(form.password).toString()
-          useRequestPost('/user/generate-user', {
-            cookie: loginInfo.cookie,
-            usernamePrefix: form.usernamePrefix,
-            passwordCode: passwordCode,
-            count: form.count
-          })
-            .then((result) => {
-              if (result.data.success == false) {
-                ElMessage.error(result.data.message)
-              } else {
-                ElMessage.success(t('somethingSuccess', { value: t('batchRegister') }))
-                router.push('/')
-              }
-            })
-            .catch((error) => {
-              console.log(error)
-              ElMessage.error(t('unknownError'))
-            })
-        })
-        .catch(() => {
-          ElMessage.info(t('cancel'))
-        })
+      const passwordCode = sha512(form.password).toString()
+      useRequestDangerousAction(
+        '/user/generate-user',
+        {
+          cookie: loginInfo.cookie,
+          usernamePrefix: form.usernamePrefix,
+          passwordCode: passwordCode,
+          count: form.count
+        },
+        t('batchRegister'),
+        router,
+        '/'
+      )
     } else {
       console.log('error submit!', fields)
     }

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useRequestGet, useRequestPost } from '@/script/service'
+import { useRequestDangerousAction, useRequestGet, useRequestPost } from '@/script/service'
 import { reactive, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { t } from 'i18next'
@@ -43,195 +43,75 @@ if (loginInfo.login && loginInfo.character <= 1) {
 }
 
 function banUser() {
-  ElMessageBox.confirm(
-    t('dangerousAction', { value: t('setToSomething', { value: t('bannedUser') }) }),
-    t('warning'),
-    {
-      confirmButtonText: t('confirm'),
-      cancelButtonText: t('cancel'),
-      type: 'warning'
-    }
+  useRequestDangerousAction(
+    '/user/ban',
+    { cookie: loginInfo.cookie, id: userInfo.id },
+    t('setToSomething', { value: t('bannedUser') }),
+    router,
+    `/user/${userInfo.id}`
   )
-    .then(() => {
-      useRequestPost('/user/ban', { cookie: loginInfo.cookie, id: userInfo.id })
-        .then((result) => {
-          if (result.data.success) {
-            ElMessage.success(
-              t('somethingSuccess', { value: t('setToSomething', { value: t('bannedUser') }) })
-            )
-            router.push(`/user/${userInfo.id}`)
-          } else ElMessage.error(result.data.message)
-        })
-        .catch((error) => {
-          console.log(error)
-          ElMessage.error(t('unknownError'))
-        })
-    })
-    .catch(() => {
-      ElMessage.info(t('cancel'))
-    })
 }
 
 function unbanUser() {
-  ElMessageBox.confirm(
-    t('dangerousAction', { value: t('setNotSomething', { value: t('bannedUser') }) }),
-    t('warning'),
-    {
-      confirmButtonText: t('confirm'),
-      cancelButtonText: t('cancel'),
-      type: 'warning'
-    }
+  useRequestDangerousAction(
+    '/user/unban',
+    { cookie: loginInfo.cookie, id: userInfo.id },
+    t('setNotSomething', { value: t('bannedUser') }),
+    router,
+    `/user/${userInfo.id}`
   )
-    .then(() => {
-      useRequestPost('/user/unban', { cookie: loginInfo.cookie, id: userInfo.id })
-        .then((result) => {
-          if (result.data.success) {
-            ElMessage.success(
-              t('somethingSuccess', { value: t('setNotSomething', { value: t('bannedUser') }) })
-            )
-            router.push(`/user/${userInfo.id}`)
-          } else ElMessage.error(result.data.message)
-        })
-        .catch((error) => {
-          console.log(error)
-          ElMessage.error(t('unknownError'))
-        })
-    })
-    .catch(() => {
-      ElMessage.info(t('cancel'))
-    })
 }
 
 function trustUser() {
-  ElMessageBox.confirm(
-    t('dangerousAction', { value: t('setToSomething', { value: t('trustedUser') }) }),
-    t('warning'),
+  useRequestDangerousAction(
+    '/user/trust',
     {
-      confirmButtonText: t('confirm'),
-      cancelButtonText: t('cancel'),
-      type: 'warning'
-    }
+      cookie: loginInfo.cookie,
+      id: userInfo.id
+    },
+    t('setToSomething', { value: t('trustedUser') }),
+    router,
+    `/user/${userInfo.id}`
   )
-    .then(() => {
-      useRequestPost('/user/trust', {
-        cookie: loginInfo.cookie,
-        id: userInfo.id
-      })
-        .then((result) => {
-          if (result.data.success) {
-            ElMessage.success(
-              t('somethingSuccess', { value: t('setToSomething', { value: t('trustedUser') }) })
-            )
-            router.push(`/user/${userInfo.id}`)
-          } else ElMessage.error(result.data.message)
-        })
-        .catch((error) => {
-          console.log(error)
-          ElMessage.error(t('unknownError'))
-        })
-    })
-    .catch(() => {
-      ElMessage.info(t('cancel'))
-    })
 }
 
 function untrustUser() {
-  ElMessageBox.confirm(
-    t('dangerousAction', { value: t('setNotSomething', { value: t('trustedUser') }) }),
-    t('warning'),
+  useRequestDangerousAction(
+    '/user/untrust',
     {
-      confirmButtonText: t('confirm'),
-      cancelButtonText: t('cancel'),
-      type: 'warning'
-    }
+      cookie: loginInfo.cookie,
+      id: userInfo.id
+    },
+    t('setNotSomething', { value: t('trustedUser') }),
+    router,
+    `/user/${userInfo.id}`
   )
-    .then(() => {
-      useRequestPost('/user/untrust', {
-        cookie: loginInfo.cookie,
-        id: userInfo.id
-      })
-        .then((result) => {
-          if (result.data.success) {
-            ElMessage.success(
-              t('somethingSuccess', { value: t('setNotSomething', { value: t('trustedUser') }) })
-            )
-            router.push(`/user/${userInfo.id}`)
-          } else ElMessage.error(result.data.message)
-        })
-        .catch((error) => {
-          console.log(error)
-          ElMessage.error(t('unknownError'))
-        })
-    })
-    .catch(() => {
-      ElMessage.info(t('cancel'))
-    })
 }
 
 function setManager() {
-  ElMessageBox.confirm(
-    t('dangerousAction', { value: t('setToSomething', { value: t('manager') }) }),
-    t('warning'),
+  useRequestDangerousAction(
+    '/user/manage',
     {
-      confirmButtonText: t('confirm'),
-      cancelButtonText: t('cancel'),
-      type: 'warning'
-    }
+      cookie: loginInfo.cookie,
+      id: userInfo.id
+    },
+    t('setToSomething', { value: t('manager') }),
+    router,
+    `/user/${userInfo.id}`
   )
-    .then(() => {
-      useRequestPost('/user/manage', {
-        cookie: loginInfo.cookie,
-        id: userInfo.id
-      })
-        .then((result) => {
-          if (result.data.success) {
-            ElMessage.success(
-              t('somethingSuccess', { value: t('setToSomething', { value: t('manager') }) })
-            )
-            router.push(`/user/${userInfo.id}`)
-          } else ElMessage.error(result.data.message)
-        })
-        .catch((error) => {
-          console.log(error)
-          ElMessage.error(t('unknownError'))
-        })
-    })
-    .catch(() => {
-      ElMessage.info(t('cancel'))
-    })
 }
 
 function unsetManager() {
-  ElMessageBox.confirm(
-    t('dangerousAction', { value: t('setNotSomething', { value: t('manager') }) }),
-    t('warning'),
+  useRequestDangerousAction(
+    '/user/unmanage',
     {
-      confirmButtonText: t('confirm'),
-      cancelButtonText: t('cancel'),
-      type: 'warning'
-    }
+      cookie: loginInfo.cookie,
+      id: userInfo.id
+    },
+    t('setNotSomething', { value: t('manager') }),
+    router,
+    `/user/${userInfo.id}`
   )
-    .then(() => {
-      useRequestPost('/user/unmanage', {
-        cookie: loginInfo.cookie,
-        id: userInfo.id
-      })
-        .then((result) => {
-          if (result.data.success) {
-            ElMessage.success(
-              t('somethingSuccess', { value: t('setNotSomething', { value: t('manager') }) })
-            )
-            router.push(`/user/${userInfo.id}`)
-          } else ElMessage.error(result.data.message)
-        })
-        .catch((error) => {
-          console.log(error)
-          ElMessage.error(t('unknownError'))
-        })
-    })
-    .catch(() => {
-      ElMessage.info(t('cancel'))
-    })
 }
 </script>
 
