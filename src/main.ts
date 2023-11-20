@@ -14,16 +14,18 @@ import 'katex/dist/katex.min.css'
 
 import en from './langs/en.json'
 import zh_CN from './langs/zh-CN.json'
+import { usePreferencesStore } from './stores/preferences'
+import { useLoginInfoStore } from './stores/loginInfo'
 
 i18next.use(LanguageDetector).init({
   detection: {
     // do not use cache to detect language, so it is easy to change language in code for debugging
     caches: []
   },
-  fallbackLng: 'en',
+  fallbackLng: 'en-US',
   compatibilityJSON: 'v3',
   resources: {
-    en: {
+    'en-US': {
       translation: en
     },
     'zh-CN': {
@@ -31,8 +33,6 @@ i18next.use(LanguageDetector).init({
     }
   }
 })
-
-// i18next.changeLanguage('en')
 
 const app = createApp(App)
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
@@ -43,5 +43,11 @@ app.use(createPinia())
 app.use(router)
 app.use(ElementPlus)
 app.use(I18NextVue, { i18next })
+
+const loginInfo = useLoginInfoStore()
+loginInfo.flush()
+const preferences = usePreferencesStore()
+preferences.flush()
+if (preferences.language != '') i18next.changeLanguage(preferences.language)
 
 app.mount('#app')
