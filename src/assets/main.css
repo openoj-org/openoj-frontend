@@ -10,3 +10,12 @@ p {
   margin-block-start: 0;
   margin-block-end: 0;
 }
+
+@font-face {
+  font-family: UbuntuMono;
+  src: url(/UbuntuMono.ttf);
+}
+
+code {
+  font-family: UbuntuMono;
+}
