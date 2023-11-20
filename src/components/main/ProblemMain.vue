@@ -131,7 +131,11 @@ useRequestGet(
         <div v-for="item in problemStatementMeta" :key="item.name">
           <div
             style="margin-bottom: 24px"
-            v-if="problemInfo[item.name] != undefined && item.suffix != true"
+            v-if="
+              problemInfo[item.name] != undefined &&
+              problemInfo[item.name] != '' &&
+              item.suffix != true
+            "
           >
             <ElDescriptions :title="$t(item.showName == undefined ? item.name : item.showName)" />
             <div style="margin-top: 0">
@@ -149,7 +153,11 @@ useRequestGet(
         <div v-for="item in problemStatementMeta" :key="item.name">
           <div
             style="margin-bottom: 24px"
-            v-if="problemInfo[item.name] != undefined && item.suffix == true"
+            v-if="
+              problemInfo[item.name] != undefined &&
+              problemInfo[item.name] != '' &&
+              item.suffix == true
+            "
           >
             <ElDescriptions :title="$t(item.showName == undefined ? item.name : item.showName)" />
             <div style="margin-top: 0">
@@ -169,6 +177,7 @@ useRequestGet(
                   type="danger"
                   :icon="Edit"
                   v-if="loginInfo.login && loginInfo.character <= 1"
+                  @click="$router.push(`/problem/${$route.params.id}/modify`)"
                   >{{ $t('modifySomething', { value: $t('problem') }) }}</ElButton
                 >
               </template>

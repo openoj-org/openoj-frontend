@@ -107,5 +107,6 @@
   "copySomething": "Copy {{value}}",
   "problem": "Problem",
   "problemsSomething": "Problem's {{value}}",
-  "attach": "Attach File"
+  "attach": "Attach File",
+  "onlyManagerCanModifyProblemHint": "Only managers and above can modify problems."
 }

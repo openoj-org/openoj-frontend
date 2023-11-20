@@ -107,5 +107,6 @@
   "copySomething": "复制{{value}}",
   "problem": "题目",
   "problemsSomething": "题目{{value}}",
-  "attach": "附加文件"
+  "attach": "附加文件",
+  "onlyManagerCanModifyProblemHint": "只有管理员及以上用户才能进行修改题目操作。"
 }
