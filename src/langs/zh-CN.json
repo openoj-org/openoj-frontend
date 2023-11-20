@@ -102,11 +102,16 @@
   "sampleWithId": "样例{{id}}",
   "sampleInputWithId": "样例输入{{id}}",
   "sampleOutputWithId": "样例输出{{id}}",
-  "sampleHideHint": "见附加文件下的<code>{{input}}</code>与<code>{{output}}</code>。",
+  "sampleHideHint": "见附加文件下的`{{input}}`与`{{output}}`。",
   "copy": "复制",
   "copySomething": "复制{{value}}",
   "problem": "题目",
   "problemsSomething": "题目{{value}}",
   "attach": "附加文件",
-  "onlyManagerCanModifyProblemHint": "只有管理员及以上用户才能进行修改题目操作。"
+  "onlyManagerCanModifyProblemHint": "只有管理员及以上用户才能进行修改题目操作。",
+  "metaData": "元数据",
+  "data": "数据",
+  "problemType": "题目类型",
+  "traditionalType": "传统型",
+  "unitDescription": "{{value}}（单位：{{unit}}）"
 }

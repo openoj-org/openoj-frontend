@@ -102,11 +102,16 @@
   "sampleWithId": "Sample #{{id}}",
   "sampleInputWithId": "Sample Input #{{id}}",
   "sampleOutputWithId": "Sample Output #{{id}}",
-  "sampleHideHint": "See <code>{{input}}</code> and <code>{{output}}</code> under attached files.",
+  "sampleHideHint": "See `{{input}}` and `{{output}}` under attached files.",
   "copy": "Copy",
   "copySomething": "Copy {{value}}",
   "problem": "Problem",
-  "problemsSomething": "Problem's {{value}}",
+  "problemsSomething": "Problem {{value}}",
   "attach": "Attach File",
-  "onlyManagerCanModifyProblemHint": "Only managers and above can modify problems."
+  "onlyManagerCanModifyProblemHint": "Only managers and above can modify problems.",
+  "metaData": "Metadata",
+  "data": "Data",
+  "problemType": "Problem Type",
+  "traditionalType": "Traditional Type",
+  "unitDescription": "{{value}} (Unit: {{unit}})"
 }
