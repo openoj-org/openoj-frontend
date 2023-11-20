@@ -3,7 +3,7 @@ import { useLoginInfoStore } from '@/stores/loginInfo'
 import { ref } from 'vue'
 import DenyDialog from '../DenyDialog.vue'
 import { ProblemInfoInput, ProblemInfoQuery } from '@/script/types'
-import { useRequestGet, useRequestPost, useRequestDangerousAction } from '@/script/service'
+import { useRequestGet, useRequestDangerousAction } from '@/script/service'
 import { useRoute, useRouter } from 'vue-router'
 import { usePreferencesStore } from '@/stores/preferences'
 import { t } from 'i18next'
@@ -16,8 +16,7 @@ import {
   ElFormItem,
   ElInput,
   ElSelect,
-  ElDivider,
-  ElMessageBox
+  ElDivider
 } from 'element-plus'
 import { MdEditor } from 'md-editor-v3'
 import i18next from 'i18next'
