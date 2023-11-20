@@ -10,6 +10,7 @@
   "submissions": "评测",
   "users": "用户列表",
   "forum": "论坛",
+  "talks": "讨论",
   "menuExpand": "展开",
   "menuCollapse": "收起",
   "myProfile": "详细资料",
@@ -103,5 +104,8 @@
   "sampleOutputWithId": "样例输出{{id}}",
   "sampleHideHint": "见附加文件下的<code>{{input}}</code>与<code>{{output}}</code>。",
   "copy": "复制",
-  "copySomething": "复制{{value}}"
+  "copySomething": "复制{{value}}",
+  "problem": "题目",
+  "problemsSomething": "题目{{value}}",
+  "attach": "附加文件"
 }

@@ -28,7 +28,7 @@ clipboard.on('error', () => {
         <template #extra>
           <ElButton
             class="copy-btn"
-            type="success"
+            type="primary"
             size="small"
             :icon="CopyDocument"
             :data-clipboard-text="value.input"
@@ -45,7 +45,7 @@ clipboard.on('error', () => {
         <template #extra>
           <ElButton
             class="copy-btn"
-            type="success"
+            type="primary"
             size="small"
             :icon="CopyDocument"
             :data-clipboard-text="value.output"

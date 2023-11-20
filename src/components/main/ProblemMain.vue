@@ -1,8 +1,17 @@
 <script setup lang="ts">
-import { useRequestGet } from '@/script/service'
+import { useRequestDownload, useRequestGet } from '@/script/service'
 import { useLoginInfoStore } from '@/stores/loginInfo'
 import { usePreferencesStore } from '@/stores/preferences'
-import { ElCard, ElCol, ElDescriptions, ElDescriptionsItem, ElMessage, ElRow } from 'element-plus'
+import {
+  ElButton,
+  ElCard,
+  ElCol,
+  ElDescriptions,
+  ElDescriptionsItem,
+  ElDivider,
+  ElMessage,
+  ElRow
+} from 'element-plus'
 import { t } from 'i18next'
 import { ref, type Ref } from 'vue'
 import { useRoute } from 'vue-router'
@@ -10,6 +19,7 @@ import SemiText from '../semiText/SemiText.vue'
 import { ProblemInfo } from '@/script/types'
 import MarkdownText from '../MarkdownText.vue'
 import SampleView from '../SampleView.vue'
+import { ChatLineRound, Cpu, Download, Edit, Promotion } from '@element-plus/icons-vue'
 
 const route = useRoute()
 const loginInfo = useLoginInfoStore()
@@ -117,7 +127,7 @@ useRequestGet(
 
 <template>
   <ElRow v-if="loaded">
-    <ElCol :span="18" style="padding-right: 120px">
+    <ElCol :span="17" style="padding-right: 120px">
       <div class="box">
         <div v-for="item in problemStatementMeta" :key="item.name">
           <div
@@ -150,11 +160,19 @@ useRequestGet(
         </div>
       </div>
     </ElCol>
-    <ElCol :span="6">
+    <ElCol :span="7">
       <ElCard class="box-card">
         <template #header>
           <div class="card-header">
             <ElDescriptions :title="problemInfo.title" :column="1">
+              <template #extra>
+                <ElButton
+                  type="danger"
+                  :icon="Edit"
+                  v-if="loginInfo.login && loginInfo.character <= 1"
+                  >{{ $t('modifySomething', { value: $t('problem') }) }}</ElButton
+                >
+              </template>
               <ElDescriptionsItem
                 :label="$t(item.showName == undefined ? item.name : item.showName)"
                 v-for="item in problemBaseMeta"
@@ -164,8 +182,39 @@ useRequestGet(
               </ElDescriptionsItem>
             </ElDescriptions>
           </div>
+          <div>
+            <ElButton
+              style="margin-top: 6px"
+              type="success"
+              :icon="Promotion"
+              v-if="loginInfo.login"
+              >{{ $t('submit') }}</ElButton
+            >
+            <ElButton
+              style="margin-top: 6px"
+              type="primary"
+              :icon="Download"
+              @click="
+                useRequestDownload(
+                  '/problem/samples',
+                  { id: $route.params.id },
+                  `${problemInfo.titleEn}.zip`
+                )
+              "
+              >{{ $t('attach') }}</ElButton
+            >
+          </div>
         </template>
-        <!-- todo -->
+        <div>
+          <ElButton text type="primary" :icon="Cpu">{{
+            $t('problemsSomething', { value: $t('submissions') })
+          }}</ElButton>
+        </div>
+        <div style="margin-top: 12px">
+          <ElButton text type="primary" :icon="ChatLineRound">{{
+            $t('problemsSomething', { value: $t('talks') })
+          }}</ElButton>
+        </div>
       </ElCard>
     </ElCol>
   </ElRow>
@@ -175,11 +224,10 @@ useRequestGet(
 .box {
   margin: 0 auto;
 }
-.text {
-  font-size: 14px;
-}
-
-.item {
+.container {
   margin-top: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>

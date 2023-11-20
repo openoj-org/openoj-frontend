@@ -10,6 +10,7 @@
   "submissions": "Submissions",
   "users": "User List",
   "forum": "Forum",
+  "talks": "Talks",
   "menuExpand": "Expand",
   "menuCollapse": "Collapse",
   "myProfile": "Profile",
@@ -103,5 +104,8 @@
   "sampleOutputWithId": "Sample Output #{{id}}",
   "sampleHideHint": "See <code>{{input}}</code> and <code>{{output}}</code> under attached files.",
   "copy": "Copy",
-  "copySomething": "Copy {{value}}"
+  "copySomething": "Copy {{value}}",
+  "problem": "Problem",
+  "problemsSomething": "Problem's {{value}}",
+  "attach": "Attach File"
 }
