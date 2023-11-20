@@ -8,6 +8,7 @@ import { Files, Postcard, PriceTag } from '@element-plus/icons-vue'
 import FormTable from '../FormTable.vue'
 import { usePreferencesStore } from '@/stores/preferences'
 import { useLoginInfoStore } from '@/stores/loginInfo'
+import type { ColumnMeta } from '@/script/types'
 
 const loginInfo = useLoginInfoStore()
 const preferences = usePreferencesStore()
@@ -47,25 +48,15 @@ interface Problem {
 }
 
 const columnMeta = (
-  (loginInfo.login ? [{ name: 'score', sortable: false, type: 'score' }] : []) as {
-    name: string
-    showName?: string
-    sortable: boolean
-    type?: string
-  }[]
+  (loginInfo.login ? [{ name: 'score', sortable: false, type: 'score' }] : []) as ColumnMeta[]
 )
   .concat([
     { name: 'id', sortable: true },
-    { name: 'title', sortable: true },
+    { name: 'title', sortable: true, type: 'link' },
     { name: 'source', sortable: false },
     { name: 'submit', sortable: false },
     { name: 'pass', showName: 'passRate', sortable: false }
-  ] as {
-    name: string
-    showName?: string
-    sortable: boolean
-    type?: string
-  }[])
+  ] as ColumnMeta[])
   .concat(
     preferences.evaluation
       ? [
@@ -74,14 +65,6 @@ const columnMeta = (
         ]
       : []
   )
-
-const marker = loginInfo.login
-  ? (row: Problem, rowIndex: number) => {
-      if (row.score == undefined) return ''
-      else if (row.score == 100) return 'success-row'
-      else return 'warning-row'
-    }
-  : undefined
 
 const tableData: Ref<Problem[]> = ref([])
 
@@ -118,7 +101,6 @@ const getTable = (tableMeta: { [index: string]: any }) => {
     :search-meta="searchMeta"
     :column-meta="columnMeta"
     :table-data="tableData"
-    :marker="marker"
     @flush-table-data="
       (tableMeta) => {
         getTable(tableMeta)

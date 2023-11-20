@@ -14,6 +14,7 @@ import {
 } from 'element-plus'
 import { useRouter } from 'vue-router'
 import SemiText from './semiText/SemiText.vue'
+import type { ColumnMeta } from '@/script/types'
 
 const router = useRouter()
 const eachpageCount = 10
@@ -26,12 +27,7 @@ const props = defineProps<{
     name: string
     icon: any
   }[]
-  columnMeta: {
-    name: string
-    showName?: string
-    sortable: boolean
-    type?: string
-  }[]
+  columnMeta: ColumnMeta[]
   tableData: any[]
 }>()
 

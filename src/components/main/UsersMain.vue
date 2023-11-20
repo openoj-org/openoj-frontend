@@ -7,6 +7,7 @@ import { t } from 'i18next'
 import { characterTranslate, timeIntToString } from '@/script/transform'
 import { User as user } from '@element-plus/icons-vue'
 import FormTable from '../FormTable.vue'
+import type { ColumnMeta } from '@/script/types'
 
 const loaded = ref(false)
 const count = ref(0)
@@ -36,7 +37,7 @@ interface User {
   pass: number
 }
 
-const columnMeta = [
+const columnMeta: ColumnMeta[] = [
   { name: 'id', sortable: true },
   { name: 'username', sortable: true },
   { name: 'character', sortable: true },
