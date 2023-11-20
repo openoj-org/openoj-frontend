@@ -51,11 +51,10 @@ const tableMeta = reactive(searchData)
 const emit = defineEmits(['flushTableData'])
 
 const getTable = () => {
-  let Query: { [index: string]: any } = toRaw(tableMeta)
-  Query.start = start.value
-  Query.end = end.value - 1
-  // console.log(Query)
-  emit('flushTableData', Query)
+  let query: { [index: string]: any } = toRaw(tableMeta)
+  query.start = start.value
+  query.end = end.value - 1
+  emit('flushTableData', query)
 }
 
 getTable()
