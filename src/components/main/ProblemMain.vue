@@ -8,7 +8,6 @@ import {
   ElCol,
   ElDescriptions,
   ElDescriptionsItem,
-  ElDivider,
   ElMessage,
   ElRow
 } from 'element-plus'
