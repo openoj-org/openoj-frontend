@@ -5,6 +5,60 @@ export interface ColumnMeta {
   type?: string
 }
 
+export class ProblemInfoInput {
+  title: string
+  titleEn: string
+  type: 0
+  timeLimit: number
+  memoryLimit: number
+  background: string
+  statement: string
+  inputStatement: string
+  outputStatement: string
+  rangeAndHint: string
+  source: string
+  constructor(data: any) {
+    this.title = data.title == undefined ? '' : data.title
+    this.titleEn = data.titleEn == undefined ? '' : data.titleEn
+    this.type = data.type == undefined ? 0 : data.type
+    this.timeLimit = data.timeLimit == undefined ? 0 : data.timeLimit
+    this.memoryLimit = data.memoryLimit == undefined ? 0 : data.memoryLimit
+    this.background = data.background == undefined ? '' : data.background
+    this.statement = data.statement == undefined ? '' : data.statement
+    this.inputStatement = data.inputStatement == undefined ? '' : data.inputStatement
+    this.outputStatement = data.outputStatement == undefined ? '' : data.outputStatement
+    this.rangeAndHint = data.rangeAndHint == undefined ? '' : data.rangeAndHint
+    this.source = data.source == undefined ? '' : data.source
+  }
+}
+
+export class ProblemInfoQuery {
+  title: string
+  titleEn: string
+  type: 0
+  timeLimit: number
+  memoryLimit: number
+  background?: string
+  statement: string
+  inputStatement: string
+  outputStatement: string
+  rangeAndHint: string
+  source: string
+  constructor(data: ProblemInfoInput) {
+    this.title = data.title
+    this.titleEn = data.titleEn
+    this.type = data.type
+    this.timeLimit = data.timeLimit
+    this.memoryLimit = data.memoryLimit
+    if (data.background != undefined) this.background = data.background
+    this.statement = data.statement
+    this.inputStatement = data.inputStatement
+    this.outputStatement = data.outputStatement
+    this.rangeAndHint = data.rangeAndHint
+    this.source = data.source
+  }
+}
+
 export class ProblemBaseInfo {
   title: string
   source: string

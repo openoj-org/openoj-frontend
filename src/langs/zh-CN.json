@@ -113,5 +113,6 @@
   "data": "数据",
   "problemType": "题目类型",
   "traditionalType": "传统型",
-  "unitDescription": "{{value}}（单位：{{unit}}）"
+  "unitDescription": "{{value}}（单位：{{unit}}）",
+  "dataFile": "数据文件"
 }

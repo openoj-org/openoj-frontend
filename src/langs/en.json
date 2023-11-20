@@ -113,5 +113,6 @@
   "data": "Data",
   "problemType": "Problem Type",
   "traditionalType": "Traditional Type",
-  "unitDescription": "{{value}} (Unit: {{unit}})"
+  "unitDescription": "{{value}} (Unit: {{unit}})",
+  "dataFile": "Data File"
 }
