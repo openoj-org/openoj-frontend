@@ -8,7 +8,7 @@ import { Files, Postcard, PriceTag } from '@element-plus/icons-vue'
 import FormTable from '../FormTable.vue'
 import { usePreferencesStore } from '@/stores/preferences'
 import { useLoginInfoStore } from '@/stores/loginInfo'
-import type { ColumnMeta } from '@/script/types'
+import { ProblemListInfo, type ColumnMeta } from '@/script/types'
 
 const loginInfo = useLoginInfoStore()
 const preferences = usePreferencesStore()
@@ -36,17 +36,6 @@ const searchMeta = [
     : []
 )
 
-interface Problem {
-  id: string
-  title: string
-  source: string
-  submit: number
-  pass: number
-  score?: number
-  grade?: number
-  tags?: string[]
-}
-
 const columnMeta = (
   (loginInfo.login ? [{ name: 'score', sortable: false, type: 'score' }] : []) as ColumnMeta[]
 )
@@ -66,7 +55,7 @@ const columnMeta = (
       : []
   )
 
-const tableData: Ref<Problem[]> = ref([])
+const tableData: Ref<ProblemListInfo[]> = ref([])
 
 const getTable = (tableMeta: { [index: string]: any }) => {
   // show loading page first
@@ -82,7 +71,7 @@ const getTable = (tableMeta: { [index: string]: any }) => {
         ElMessage.error(result.data.message)
       } else {
         count.value = result.data.count
-        tableData.value = result.data.result
+        tableData.value = ProblemListInfo.list(result.data.result)
         loaded.value = true
       }
     })
