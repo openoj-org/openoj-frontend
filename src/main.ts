@@ -10,6 +10,7 @@ import I18NextVue from 'i18next-vue'
 import LanguageDetector from 'i18next-browser-languagedetector'
 import App from './App.vue'
 import router from './router'
+import 'katex/dist/katex.min.css'
 
 import en from './langs/en.json'
 import zh_CN from './langs/zh-CN.json'
