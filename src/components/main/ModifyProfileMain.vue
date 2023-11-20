@@ -9,6 +9,7 @@ import { timeDeltaIntToString } from '@/script/transform'
 import { useSetItem } from '@/stores/local'
 import router from '@/router'
 import sha512 from 'crypto-js/sha512'
+import DenyDialog from '../DenyDialog.vue'
 
 const loginInfo = useLoginInfoStore()
 const dialogVisible = ref(false)
@@ -296,24 +297,9 @@ function changeSignature() {
 </script>
 
 <template>
-  <el-dialog v-model="dialogVisible" :title="$t('tips')" width="30%" :show-close="false">
-    <span>{{ $t('notLoginHint') }}</span>
-    <template #footer>
-      <span class="dialog-footer">
-        <el-button
-          type="primary"
-          @click="
-            () => {
-              dialogVisible = false
-              $router.push('/')
-            }
-          "
-        >
-          {{ $t('confirm') }}
-        </el-button>
-      </span>
-    </template>
-  </el-dialog>
+  <DenyDialog :visible="dialogVisible">
+    {{ $t('notLoginHint') }}
+  </DenyDialog>
   <div class="form-box">
     <el-skeleton :rows="5" animated v-if="!loaded" />
     <div v-if="loaded && loginInfo.login">

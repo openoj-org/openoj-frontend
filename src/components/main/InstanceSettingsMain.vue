@@ -6,7 +6,7 @@ import { t } from 'i18next'
 import { nextTick, reactive, ref, type Ref } from 'vue'
 import { useRouter } from 'vue-router'
 import sha512 from 'crypto-js/sha512'
-import { result } from 'lodash'
+import DenyDialog from '../DenyDialog.vue'
 
 const router = useRouter()
 const loginInfo = useLoginInfoStore()
@@ -249,24 +249,9 @@ async function batchRegister(formEl: FormInstance | undefined) {
 }
 </script>
 <template>
-  <el-dialog v-model="dialogVisible" :title="$t('tips')" width="30%" :show-close="false">
-    <span>{{ $t('onlyRootCanManageInstanceHint') }}</span>
-    <template #footer>
-      <span class="dialog-footer">
-        <el-button
-          type="primary"
-          @click="
-            () => {
-              dialogVisible = false
-              $router.push('/')
-            }
-          "
-        >
-          {{ $t('confirm') }}
-        </el-button>
-      </span>
-    </template>
-  </el-dialog>
+  <DenyDialog :visible="dialogVisible">
+    {{ $t('onlyRootCanManageInstanceHint') }}
+  </DenyDialog>
   <div class="box">
     <el-skeleton :rows="5" animated v-if="!loaded" />
     <div v-else>

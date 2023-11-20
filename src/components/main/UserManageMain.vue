@@ -7,6 +7,7 @@ import { useLoginInfoStore } from '@/stores/loginInfo'
 import { characterTranslate } from '@/script/transform'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { useRouter } from 'vue-router'
+import DenyDialog from '../DenyDialog.vue'
 
 const router = useRouter()
 const loginInfo = useLoginInfoStore()
@@ -235,24 +236,9 @@ function unsetManager() {
 </script>
 
 <template>
-  <el-dialog v-model="dialogVisible" :title="$t('tips')" width="30%" :show-close="false">
-    <span>{{ $t('onlyManagerCanManageHint') }}</span>
-    <template #footer>
-      <span class="dialog-footer">
-        <el-button
-          type="primary"
-          @click="
-            () => {
-              dialogVisible = false
-              $router.push('/')
-            }
-          "
-        >
-          {{ $t('confirm') }}
-        </el-button>
-      </span>
-    </template>
-  </el-dialog>
+  <DenyDialog :visible="dialogVisible">
+    {{ $t('onlyManagerCanManageHint') }}
+  </DenyDialog>
   <div class="box">
     <el-skeleton :rows="5" animated v-if="!loaded" />
     <el-descriptions :title="$t('userInfo')" v-if="loaded">
