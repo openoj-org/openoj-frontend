@@ -12,11 +12,9 @@ import {
   ElTable,
   ElTableColumn
 } from 'element-plus'
-import { useRouter } from 'vue-router'
 import SemiText from './semiText/SemiText.vue'
 import type { ColumnMeta } from '@/script/types'
 
-const router = useRouter()
 const eachpageCount = 10
 
 const props = defineProps<{
@@ -77,10 +75,6 @@ function sortChange(arg: any) {
     getTable()
   }
 }
-
-function rowClick(row: any) {
-  router.push(`/${props.title}/${toRaw(row).id}`)
-}
 </script>
 
 <template>
@@ -107,12 +101,7 @@ function rowClick(row: any) {
     </ElForm>
     <el-skeleton :rows="5" animated v-if="!loaded" />
     <div v-show="loaded">
-      <ElTable
-        :data="tableData"
-        style="width: 100%"
-        @sort-change="sortChange"
-        @row-click="rowClick"
-      >
+      <ElTable :data="tableData" style="width: 100%" @sort-change="sortChange">
         <ElTableColumn
           v-for="column in columnMeta"
           :key="column.name"
@@ -121,7 +110,11 @@ function rowClick(row: any) {
           :sortable="column.sortable ? 'custom' : false"
         >
           <template #default="scope">
-            <SemiText :type="column.type" :value="scope.row[column.name]" />
+            <SemiText
+              :type="column.type"
+              :value="scope.row[column.name]"
+              :link="`/${props.title}/${scope.row.id}`"
+            />
           </template>
         </ElTableColumn>
       </ElTable>

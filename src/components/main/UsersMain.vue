@@ -39,7 +39,7 @@ interface User {
 
 const columnMeta: ColumnMeta[] = [
   { name: 'id', sortable: true },
-  { name: 'username', sortable: true },
+  { name: 'username', sortable: true, type: 'link' },
   { name: 'character', sortable: true },
   { name: 'signature', sortable: false },
   { name: 'registerTime', sortable: true },
