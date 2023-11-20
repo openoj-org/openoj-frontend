@@ -1,26 +1,29 @@
 <script setup lang="ts">
 import { useLoginInfoStore } from '@/stores/loginInfo'
-import { reactive, ref, type Ref } from 'vue'
+import { ref } from 'vue'
 import DenyDialog from '../DenyDialog.vue'
-import { ProblemInfoInput } from '@/script/types'
-import { useRequestGet } from '@/script/service'
-import { useRoute } from 'vue-router'
+import { ProblemInfoInput, ProblemInfoQuery } from '@/script/types'
+import { useRequestGet, useRequestPost, useRequestDangerousAction } from '@/script/service'
+import { useRoute, useRouter } from 'vue-router'
 import { usePreferencesStore } from '@/stores/preferences'
 import { t } from 'i18next'
-import type { FormInstance, FormRules } from 'element-plus'
 import {
+  type FormInstance,
+  ElButton,
   ElOption,
-  ElDescriptions,
   ElMessage,
   ElForm,
   ElFormItem,
   ElInput,
-  ElSelect
+  ElSelect,
+  ElDivider,
+  ElMessageBox
 } from 'element-plus'
 import { MdEditor } from 'md-editor-v3'
 import i18next from 'i18next'
 
 const route = useRoute()
+const router = useRouter()
 const loginInfo = useLoginInfoStore()
 const preferences = usePreferencesStore()
 const dialogVisible = ref(false)
@@ -56,6 +59,19 @@ useRequestGet(
     console.log(error)
     ElMessage.error(t('unknownError'))
   })
+
+function changeMeta() {
+  let query: { [index: string]: any } = new ProblemInfoQuery(form.value)
+  query.cookie = loginInfo.cookie
+  query.id = route.params.id
+  useRequestDangerousAction(
+    '/problem/change-meta',
+    query,
+    t('modifySomething', { value: t('metaData') }),
+    router,
+    `/problem/${route.params.id}`
+  )
+}
 </script>
 
 <template>
@@ -126,6 +142,10 @@ useRequestGet(
       v-model="form.rangeAndHint"
       :language="i18next.language"
     ></MdEditor>
+    <ElButton style="margin-top: 24px" type="danger" @click="changeMeta">{{
+      $t('modifySomething', { value: $t('metaData') })
+    }}</ElButton>
+    <ElDivider />
     <h3>{{ $t('dataFile') }}</h3>
   </div>
 </template>
