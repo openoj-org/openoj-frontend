@@ -35,6 +35,7 @@
   "canNotBeEmpty": "{{value}} can not be empty",
   "passwordNotMatch": "The two passwords entered do not match",
   "somethingSuccess": "{{value}} success",
+  "somethingFailed": "{{value}} failed",
   "forgetPassword": "Forget Password",
   "newPassword": "New Password",
   "repeatNewPassword": "Repeat New Password",
@@ -89,5 +90,18 @@
   "passRate": "Passing Rate",
   "timeLimit": "Time Limit",
   "memoryLimit": "Memory Limit",
-  "submitCount": "Number of Submissions"
+  "submitCount": "Submissions",
+  "problemBackground": "Problem Background",
+  "problemStatement": "Problem Description",
+  "inputStatement": "Input Format Description",
+  "outputStatement": "Output Format Description",
+  "rangeAndHint": "Data Range and Hint",
+  "fileName": "File Name",
+  "sample": "Sample",
+  "sampleWithId": "Sample #{{id}}",
+  "sampleInputWithId": "Sample Input #{{id}}",
+  "sampleOutputWithId": "Sample Output #{{id}}",
+  "sampleHideHint": "See <code>{{input}}</code> and <code>{{output}}</code> under attached files.",
+  "copy": "Copy",
+  "copySomething": "Copy {{value}}"
 }
