@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { markdown } from '@/script/markdown'
-import { ElText } from 'element-plus'
+import { MdPreview } from 'md-editor-v3'
 defineProps<{
   value: any
+  id: any
 }>()
 </script>
 
 <template>
-  <ElText><span v-html="markdown(value)"></span></ElText>
+  <MdPreview :editor-id="id" :model-value="value"></MdPreview>
 </template>

@@ -21,7 +21,7 @@ clipboard.on('error', () => {
 </script>
 
 <template>
-  <ElDescriptions :title="$t('sampleWithId', { id: id })" />
+  <h3>{{ $t('sampleWithId', { id: id }) }}</h3>
   <ElRow style="margin-top: 0" v-if="value.display" :gutter="60">
     <ElCol :span="12">
       <ElDescriptions :title="$t('sampleInputWithId', { id: id })" size="small">

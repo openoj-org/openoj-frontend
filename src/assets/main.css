@@ -6,11 +6,6 @@ body {
   text-align: center;
 }
 
-p {
-  margin-block-start: 0;
-  margin-block-end: 0;
-}
-
 @font-face {
   font-family: UbuntuMono;
   src: url(/UbuntuMono.ttf);

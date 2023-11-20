@@ -126,21 +126,20 @@ useRequestGet(
 
 <template>
   <ElRow v-if="loaded">
-    <ElCol :span="17" style="padding-right: 120px">
+    <ElCol :span="17" style="padding-right: 60px">
       <div class="box">
         <div v-for="item in problemStatementMeta" :key="item.name">
           <div
-            style="margin-bottom: 24px"
             v-if="
               problemInfo[item.name] != undefined &&
               problemInfo[item.name] != '' &&
               item.suffix != true
             "
           >
-            <ElDescriptions :title="$t(item.showName == undefined ? item.name : item.showName)" />
-            <div style="margin-top: 0">
-              <MarkdownText :value="problemInfo[item.name]" />
-            </div>
+            <h3 style="margin-block-end: 0">
+              {{ $t(item.showName == undefined ? item.name : item.showName) }}
+            </h3>
+            <MarkdownText :id="item.name" :value="problemInfo[item.name]" />
           </div>
         </div>
         <div
@@ -152,17 +151,16 @@ useRequestGet(
         </div>
         <div v-for="item in problemStatementMeta" :key="item.name">
           <div
-            style="margin-bottom: 24px"
             v-if="
               problemInfo[item.name] != undefined &&
               problemInfo[item.name] != '' &&
               item.suffix == true
             "
           >
-            <ElDescriptions :title="$t(item.showName == undefined ? item.name : item.showName)" />
-            <div style="margin-top: 0">
-              <MarkdownText :value="problemInfo[item.name]" />
-            </div>
+            <h3 style="margin-block-end: 0">
+              {{ $t(item.showName == undefined ? item.name : item.showName) }}
+            </h3>
+            <MarkdownText :id="item.name" :value="problemInfo[item.name]" />
           </div>
         </div>
       </div>
@@ -178,7 +176,7 @@ useRequestGet(
                   :icon="Edit"
                   v-if="loginInfo.login && loginInfo.character <= 1"
                   @click="$router.push(`/problem/${$route.params.id}/modify`)"
-                  >{{ $t('modifySomething', { value: $t('problem') }) }}</ElButton
+                  >{{ $t('modify') }}</ElButton
                 >
               </template>
               <ElDescriptionsItem
