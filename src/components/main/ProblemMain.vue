@@ -136,9 +136,9 @@ useRequestGet(
               item.suffix != true
             "
           >
-            <h3 style="margin-block-end: 0">
+            <h4 style="margin-block-end: 0">
               {{ $t(item.showName == undefined ? item.name : item.showName) }}
-            </h3>
+            </h4>
             <MarkdownText :id="item.name" :value="problemInfo[item.name]" />
           </div>
         </div>
@@ -157,9 +157,9 @@ useRequestGet(
               item.suffix == true
             "
           >
-            <h3 style="margin-block-end: 0">
+            <h4 style="margin-block-end: 0">
               {{ $t(item.showName == undefined ? item.name : item.showName) }}
-            </h3>
+            </h4>
             <MarkdownText :id="item.name" :value="problemInfo[item.name]" />
           </div>
         </div>

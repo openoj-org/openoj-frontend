@@ -11,7 +11,7 @@ import LanguageDetector from 'i18next-browser-languagedetector'
 import App from './App.vue'
 import router from './router'
 import 'md-editor-v3/lib/style.css'
-import 'md-editor-v3/lib/preview.css'
+import '@/assets/markdown.css'
 
 import en from './langs/en.json'
 import zh_CN from './langs/zh-CN.json'
