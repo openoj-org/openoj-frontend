@@ -4,7 +4,7 @@ import { ref } from 'vue'
 import DenyDialog from '../DenyDialog.vue'
 import { ProblemInfoInput, ProblemInfoQuery } from '@/script/types'
 import { useRequestGet, useRequestDangerousAction } from '@/script/service'
-import { useRoute, useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
 import { usePreferencesStore } from '@/stores/preferences'
 import { t } from 'i18next'
 import {
@@ -16,13 +16,16 @@ import {
   ElFormItem,
   ElInput,
   ElSelect,
-  ElDivider
+  ElDivider,
+  ElUpload
 } from 'element-plus'
 import { MdEditor } from 'md-editor-v3'
 import i18next from 'i18next'
+import { genFileId } from 'element-plus'
+import type { UploadInstance, UploadProps, UploadRawFile, UploadRequestHandler } from 'element-plus'
+import { Upload } from '@element-plus/icons-vue'
 
 const route = useRoute()
-const router = useRouter()
 const loginInfo = useLoginInfoStore()
 const preferences = usePreferencesStore()
 const dialogVisible = ref(false)
@@ -66,10 +69,34 @@ function changeMeta() {
   useRequestDangerousAction(
     '/problem/change-meta',
     query,
-    t('modifySomething', { value: t('metaData') }),
-    router,
-    `/problem/${route.params.id}`
+    t('modifySomething', { value: t('metaData') })
   )
+}
+
+const upload = ref<UploadInstance>()
+
+const handleExceed: UploadProps['onExceed'] = (files) => {
+  upload.value!.clearFiles()
+  const file = files[0] as UploadRawFile
+  file.uid = genFileId()
+  upload.value!.handleStart(file)
+}
+
+const submitUpload = () => {
+  upload.value!.submit()
+}
+
+const test: UploadRequestHandler = (options: any) => {
+  const formData = new FormData()
+  formData.append('cookie', loginInfo.cookie)
+  formData.append('id', route.params.id as string)
+  formData.append('data', options.file)
+  useRequestDangerousAction(
+    '/problem/change-data',
+    formData,
+    t('modifySomething', { value: t('dataFile') })
+  )
+  return {} as any
 }
 </script>
 
@@ -146,6 +173,23 @@ function changeMeta() {
     }}</ElButton>
     <ElDivider />
     <h3>{{ $t('dataFile') }}</h3>
+    <ElUpload
+      ref="upload"
+      :limit="1"
+      :on-exceed="handleExceed"
+      :auto-upload="false"
+      :http-request="test"
+    >
+      <template #trigger>
+        <ElButton type="primary">{{ $t('selectFile') }}</ElButton>
+      </template>
+      <ElButton style="margin-left: 12px" type="danger" :icon="Upload" @click="submitUpload">
+        {{ $t('uploadFile') }}
+      </ElButton>
+      <template #tip>
+        <div class="el-upload__tip">{{ $t('dataFileUploadHint') }}</div>
+      </template>
+    </ElUpload>
   </div>
 </template>
 

@@ -37,8 +37,8 @@ export function useRequestDangerousAction(
   url: string,
   query: object,
   actionName: string,
-  router: Router,
-  link: string
+  router?: Router,
+  link?: string
 ) {
   ElMessageBox.confirm(
     t('dangerousAction', {
@@ -60,7 +60,7 @@ export function useRequestDangerousAction(
                 value: actionName
               })
             )
-            router.push(link)
+            if (router != undefined) router.push(link!)
           } else ElMessage.error(result.data.message)
         })
         .catch((error) => {

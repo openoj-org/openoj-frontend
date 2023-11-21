@@ -114,5 +114,8 @@
   "problemType": "题目类型",
   "traditionalType": "传统型",
   "unitDescription": "{{value}}（单位：{{unit}}）",
-  "dataFile": "数据文件"
+  "dataFile": "数据文件",
+  "dataFileUploadHint": "数据文件格式请参考这里。上传的数据文件将会覆盖原文件。",
+  "selectFile": "选择文件",
+  "uploadFile": "上传文件"
 }
