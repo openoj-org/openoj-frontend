@@ -14,6 +14,7 @@ import UserManageView from '@/views/UserManageView.vue'
 import InstanceSettingsView from '@/views/InstanceSettingsView.vue'
 import ProblemView from '@/views/ProblemView.vue'
 import ProblemModifyView from '@/views/ProblemModifyView.vue'
+import ProblemsetCreateView from '@/views/ProblemsetCreateView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -42,6 +43,11 @@ const router = createRouter({
       path: '/problemset',
       name: 'problemset',
       component: ProblemsetView
+    },
+    {
+      path: '/problemset/create',
+      name: 'problemset-create',
+      component: ProblemsetCreateView
     },
     {
       path: '/problem/:id',

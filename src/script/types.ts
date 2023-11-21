@@ -32,6 +32,14 @@ export class ProblemInfoInput {
   }
 }
 
+export class ProblemInfoCreateInput extends ProblemInfoInput {
+  id: number
+  constructor(data: any) {
+    super(data)
+    this.id = 0
+  }
+}
+
 export class ProblemInfoQuery {
   title: string
   titleEn: string
@@ -56,6 +64,14 @@ export class ProblemInfoQuery {
     this.outputStatement = data.outputStatement
     this.rangeAndHint = data.rangeAndHint
     this.source = data.source
+  }
+}
+
+export class ProblemInfoCreateQuery extends ProblemInfoQuery {
+  id: number
+  constructor(data: ProblemInfoCreateInput) {
+    super(data)
+    this.id = data.id
   }
 }
 

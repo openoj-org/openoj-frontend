@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { type Ref } from 'vue'
 import { ref } from 'vue'
-import { ElMessage } from 'element-plus'
+import { ElButton, ElMessage } from 'element-plus'
 import { useRequestGet } from '@/script/service'
 import { t } from 'i18next'
-import { Files, Postcard, PriceTag } from '@element-plus/icons-vue'
+import { Files, Plus, Postcard, PriceTag } from '@element-plus/icons-vue'
 import FormTable from '../FormTable.vue'
 import { usePreferencesStore } from '@/stores/preferences'
 import { useLoginInfoStore } from '@/stores/loginInfo'
@@ -96,4 +96,12 @@ const getTable = (tableMeta: { [index: string]: any }) => {
       }
     "
   ></FormTable>
+  <ElButton
+    style="margin-top: 12px"
+    type="danger"
+    :icon="Plus"
+    v-if="loginInfo.login && loginInfo.character <= 1"
+    @click="$router.push('/problemset/create')"
+    >{{ $t('createSomething', { value: $t('problem') }) }}</ElButton
+  >
 </template>
