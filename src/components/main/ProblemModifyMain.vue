@@ -170,31 +170,31 @@ const problemFileUpload: UploadRequestHandler = (options: any) => {
             <ElInput v-model="form.source"></ElInput>
           </ElFormItem>
         </ElForm>
-        <h3>{{ $t('problemBackground') }}</h3>
+        <h4>{{ $t('problemBackground') }}</h4>
         <MdEditor
           editor-id="background"
           v-model="form.background"
           :language="i18next.language"
         ></MdEditor>
-        <h3>{{ $t('problemStatement') }}</h3>
+        <h4>{{ $t('problemStatement') }}</h4>
         <MdEditor
           editor-id="statement"
           v-model="form.statement"
           :language="i18next.language"
         ></MdEditor>
-        <h3>{{ $t('inputStatement') }}</h3>
+        <h4>{{ $t('inputStatement') }}</h4>
         <MdEditor
           editor-id="inputStatement"
           v-model="form.inputStatement"
           :language="i18next.language"
         ></MdEditor>
-        <h3>{{ $t('outputStatement') }}</h3>
+        <h4>{{ $t('outputStatement') }}</h4>
         <MdEditor
           editor-id="outputStatement"
           v-model="form.outputStatement"
           :language="i18next.language"
         ></MdEditor>
-        <h3>{{ $t('rangeAndHint') }}</h3>
+        <h4>{{ $t('rangeAndHint') }}</h4>
         <MdEditor
           editor-id="rangeAndHint"
           v-model="form.rangeAndHint"
@@ -204,7 +204,7 @@ const problemFileUpload: UploadRequestHandler = (options: any) => {
           $t('modifySomething', { value: $t('metaData') })
         }}</ElButton>
         <ElDivider />
-        <h3>{{ $t('dataFile') }}</h3>
+        <h4>{{ $t('dataFile') }}</h4>
         <ElUpload
           ref="dataFile"
           :limit="1"
@@ -226,7 +226,7 @@ const problemFileUpload: UploadRequestHandler = (options: any) => {
         </ElUpload>
       </ElTabPane>
       <ElTabPane :label="$t('problemFileMode')" name="file">
-        <h3>{{ $t('problemFile') }}</h3>
+        <h4>{{ $t('problemFile') }}</h4>
         <ElUpload
           ref="problemFile"
           :limit="1"
