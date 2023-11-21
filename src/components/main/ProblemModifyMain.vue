@@ -187,7 +187,9 @@ const test: UploadRequestHandler = (options: any) => {
         {{ $t('uploadFile') }}
       </ElButton>
       <template #tip>
-        <div class="el-upload__tip">{{ $t('dataFileUploadHint') }}</div>
+        <div class="el-upload__tip">
+          {{ $t('dataFileOverwriteHint') }}
+        </div>
       </template>
     </ElUpload>
   </div>
