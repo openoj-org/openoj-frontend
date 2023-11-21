@@ -50,7 +50,7 @@ export class ProblemInfoQuery {
     this.type = data.type
     this.timeLimit = data.timeLimit
     this.memoryLimit = data.memoryLimit
-    if (data.background != undefined) this.background = data.background
+    if (data.background != '') this.background = data.background
     this.statement = data.statement
     this.inputStatement = data.inputStatement
     this.outputStatement = data.outputStatement
