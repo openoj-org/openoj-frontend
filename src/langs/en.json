@@ -117,5 +117,7 @@
   "dataFile": "Data File",
   "dataFileUploadHint": "Please refer to here for the data file format. The uploaded data file will overwrite the original file.",
   "selectFile": "Select File",
-  "uploadFile": "Upload File"
+  "uploadFile": "Upload File",
+  "delete": "Delete",
+  "deleteSomething": "Delete {{value}}"
 }

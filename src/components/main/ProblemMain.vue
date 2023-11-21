@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useRequestDownload, useRequestGet } from '@/script/service'
+import { useRequestDangerousAction, useRequestDownload, useRequestGet } from '@/script/service'
 import { useLoginInfoStore } from '@/stores/loginInfo'
 import { usePreferencesStore } from '@/stores/preferences'
 import {
@@ -13,14 +13,15 @@ import {
 } from 'element-plus'
 import { t } from 'i18next'
 import { ref, type Ref } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import SemiText from '../semiText/SemiText.vue'
 import { ProblemInfo } from '@/script/types'
 import MarkdownText from '../MarkdownText.vue'
 import SampleView from '../SampleView.vue'
-import { ChatLineRound, Cpu, Download, Edit, Promotion } from '@element-plus/icons-vue'
+import { ChatLineRound, Cpu, Delete, Download, Edit, Promotion } from '@element-plus/icons-vue'
 
 const route = useRoute()
+const router = useRouter()
 const loginInfo = useLoginInfoStore()
 const preferences = usePreferencesStore()
 
@@ -122,6 +123,19 @@ useRequestGet(
     console.log(error)
     ElMessage.error(t('unknownError'))
   })
+
+function deleteProblem() {
+  useRequestDangerousAction(
+    '/problem/delete',
+    {
+      cookie: loginInfo.cookie,
+      id: route.params.id
+    },
+    t('deleteSomething', { value: t('problem') }),
+    router,
+    '/problemset'
+  )
+}
 </script>
 
 <template>
@@ -177,6 +191,13 @@ useRequestGet(
                   v-if="loginInfo.login && loginInfo.character <= 1"
                   @click="$router.push(`/problem/${$route.params.id}/modify`)"
                   >{{ $t('modify') }}</ElButton
+                >
+                <ElButton
+                  type="danger"
+                  :icon="Delete"
+                  v-if="loginInfo.login && loginInfo.character <= 0"
+                  @click="deleteProblem"
+                  >{{ $t('delete') }}</ElButton
                 >
               </template>
               <ElDescriptionsItem
