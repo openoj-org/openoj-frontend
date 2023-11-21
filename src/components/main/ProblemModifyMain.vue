@@ -17,7 +17,9 @@ import {
   ElInput,
   ElSelect,
   ElDivider,
-  ElUpload
+  ElUpload,
+  ElTabs,
+  ElTabPane
 } from 'element-plus'
 import { MdEditor } from 'md-editor-v3'
 import i18next from 'i18next'
@@ -39,6 +41,8 @@ const problemTypeOptions = [
 ]
 
 const loaded = ref(false)
+
+const activeName = ref('regular')
 
 const formRef = ref<FormInstance>()
 const form = ref(new ProblemInfoInput({}))
@@ -73,20 +77,20 @@ function changeMeta() {
   )
 }
 
-const upload = ref<UploadInstance>()
+const dataFile = ref<UploadInstance>()
 
-const handleExceed: UploadProps['onExceed'] = (files) => {
-  upload.value!.clearFiles()
+const dataFileHandleExceed: UploadProps['onExceed'] = (files) => {
+  dataFile.value!.clearFiles()
   const file = files[0] as UploadRawFile
   file.uid = genFileId()
-  upload.value!.handleStart(file)
+  dataFile.value!.handleStart(file)
 }
 
-const submitUpload = () => {
-  upload.value!.submit()
+const dataFileSubmit = () => {
+  dataFile.value!.submit()
 }
 
-const test: UploadRequestHandler = (options: any) => {
+const dataFileUpload: UploadRequestHandler = (options: any) => {
   const formData = new FormData()
   formData.append('cookie', loginInfo.cookie)
   formData.append('id', route.params.id as string)
@@ -98,6 +102,32 @@ const test: UploadRequestHandler = (options: any) => {
   )
   return {} as any
 }
+
+const problemFile = ref<UploadInstance>()
+
+const problemFileHandleExceed: UploadProps['onExceed'] = (files) => {
+  problemFile.value!.clearFiles()
+  const file = files[0] as UploadRawFile
+  file.uid = genFileId()
+  problemFile.value!.handleStart(file)
+}
+
+const problemFileSubmit = () => {
+  problemFile.value!.submit()
+}
+
+const problemFileUpload: UploadRequestHandler = (options: any) => {
+  const formData = new FormData()
+  formData.append('cookie', loginInfo.cookie)
+  formData.append('id', route.params.id as string)
+  formData.append('data', options.file)
+  useRequestDangerousAction(
+    '/problem/change-by-file',
+    formData,
+    t('modifySomething', { value: t('problemFile') })
+  )
+  return {} as any
+}
 </script>
 
 <template>
@@ -105,93 +135,124 @@ const test: UploadRequestHandler = (options: any) => {
     {{ $t('onlyManagerCanModifyProblemHint') }}
   </DenyDialog>
   <div class="box" v-if="loaded">
-    <ElForm :inline="true" ref="formRef" :model="form">
-      <ElFormItem :label="$t('title')" prop="title">
-        <ElInput v-model="form.title"></ElInput>
-      </ElFormItem>
-      <ElFormItem :label="$t('fileName')" prop="titleEn">
-        <ElInput v-model="form.titleEn"></ElInput>
-      </ElFormItem>
-      <ElFormItem :label="$t('problemType')" prop="type">
-        <ElSelect v-model="form.type">
-          <ElOption
-            v-for="option in problemTypeOptions"
-            :key="option.value"
-            :label="option.label"
-            :value="option.value"
-          ></ElOption>
-        </ElSelect>
-      </ElFormItem>
-      <ElFormItem
-        :label="$t('unitDescription', { value: $t('timeLimit'), unit: 'ms' })"
-        prop="timeLimit"
-      >
-        <ElInput type="number" v-model="form.timeLimit"></ElInput>
-      </ElFormItem>
-      <ElFormItem
-        :label="$t('unitDescription', { value: $t('memoryLimit'), unit: 'MB' })"
-        prop="memoryLimit"
-      >
-        <ElInput type="number" v-model="form.memoryLimit"></ElInput>
-      </ElFormItem>
-      <ElFormItem :label="$t('source')" prop="source">
-        <ElInput v-model="form.source"></ElInput>
-      </ElFormItem>
-    </ElForm>
-    <h3>{{ $t('problemBackground') }}</h3>
-    <MdEditor
-      editor-id="background"
-      v-model="form.background"
-      :language="i18next.language"
-    ></MdEditor>
-    <h3>{{ $t('problemStatement') }}</h3>
-    <MdEditor
-      editor-id="statement"
-      v-model="form.statement"
-      :language="i18next.language"
-    ></MdEditor>
-    <h3>{{ $t('inputStatement') }}</h3>
-    <MdEditor
-      editor-id="inputStatement"
-      v-model="form.inputStatement"
-      :language="i18next.language"
-    ></MdEditor>
-    <h3>{{ $t('outputStatement') }}</h3>
-    <MdEditor
-      editor-id="outputStatement"
-      v-model="form.outputStatement"
-      :language="i18next.language"
-    ></MdEditor>
-    <h3>{{ $t('rangeAndHint') }}</h3>
-    <MdEditor
-      editor-id="rangeAndHint"
-      v-model="form.rangeAndHint"
-      :language="i18next.language"
-    ></MdEditor>
-    <ElButton style="margin-top: 24px" type="danger" @click="changeMeta">{{
-      $t('modifySomething', { value: $t('metaData') })
-    }}</ElButton>
-    <ElDivider />
-    <h3>{{ $t('dataFile') }}</h3>
-    <ElUpload
-      ref="upload"
-      :limit="1"
-      :on-exceed="handleExceed"
-      :auto-upload="false"
-      :http-request="test"
-    >
-      <template #trigger>
-        <ElButton type="primary">{{ $t('selectFile') }}</ElButton>
-      </template>
-      <ElButton style="margin-left: 12px" type="danger" :icon="Upload" @click="submitUpload">
-        {{ $t('uploadFile') }}
-      </ElButton>
-      <template #tip>
-        <div class="el-upload__tip">
-          {{ $t('dataFileOverwriteHint') }}
-        </div>
-      </template>
-    </ElUpload>
+    <ElTabs v-model="activeName" type="card">
+      <ElTabPane style="margin-top: 20px" :label="$t('problemRegularMode')" name="regular">
+        <ElForm :inline="true" ref="formRef" :model="form">
+          <ElFormItem :label="$t('title')" prop="title">
+            <ElInput v-model="form.title"></ElInput>
+          </ElFormItem>
+          <ElFormItem :label="$t('fileName')" prop="titleEn">
+            <ElInput v-model="form.titleEn"></ElInput>
+          </ElFormItem>
+          <ElFormItem :label="$t('problemType')" prop="type">
+            <ElSelect v-model="form.type">
+              <ElOption
+                v-for="option in problemTypeOptions"
+                :key="option.value"
+                :label="option.label"
+                :value="option.value"
+              ></ElOption>
+            </ElSelect>
+          </ElFormItem>
+          <ElFormItem
+            :label="$t('unitDescription', { value: $t('timeLimit'), unit: 'ms' })"
+            prop="timeLimit"
+          >
+            <ElInput type="number" v-model="form.timeLimit"></ElInput>
+          </ElFormItem>
+          <ElFormItem
+            :label="$t('unitDescription', { value: $t('memoryLimit'), unit: 'MB' })"
+            prop="memoryLimit"
+          >
+            <ElInput type="number" v-model="form.memoryLimit"></ElInput>
+          </ElFormItem>
+          <ElFormItem :label="$t('source')" prop="source">
+            <ElInput v-model="form.source"></ElInput>
+          </ElFormItem>
+        </ElForm>
+        <h3>{{ $t('problemBackground') }}</h3>
+        <MdEditor
+          editor-id="background"
+          v-model="form.background"
+          :language="i18next.language"
+        ></MdEditor>
+        <h3>{{ $t('problemStatement') }}</h3>
+        <MdEditor
+          editor-id="statement"
+          v-model="form.statement"
+          :language="i18next.language"
+        ></MdEditor>
+        <h3>{{ $t('inputStatement') }}</h3>
+        <MdEditor
+          editor-id="inputStatement"
+          v-model="form.inputStatement"
+          :language="i18next.language"
+        ></MdEditor>
+        <h3>{{ $t('outputStatement') }}</h3>
+        <MdEditor
+          editor-id="outputStatement"
+          v-model="form.outputStatement"
+          :language="i18next.language"
+        ></MdEditor>
+        <h3>{{ $t('rangeAndHint') }}</h3>
+        <MdEditor
+          editor-id="rangeAndHint"
+          v-model="form.rangeAndHint"
+          :language="i18next.language"
+        ></MdEditor>
+        <ElButton style="margin-top: 24px" type="danger" @click="changeMeta">{{
+          $t('modifySomething', { value: $t('metaData') })
+        }}</ElButton>
+        <ElDivider />
+        <h3>{{ $t('dataFile') }}</h3>
+        <ElUpload
+          ref="dataFile"
+          :limit="1"
+          :on-exceed="dataFileHandleExceed"
+          :auto-upload="false"
+          :http-request="dataFileUpload"
+        >
+          <template #trigger>
+            <ElButton type="primary">{{ $t('selectFile') }}</ElButton>
+          </template>
+          <ElButton style="margin-left: 12px" type="danger" :icon="Upload" @click="dataFileSubmit">
+            {{ $t('uploadFile') }}
+          </ElButton>
+          <template #tip>
+            <div class="el-upload__tip">
+              {{ $t('dataFileOverwriteHint') }}
+            </div>
+          </template>
+        </ElUpload>
+      </ElTabPane>
+      <ElTabPane :label="$t('problemFileMode')" name="file">
+        <h3>{{ $t('problemFile') }}</h3>
+        <ElUpload
+          ref="problemFile"
+          :limit="1"
+          :on-exceed="problemFileHandleExceed"
+          :auto-upload="false"
+          :http-request="problemFileUpload"
+        >
+          <template #trigger>
+            <ElButton type="primary">{{ $t('selectFile') }}</ElButton>
+          </template>
+          <ElButton
+            style="margin-left: 12px"
+            type="danger"
+            :icon="Upload"
+            @click="problemFileSubmit"
+          >
+            {{ $t('uploadFile') }}
+          </ElButton>
+          <template #tip>
+            <div class="el-upload__tip">
+              {{ $t('problemFileOverwriteHint') }}
+            </div>
+          </template>
+        </ElUpload>
+      </ElTabPane>
+    </ElTabs>
   </div>
 </template>
 

@@ -35,7 +35,7 @@ useRequestGet(
 </script>
 
 <template>
-  <BaseView inside :title="$t('modifySomething', { value: $t('problem') })">
+  <BaseView :title="$t('modifySomething', { value: $t('problem') })">
     <template v-slot:breadcrumb>
       <ElBreadcrumb :separator-icon="ArrowRight" v-if="loaded">
         <ElBreadcrumbItem :to="{ path: '/problemset' }">

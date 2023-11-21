@@ -121,5 +121,7 @@
   "delete": "删除",
   "deleteSomething": "删除{{value}}",
   "problemRegularMode": "常规模式",
-  "problemFileMode": "文件模式"
+  "problemFileMode": "文件模式",
+  "problemFile": "题目文件",
+  "problemFileOverwriteHint": "上传的题目文件将会覆盖原文件。"
 }

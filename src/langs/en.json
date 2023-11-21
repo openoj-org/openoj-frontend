@@ -119,5 +119,7 @@
   "selectFile": "Select File",
   "uploadFile": "Upload File",
   "delete": "Delete",
-  "deleteSomething": "Delete {{value}}"
+  "deleteSomething": "Delete {{value}}",
+  "problemFile": "Problem File",
+  "problemFileOverwriteHint": "The uploaded problem file will overwrite the original file."
 }
