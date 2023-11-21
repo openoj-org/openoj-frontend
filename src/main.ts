@@ -49,6 +49,5 @@ const loginInfo = useLoginInfoStore()
 loginInfo.flush()
 const preferences = usePreferencesStore()
 preferences.flush()
-if (preferences.language != '') i18next.changeLanguage(preferences.language)
 
 app.mount('#app')
