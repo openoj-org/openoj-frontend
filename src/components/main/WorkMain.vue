@@ -182,27 +182,11 @@ function deleteWork() {
         </div>
       </div>
     </ElMain>
-    <ElAside style="width: 300px">
+    <ElAside style="width: 310px">
       <ElCard class="box-card">
         <template #header>
           <div class="card-header">
             <ElDescriptions :title="workInfo.title" :column="1">
-              <template #extra>
-                <ElButton
-                  type="danger"
-                  :icon="Edit"
-                  v-if="loginInfo.login && loginInfo.character <= 1"
-                  @click="$router.push(`/work/${$route.params.id}/modify`)"
-                  >{{ $t('modify') }}</ElButton
-                >
-                <ElButton
-                  type="danger"
-                  :icon="Delete"
-                  v-if="loginInfo.login && loginInfo.character <= 0"
-                  @click="deleteWork"
-                  >{{ $t('delete') }}</ElButton
-                >
-              </template>
               <ElDescriptionsItem
                 :label="$t(item.showName == undefined ? item.name : item.showName)"
                 v-for="item in workBaseMeta"
@@ -240,6 +224,24 @@ function deleteWork() {
                 )
               "
               >{{ $t('attach') }}</ElButton
+            >
+          </div>
+          <div>
+            <ElButton
+              style="margin-top: 12px"
+              type="danger"
+              :icon="Edit"
+              v-if="loginInfo.login && loginInfo.character <= 1"
+              @click="$router.push(`/work/${$route.params.id}/modify`)"
+              >{{ $t('modify') }}</ElButton
+            >
+            <ElButton
+              style="margin-top: 12px"
+              type="danger"
+              :icon="Delete"
+              v-if="loginInfo.login && loginInfo.character <= 0"
+              @click="deleteWork"
+              >{{ $t('delete') }}</ElButton
             >
           </div>
         </template>
