@@ -23,7 +23,7 @@ clipboard.on('error', () => {
 
 <template>
   <h4 style="margin-block-end: 0">{{ $t('sampleWithId', { id: id }) }}</h4>
-  <ElRow style="margin-top: 12px" v-if="value.display" :gutter="60">
+  <ElRow style="margin-top: 12px; max-width: 1000px" v-if="value.display" :gutter="60">
     <ElCol :span="12">
       <ElDescriptions :title="$t('sampleInputWithId', { id: id })" size="small">
         <template #extra>
