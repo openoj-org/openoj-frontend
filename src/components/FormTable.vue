@@ -125,6 +125,7 @@ function sortChange(arg: any) {
         :total="count"
       />
     </div>
+    <slot name="extra"></slot>
   </div>
 </template>
 
