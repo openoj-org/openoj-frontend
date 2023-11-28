@@ -3,13 +3,14 @@ import { useRequestDangerousAction, useRequestDownload, useRequestGet } from '@/
 import { useLoginInfoStore } from '@/stores/loginInfo'
 import { usePreferencesStore } from '@/stores/preferences'
 import {
+  ElAside,
   ElButton,
   ElCard,
-  ElCol,
+  ElContainer,
   ElDescriptions,
   ElDescriptionsItem,
-  ElMessage,
-  ElRow
+  ElMain,
+  ElMessage
 } from 'element-plus'
 import { t } from 'i18next'
 import { ref, type Ref } from 'vue'
@@ -139,8 +140,8 @@ function deleteProblem() {
 </script>
 
 <template>
-  <ElRow v-if="loaded">
-    <ElCol :span="17" style="padding-right: 60px">
+  <ElContainer v-if="loaded">
+    <ElMain style="padding-right: 60px">
       <div class="box">
         <div v-for="item in problemStatementMeta" :key="item.name">
           <div
@@ -178,8 +179,8 @@ function deleteProblem() {
           </div>
         </div>
       </div>
-    </ElCol>
-    <ElCol :span="7">
+    </ElMain>
+    <ElAside style="width: 300px">
       <ElCard class="box-card">
         <template #header>
           <div class="card-header">
@@ -243,8 +244,8 @@ function deleteProblem() {
           }}</ElButton>
         </div>
       </ElCard>
-    </ElCol>
-  </ElRow>
+    </ElAside>
+  </ElContainer>
 </template>
 
 <style scoped>
