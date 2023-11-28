@@ -128,5 +128,8 @@
   "author": "Author",
   "recommendation": "Recommendation",
   "recommendationCount": "Recommended Votes",
-  "workProblem": "Workshop Problem"
+  "workProblem": "Workshop Problem",
+  "import": "Import",
+  "importWorkToProblem": "Import Problem to Problemset",
+  "inputImportIdHint": "Please enter problemset ID you want to import to"
 }

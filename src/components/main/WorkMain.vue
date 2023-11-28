@@ -1,5 +1,10 @@
 <script setup lang="ts">
-import { useRequestDangerousAction, useRequestDownload, useRequestGet } from '@/script/service'
+import {
+  useRequestDangerousAction,
+  useRequestDownload,
+  useRequestGet,
+  useRequestPost
+} from '@/script/service'
 import { useLoginInfoStore } from '@/stores/loginInfo'
 import { usePreferencesStore } from '@/stores/preferences'
 import {
@@ -10,7 +15,8 @@ import {
   ElDescriptions,
   ElDescriptionsItem,
   ElMain,
-  ElMessage
+  ElMessage,
+  ElMessageBox
 } from 'element-plus'
 import { t } from 'i18next'
 import { ref, type Ref } from 'vue'
@@ -19,7 +25,15 @@ import SemiText from '../semiText/SemiText.vue'
 import { WorkInfo, type LinkBody } from '@/script/types'
 import MarkdownText from '../MarkdownText.vue'
 import SampleView from '../SampleView.vue'
-import { ChatLineRound, Cpu, Delete, Download, Edit, Promotion } from '@element-plus/icons-vue'
+import {
+  ArrowRight,
+  ChatLineRound,
+  Cpu,
+  Delete,
+  Download,
+  Edit,
+  Promotion
+} from '@element-plus/icons-vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -147,6 +161,29 @@ function deleteWork() {
     '/workshop'
   )
 }
+
+function importWork() {
+  ElMessageBox.prompt(t('inputImportIdHint'), t('tips'), {
+    confirmButtonText: t('confirm'),
+    cancelButtonText: t('cancel')
+  })
+    .then(({ value }) => {
+      useRequestDangerousAction(
+        '/workshop/import',
+        {
+          cookie: loginInfo.cookie,
+          sourceId: route.params.id,
+          targetId: value
+        },
+        t('import'),
+        router,
+        `/problem/${value}`
+      )
+    })
+    .catch(() => {
+      ElMessage.info(t('cancel'))
+    })
+}
 </script>
 
 <template>
@@ -227,6 +264,14 @@ function deleteWork() {
             >
           </div>
           <div>
+            <ElButton
+              style="margin-top: 12px"
+              type="danger"
+              :icon="ArrowRight"
+              v-if="loginInfo.login && loginInfo.character <= 1"
+              @click="importWork"
+              >{{ $t('import') }}
+            </ElButton>
             <ElButton
               style="margin-top: 12px"
               type="danger"

@@ -130,5 +130,8 @@
   "author": "作者",
   "recommendation": "推荐",
   "recommendationCount": "推荐票数",
-  "workProblem": "创意工坊题目"
+  "workProblem": "创意工坊题目",
+  "import": "导入",
+  "importWorkToProblem": "导入题目至官方题库",
+  "inputImportIdHint": "请输入想要导入到的官方题库ID"
 }
