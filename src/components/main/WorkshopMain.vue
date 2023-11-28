@@ -118,9 +118,9 @@ const getTable = (tableMeta: { [index: string]: any }) => {
     <template #extra>
       <ElButton
         style="margin-top: 12px"
-        type="primary"
+        type="danger"
         :icon="Plus"
-        v-if="loginInfo.login && loginInfo.character <= 1"
+        v-if="loginInfo.login"
         @click="$router.push('/workshop/create')"
         >{{ $t('createSomething', { value: $t('problem') }) }}</ElButton
       >
