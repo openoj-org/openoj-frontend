@@ -15,6 +15,7 @@ import InstanceSettingsView from '@/views/InstanceSettingsView.vue'
 import ProblemView from '@/views/ProblemView.vue'
 import ProblemModifyView from '@/views/ProblemModifyView.vue'
 import ProblemsetCreateView from '@/views/ProblemsetCreateView.vue'
+import WorkView from '@/views/WorkView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -63,6 +64,11 @@ const router = createRouter({
       path: '/workshop',
       name: 'workshop',
       component: WorkshopView
+    },
+    {
+      path: '/work/:id',
+      name: 'work',
+      component: WorkView
     },
     {
       path: '/submissions',

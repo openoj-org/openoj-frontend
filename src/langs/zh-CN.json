@@ -128,5 +128,6 @@
   "onlyManagerCanCreateProblemHint": "只有管理员及以上用户才能进行创建题目操作。",
   "author": "作者",
   "recommendation": "推荐",
-  "recommendationCount": "推荐票数"
+  "recommendationCount": "推荐票数",
+  "workProblem": "创意工坊题目"
 }

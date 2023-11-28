@@ -126,5 +126,6 @@
   "onlyManagerCanCreateProblemHint": "Only managers and above can create problem.",
   "author": "Author",
   "recommendation": "Recommendation",
-  "recommendationCount": "Recommended Votes"
+  "recommendationCount": "Recommended Votes",
+  "workProblem": "Workshop Problem"
 }
