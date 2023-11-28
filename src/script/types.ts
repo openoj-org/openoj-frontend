@@ -11,6 +11,7 @@ export interface ColumnMeta {
   linkbody?: LinkBody
 }
 
+// 修改官方题库题目的表单类型
 export class ProblemInfoInput {
   title: string
   titleEn: string
@@ -38,6 +39,9 @@ export class ProblemInfoInput {
   }
 }
 
+export class WorkInfoInput extends ProblemInfoInput {}
+
+// 创建官方题库题目的表单类型
 export class ProblemInfoCreateInput extends ProblemInfoInput {
   id: number
   constructor(data: any) {
@@ -46,6 +50,9 @@ export class ProblemInfoCreateInput extends ProblemInfoInput {
   }
 }
 
+export class WorkInfoCreateInput extends WorkInfoInput {}
+
+// 修改官方题库题目的请求参数类型
 export class ProblemInfoQuery {
   title: string
   titleEn: string
@@ -73,11 +80,24 @@ export class ProblemInfoQuery {
   }
 }
 
+export class WorkInfoQuery extends ProblemInfoQuery {
+  constructor(data: WorkInfoInput) {
+    super(data)
+  }
+}
+
+// 创建官方题库题目的请求参数类型
 export class ProblemInfoCreateQuery extends ProblemInfoQuery {
   id: number
   constructor(data: ProblemInfoCreateInput) {
     super(data)
     this.id = data.id
+  }
+}
+
+export class WorkInfoCreateQuery extends WorkInfoQuery {
+  constructor(data: WorkInfoCreateInput) {
+    super(data)
   }
 }
 
