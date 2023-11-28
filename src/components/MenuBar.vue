@@ -1,6 +1,11 @@
 <template>
   <div>
-    <el-menu router id="main-menu" class="el-menu-vertical-demo" :collapse="isCollapse.collapse">
+    <el-menu
+      router
+      id="main-menu"
+      class="el-menu-vertical-demo"
+      :collapse="preferences.menuCollapse"
+    >
       <el-menu-item index="/problemset">
         <el-icon><Collection /></el-icon>
         <template #title>{{ $t('problemSet') }}</template>
@@ -25,16 +30,16 @@
       id="extra-menu"
       default-active="2"
       class="el-menu-vertical-demo"
-      :collapse="isCollapse.collapse"
+      :collapse="preferences.menuCollapse"
       active-text-color="#303133"
     >
       <el-menu-item index="1" @click="switchCollapse">
         <el-icon>
-          <Expand v-if="isCollapse.collapse" />
+          <Expand v-if="preferences.menuCollapse" />
           <Fold v-else />
         </el-icon>
         <template #title>{{
-          isCollapse.collapse ? $t('menuExpand') : $t('menuCollapse')
+          preferences.menuCollapse ? $t('menuExpand') : $t('menuCollapse')
         }}</template>
       </el-menu-item>
     </el-menu>
@@ -51,11 +56,11 @@ import {
   MagicStick,
   User
 } from '@element-plus/icons-vue'
-import { useMenuCollapseStore } from '@/stores/menuCollapse'
+import { usePreferencesStore } from '@/stores/preferences'
 
-const isCollapse = useMenuCollapseStore()
+const preferences = usePreferencesStore()
 function switchCollapse() {
-  isCollapse.flip()
+  preferences.flip()
 }
 </script>
 
