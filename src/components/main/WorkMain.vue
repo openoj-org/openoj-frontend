@@ -142,7 +142,7 @@ function deleteWork() {
       cookie: loginInfo.cookie,
       id: route.params.id
     },
-    t('deleteSomething', { value: t('workProblem') }),
+    t('deleteSomething', { value: t('problem') }),
     router,
     '/workshop'
   )
