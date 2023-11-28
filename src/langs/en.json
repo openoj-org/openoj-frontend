@@ -123,5 +123,8 @@
   "problemFile": "Problem File",
   "problemFileOverwriteHint": "The uploaded problem file will overwrite the original file.",
   "createSomething": "Create {{value}}",
-  "onlyManagerCanCreateProblemHint": "Only managers and above can create problem."
+  "onlyManagerCanCreateProblemHint": "Only managers and above can create problem.",
+  "author": "Author",
+  "recommendation": "Recommendation",
+  "recommendationCount": "Recommended Votes"
 }

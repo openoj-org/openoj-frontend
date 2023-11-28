@@ -125,5 +125,8 @@
   "problemFile": "题目文件",
   "problemFileOverwriteHint": "上传的题目文件将会覆盖原文件。",
   "createSomething": "创建{{value}}",
-  "onlyManagerCanCreateProblemHint": "只有管理员及以上用户才能进行创建题目操作。"
+  "onlyManagerCanCreateProblemHint": "只有管理员及以上用户才能进行创建题目操作。",
+  "author": "作者",
+  "recommendation": "推荐",
+  "recommendationCount": "推荐票数"
 }
