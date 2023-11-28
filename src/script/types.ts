@@ -1,8 +1,14 @@
+interface LinkBody {
+  head: string
+  idName: string
+}
+
 export interface ColumnMeta {
   name: string
   showName?: string
   sortable: boolean
   type?: string
+  linkbody?: LinkBody
 }
 
 export class ProblemInfoInput {
@@ -94,6 +100,18 @@ export class ProblemBaseInfo {
   }
 }
 
+export class WorkBaseInfo extends ProblemBaseInfo {
+  userId: string
+  username: string
+  recommendation: number
+  constructor(data: any) {
+    super(data)
+    this.userId = data.userId == undefined ? '' : data.userId
+    this.username = data.username == undefined ? '' : data.username
+    this.recommendation = data.recommendation == undefined ? 0 : data.recommendation
+  }
+}
+
 export class ProblemListInfo extends ProblemBaseInfo {
   id: string
   constructor(data: any) {
@@ -103,6 +121,19 @@ export class ProblemListInfo extends ProblemBaseInfo {
   static list(data: any[]) {
     const result: ProblemListInfo[] = []
     for (let i = 0; i < data.length; i++) result.push(new ProblemListInfo(data[i]))
+    return result
+  }
+}
+
+export class WorkListInfo extends WorkBaseInfo {
+  id: string
+  constructor(data: any) {
+    super(data)
+    this.id = data.id == undefined ? '' : data.id
+  }
+  static list(data: any[]) {
+    const result: WorkListInfo[] = []
+    for (let i = 0; i < data.length; i++) result.push(new WorkListInfo(data[i]))
     return result
   }
 }

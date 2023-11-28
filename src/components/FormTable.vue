@@ -112,7 +112,13 @@ function sortChange(arg: any) {
             <SemiText
               :type="column.type"
               :value="scope.row[column.name]"
-              :link="`/${props.title}/${scope.row.id}`"
+              :link="
+                column.type == 'link'
+                  ? column.linkbody == undefined
+                    ? `/${props.title}/${scope.row.id}`
+                    : `/${column.linkbody.head}/${scope.row[column.linkbody.idName]}`
+                  : undefined
+              "
             />
           </template>
         </ElTableColumn>
