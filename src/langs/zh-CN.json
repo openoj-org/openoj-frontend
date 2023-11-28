@@ -109,6 +109,7 @@
   "problemsSomething": "题目{{value}}",
   "attach": "附加文件",
   "onlyManagerCanModifyProblemHint": "只有管理员及以上用户才能进行修改题目操作。",
+  "onlyAuthorCanModifyProblemHint": "只有题目作者才能进行修改题目操作。",
   "metaData": "元数据",
   "data": "数据",
   "problemType": "题目类型",

@@ -109,6 +109,7 @@
   "problemsSomething": "Problem {{value}}",
   "attach": "Attach File",
   "onlyManagerCanModifyProblemHint": "Only managers and above can modify problems.",
+  "onlyAuthorCanModifyProblemHint": "Only author can modify problems.",
   "metaData": "Metadata",
   "data": "Data",
   "problemType": "Problem Type",

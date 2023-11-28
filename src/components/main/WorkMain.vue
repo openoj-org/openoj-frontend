@@ -231,7 +231,7 @@ function deleteWork() {
               style="margin-top: 12px"
               type="danger"
               :icon="Edit"
-              v-if="loginInfo.login && loginInfo.character <= 1"
+              v-if="loginInfo.login && loginInfo.id == workInfo.userId"
               @click="$router.push(`/work/${$route.params.id}/modify`)"
               >{{ $t('modify') }}</ElButton
             >
