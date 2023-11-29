@@ -1,52 +1,4 @@
-<template>
-  <div>
-    <el-menu
-      router
-      id="main-menu"
-      class="el-menu-vertical-demo"
-      :collapse="preferences.menuCollapse"
-    >
-      <el-menu-item index="/problemset">
-        <el-icon><Collection /></el-icon>
-        <template #title>{{ $t('problemSet') }}</template>
-      </el-menu-item>
-      <el-menu-item index="/workshop">
-        <el-icon><MagicStick /></el-icon>
-        <template #title>{{ $t('workshop') }}</template>
-      </el-menu-item>
-      <el-menu-item index="/submissions">
-        <el-icon><Cpu /></el-icon>
-        <template #title>{{ $t('submissions') }}</template>
-      </el-menu-item>
-      <el-menu-item index="/users">
-        <el-icon><User /></el-icon>
-        <template #title>{{ $t('users') }}</template>
-      </el-menu-item>
-      <el-menu-item index="/forum">
-        <el-icon><ChatLineRound /></el-icon>
-        <template #title>{{ $t('forum') }}</template>
-      </el-menu-item> </el-menu
-    ><el-menu
-      id="extra-menu"
-      default-active="2"
-      class="el-menu-vertical-demo"
-      :collapse="preferences.menuCollapse"
-      active-text-color="#303133"
-    >
-      <el-menu-item index="1" @click="switchCollapse">
-        <el-icon>
-          <Expand v-if="preferences.menuCollapse" />
-          <Fold v-else />
-        </el-icon>
-        <template #title>{{
-          preferences.menuCollapse ? $t('menuExpand') : $t('menuCollapse')
-        }}</template>
-      </el-menu-item>
-    </el-menu>
-  </div>
-</template>
-
-<script lang="ts" setup>
+<script setup lang="ts">
 import {
   ChatLineRound,
   Collection,
@@ -57,6 +9,7 @@ import {
   User
 } from '@element-plus/icons-vue'
 import { usePreferencesStore } from '@/stores/preferences'
+import { ElIcon, ElMenu, ElMenuItem } from 'element-plus'
 
 const preferences = usePreferencesStore()
 function switchCollapse() {
@@ -64,9 +17,50 @@ function switchCollapse() {
 }
 </script>
 
+<template>
+  <div>
+    <ElMenu router id="main-menu" class="menu-bar" :collapse="preferences.menuCollapse">
+      <ElMenuItem index="/problemset">
+        <ElIcon><Collection /></ElIcon>
+        <template #title>{{ $t('problemSet') }}</template>
+      </ElMenuItem>
+      <ElMenuItem index="/workshop">
+        <ElIcon><MagicStick /></ElIcon>
+        <template #title>{{ $t('workshop') }}</template>
+      </ElMenuItem>
+      <ElMenuItem index="/submissions">
+        <ElIcon><Cpu /></ElIcon>
+        <template #title>{{ $t('submissions') }}</template>
+      </ElMenuItem>
+      <ElMenuItem index="/users">
+        <ElIcon><User /></ElIcon>
+        <template #title>{{ $t('users') }}</template>
+      </ElMenuItem>
+      <ElMenuItem index="/forum">
+        <ElIcon><ChatLineRound /></ElIcon>
+        <template #title>{{ $t('forum') }}</template>
+      </ElMenuItem>
+    </ElMenu>
+    <ElMenu id="extra-menu" class="menu-bar no-highlight" :collapse="preferences.menuCollapse">
+      <ElMenuItem index="1" @click="switchCollapse">
+        <ElIcon>
+          <Expand v-if="preferences.menuCollapse" />
+          <Fold v-else />
+        </ElIcon>
+        <template #title>{{
+          preferences.menuCollapse ? $t('menuExpand') : $t('menuCollapse')
+        }}</template>
+      </ElMenuItem>
+    </ElMenu>
+  </div>
+</template>
+
 <style>
-.el-menu-vertical-demo:not(.el-menu--collapse) {
+.menu-bar:not(.el-menu--collapse) {
   width: 200px;
+}
+.no-highlight > .el-menu-item.is-active {
+  color: var(--el-menu-text-color);
 }
 #main-menu {
   height: calc(100vh - 121.8px);
