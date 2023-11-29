@@ -6,7 +6,6 @@ import { ElMessage } from 'element-plus'
 import { t } from 'i18next'
 import type { FormInstance, FormRules } from 'element-plus'
 import { timeDeltaIntToString } from '@/script/transform'
-import { useSetItem } from '@/stores/local'
 import router from '@/router'
 import sha512 from 'crypto-js/sha512'
 import DenyDialog from '../DenyDialog.vue'
@@ -172,8 +171,7 @@ async function changeUsername(formEl: FormInstance | undefined) {
             ElMessage.error(result.data.message)
           } else {
             ElMessage.success(t('somethingSuccess', { value: t('modify') }))
-            useSetItem('username', newUsername)
-            loginInfo.flush()
+            loginInfo.username = newUsername
             router.push(`/user/${loginInfo.id}`)
           }
         })

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useGetItem, useSetItem } from '@/stores/local'
 import global from '@/assets/global.json'
 import { useRouter } from 'vue-router'
 import { ref } from 'vue'
@@ -12,7 +11,6 @@ const router = useRouter()
 const loginInfo = useLoginInfoStore()
 
 const loaded = ref(false)
-loginInfo.flush()
 loaded.value = true
 
 const toMain = () => {
@@ -21,18 +19,13 @@ const toMain = () => {
 const searchContent = ref('')
 
 function logout() {
-  useRequestPost('/user/logout', { cookie: useGetItem('cookie') })
+  useRequestPost('/user/logout', { cookie: loginInfo.cookie })
     .then((result) => {
       if (result.data.success == false) {
         ElMessage.error(result.data.message)
       } else {
         ElMessage.success(t('somethingSuccess', { value: t('logout') }))
-        useSetItem('login', null)
-        useSetItem('username', null)
-        useSetItem('character', null)
-        useSetItem('id', null)
-        useSetItem('cookie', null)
-        loginInfo.flush()
+        loginInfo.setLogout()
         router.push('/')
       }
     })
