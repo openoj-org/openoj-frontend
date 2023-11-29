@@ -13,7 +13,7 @@ import {
   ElTableColumn
 } from 'element-plus'
 import SemiText from './semiText/SemiText.vue'
-import type { ColumnMeta } from '@/script/types'
+import type { ColumnMeta } from '@/types/table'
 
 const eachpageCount = 10
 

@@ -8,7 +8,8 @@ import { Files, Plus, Postcard, PriceTag, User } from '@element-plus/icons-vue'
 import FormTable from '../FormTable.vue'
 import { usePreferencesStore } from '@/stores/preferences'
 import { useLoginInfoStore } from '@/stores/loginInfo'
-import { WorkListInfo, type ColumnMeta } from '@/script/types'
+import { WorkListInfo } from '@/types/problem'
+import { type ColumnMeta } from '@/types/table'
 
 const loginInfo = useLoginInfoStore()
 const preferences = usePreferencesStore()
@@ -127,3 +128,4 @@ const getTable = (tableMeta: { [index: string]: any }) => {
     </template>
   </FormTable>
 </template>
+@/types/types @/types/problem

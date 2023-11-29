@@ -16,7 +16,7 @@ import { t } from 'i18next'
 import { ref, type Ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import SemiText from '../semiText/SemiText.vue'
-import { ProblemInfo } from '@/script/types'
+import { ProblemInfo } from '@/types/problem'
 import MarkdownText from '../MarkdownText.vue'
 import SampleView from '../SampleView.vue'
 import { ChatLineRound, Cpu, Delete, Download, Edit, Promotion } from '@element-plus/icons-vue'
@@ -261,3 +261,4 @@ function deleteProblem() {
   align-items: center;
 }
 </style>
+@/types/types @/types/problem

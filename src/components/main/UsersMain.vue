@@ -7,7 +7,7 @@ import { t } from 'i18next'
 import { characterTranslate, timeIntToString } from '@/script/transform'
 import { User as user } from '@element-plus/icons-vue'
 import FormTable from '../FormTable.vue'
-import type { ColumnMeta } from '@/script/types'
+import type { ColumnMeta } from '@/types/table'
 
 const loaded = ref(false)
 const count = ref(0)

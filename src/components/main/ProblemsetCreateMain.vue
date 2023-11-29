@@ -2,7 +2,7 @@
 import { useLoginInfoStore } from '@/stores/loginInfo'
 import { ref } from 'vue'
 import DenyDialog from '../DenyDialog.vue'
-import { ProblemInfoCreateInput, ProblemInfoCreateQuery } from '@/script/types'
+import { ProblemInfoCreateInput, ProblemInfoCreateQuery } from '@/types/problem'
 import { useRequestDangerousAction } from '@/script/service'
 import { t } from 'i18next'
 import {
@@ -224,3 +224,4 @@ const fileModeCreate: UploadRequestHandler = (options: any) => {
   margin: 0 auto;
 }
 </style>
+@/types/types @/types/problem

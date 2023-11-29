@@ -2,7 +2,7 @@
 import { useLoginInfoStore } from '@/stores/loginInfo'
 import { ref } from 'vue'
 import DenyDialog from '../DenyDialog.vue'
-import { ProblemInfoInput, ProblemInfoQuery } from '@/script/types'
+import { ProblemInfoInput, ProblemInfoQuery } from '@/types/problem'
 import { useRequestGet, useRequestDangerousAction } from '@/script/service'
 import { useRoute } from 'vue-router'
 import { usePreferencesStore } from '@/stores/preferences'
@@ -261,3 +261,4 @@ const problemFileUpload: UploadRequestHandler = (options: any) => {
   margin: 0 auto;
 }
 </style>
+@/types/types @/types/problem

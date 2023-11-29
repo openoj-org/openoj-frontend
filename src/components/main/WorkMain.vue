@@ -1,10 +1,5 @@
 <script setup lang="ts">
-import {
-  useRequestDangerousAction,
-  useRequestDownload,
-  useRequestGet,
-  useRequestPost
-} from '@/script/service'
+import { useRequestDangerousAction, useRequestDownload, useRequestGet } from '@/script/service'
 import { useLoginInfoStore } from '@/stores/loginInfo'
 import { usePreferencesStore } from '@/stores/preferences'
 import {
@@ -22,7 +17,8 @@ import { t } from 'i18next'
 import { ref, type Ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import SemiText from '../semiText/SemiText.vue'
-import { WorkInfo, type LinkBody } from '@/script/types'
+import { WorkInfo } from '@/types/problem'
+import { type LinkBody } from '@/types/table'
 import MarkdownText from '../MarkdownText.vue'
 import SampleView from '../SampleView.vue'
 import {
@@ -316,3 +312,4 @@ function importWork() {
   align-items: center;
 }
 </style>
+@/types/types @/types/problem

@@ -1,17 +1,12 @@
-export interface LinkBody {
-  head: string
-  idName: string
-}
-
-export interface ColumnMeta {
-  name: string
-  showName?: string
-  sortable: boolean
-  type?: string
-  linkbody?: LinkBody
-}
-
-// 修改官方题库题目的表单类型
+/**
+ * input form type when modify problem
+ * @date 2023/11/29 - 09:56:40
+ * @author Mr_Spade
+ *
+ * @export
+ * @class ProblemInfoInput
+ * @typedef {ProblemInfoInput}
+ */
 export class ProblemInfoInput {
   title: string
   titleEn: string
@@ -41,7 +36,16 @@ export class ProblemInfoInput {
 
 export class WorkInfoInput extends ProblemInfoInput {}
 
-// 创建官方题库题目的表单类型
+/**
+ * input form type when create problem
+ * @date 2023/11/29 - 09:58:07
+ * @author Mr_Spade
+ *
+ * @export
+ * @class ProblemInfoCreateInput
+ * @typedef {ProblemInfoCreateInput}
+ * @extends {ProblemInfoInput}
+ */
 export class ProblemInfoCreateInput extends ProblemInfoInput {
   id: number
   constructor(data: any) {
@@ -52,7 +56,15 @@ export class ProblemInfoCreateInput extends ProblemInfoInput {
 
 export class WorkInfoCreateInput extends WorkInfoInput {}
 
-// 修改官方题库题目的请求参数类型
+/**
+ * query params type when modify problem
+ * @date 2023/11/29 - 09:58:51
+ * @author Mr_Spade
+ *
+ * @export
+ * @class ProblemInfoQuery
+ * @typedef {ProblemInfoQuery}
+ */
 export class ProblemInfoQuery {
   title: string
   titleEn: string
@@ -86,7 +98,16 @@ export class WorkInfoQuery extends ProblemInfoQuery {
   }
 }
 
-// 创建官方题库题目的请求参数类型
+/**
+ * query params type when create problem
+ * @date 2023/11/29 - 09:59:21
+ * @author Mr_Spade
+ *
+ * @export
+ * @class ProblemInfoCreateQuery
+ * @typedef {ProblemInfoCreateQuery}
+ * @extends {ProblemInfoQuery}
+ */
 export class ProblemInfoCreateQuery extends ProblemInfoQuery {
   id: number
   constructor(data: ProblemInfoCreateInput) {

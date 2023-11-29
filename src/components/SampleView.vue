@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Sample } from '@/script/types'
+import type { Sample } from '@/types/problem'
 import { CopyDocument } from '@element-plus/icons-vue'
 import { ElButton, ElCard, ElCol, ElDescriptions, ElMessage, ElRow } from 'element-plus'
 import ClipboardJS from 'clipboard'
@@ -66,3 +66,4 @@ clipboard.on('error', () => {
     ></MarkdownText>
   </div>
 </template>
+@/types/types @/types/problem
