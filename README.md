@@ -7,7 +7,6 @@
 ```json
 {
   "ojName": "实例的名称，一般无需修改",
-  "localStoragePrefix": "一般无需修改",
   "backendUrl": "后端的url链接，包含协议头、ip或域名、端口号（如果不是默认），例如：http://localhost:3000"
 }
 ```
