@@ -16,7 +16,6 @@ import '@/assets/markdown.css'
 
 import en from './langs/en.json'
 import zh_CN from './langs/zh-CN.json'
-import { usePreferencesStore } from './stores/preferences'
 
 i18next.use(LanguageDetector).init({
   detection: {
@@ -47,8 +46,5 @@ app.use(pinia)
 app.use(router)
 app.use(ElementPlus)
 app.use(I18NextVue, { i18next })
-
-const preferences = usePreferencesStore()
-preferences.flush()
 
 app.mount('#app')
