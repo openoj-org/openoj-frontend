@@ -1,5 +1,6 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
+import i18next from 'i18next'
 
 export const usePreferencesStore = defineStore(
   'preferences',
@@ -13,6 +14,11 @@ export const usePreferencesStore = defineStore(
     return { menuCollapse, language, evaluation, flip }
   },
   {
-    persist: true
+    persist: {
+      afterRestore: () => {
+        const preferences = usePreferencesStore()
+        if (preferences.language != '') i18next.changeLanguage(preferences.language)
+      }
+    }
   }
 )
