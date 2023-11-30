@@ -2,9 +2,31 @@
 import global from '@/assets/global.json'
 import { useRouter } from 'vue-router'
 import { ref } from 'vue'
-import { Document, Search, SwitchButton } from '@element-plus/icons-vue'
+import {
+  ArrowDown,
+  ChatLineRound,
+  Cpu,
+  Document,
+  EditPen,
+  MagicStick,
+  Search,
+  Setting,
+  SwitchButton,
+  User
+} from '@element-plus/icons-vue'
 import { useRequestPost } from '@/script/service'
-import { ElMessage } from 'element-plus'
+import {
+  ElButton,
+  ElCol,
+  ElDropdown,
+  ElDropdownItem,
+  ElDropdownMenu,
+  ElIcon,
+  ElInput,
+  ElMessage,
+  ElPageHeader,
+  ElRow
+} from 'element-plus'
 import { t } from 'i18next'
 import { useLoginInfoStore } from '@/stores/loginInfo'
 const router = useRouter()
@@ -37,7 +59,7 @@ function logout() {
 </script>
 
 <template>
-  <el-page-header id="pageheader" @back="toMain" icon="ChromeFilled">
+  <ElPageHeader id="pageheader" @back="toMain" icon="ChromeFilled">
     <template #title>
       <h1>
         {{ global.ojName }}
@@ -45,80 +67,75 @@ function logout() {
     </template>
     <template #content>
       <slot></slot>
-      <!-- <el-breadcrumb separator="/">
-        <el-breadcrumb-item :to="{ path: './page-header.html' }"> homepage </el-breadcrumb-item>
-        <el-breadcrumb-item><a href="./page-header.html">route 1</a></el-breadcrumb-item>
-        <el-breadcrumb-item>route 2</el-breadcrumb-item>
-      </el-breadcrumb> -->
     </template>
     <template #extra>
-      <el-row :gutter="12" justify="space-evenly">
-        <el-col :span="12">
-          <el-input v-model="searchContent" :placeholder="$t('searchHint')">
+      <ElRow :gutter="12" justify="space-evenly">
+        <ElCol :span="12">
+          <ElInput v-model="searchContent" :placeholder="$t('searchHint')">
             <template #append>
-              <el-button :icon="Search" />
+              <ElButton :icon="Search" />
             </template>
-          </el-input>
-        </el-col>
-        <el-col :span="9" v-if="loaded && loginInfo.login">
+          </ElInput>
+        </ElCol>
+        <ElCol :span="9" v-if="loaded && loginInfo.login">
           <div>
-            <el-dropdown>
-              <el-button text type="primary">
-                <el-icon class="el-icon--left"><User /></el-icon>
+            <ElDropdown>
+              <ElButton text type="primary">
+                <ElIcon class="el-icon--left"><User /></ElIcon>
                 {{ loginInfo.username }}
-                <el-icon class="el-icon--right"><arrow-down /></el-icon>
-              </el-button>
+                <ElIcon class="el-icon--right"><ArrowDown /></ElIcon>
+              </ElButton>
               <template #dropdown>
-                <el-dropdown-menu>
-                  <el-dropdown-item @click="$router.push(`/user/${loginInfo.id}`)"
-                    ><el-icon class="el-icon--left"><Document /></el-icon
-                    >{{ $t('myProfile') }}</el-dropdown-item
+                <ElDropdownMenu>
+                  <ElDropdownItem @click="$router.push(`/user/${loginInfo.id}`)"
+                    ><ElIcon class="el-icon--left"><Document /></ElIcon
+                    >{{ $t('myProfile') }}</ElDropdownItem
                   >
-                  <el-dropdown-item divided
-                    ><el-icon class="el-icon--left"><MagicStick /></el-icon
-                    >{{ $t('myWorkshop') }}</el-dropdown-item
+                  <ElDropdownItem divided
+                    ><ElIcon class="el-icon--left"><MagicStick /></ElIcon
+                    >{{ $t('myWorkshop') }}</ElDropdownItem
                   >
-                  <el-dropdown-item
-                    ><el-icon class="el-icon--left"><Cpu /></el-icon
-                    >{{ $t('mySubmission') }}</el-dropdown-item
+                  <ElDropdownItem
+                    ><ElIcon class="el-icon--left"><Cpu /></ElIcon
+                    >{{ $t('mySubmission') }}</ElDropdownItem
                   >
-                  <el-dropdown-item
-                    ><el-icon class="el-icon--left"><ChatLineRound /></el-icon
-                    >{{ $t('myDiscussion') }}</el-dropdown-item
+                  <ElDropdownItem
+                    ><ElIcon class="el-icon--left"><ChatLineRound /></ElIcon
+                    >{{ $t('myDiscussion') }}</ElDropdownItem
                   >
-                  <el-dropdown-item divided @click="$router.push('/user/modify')">
-                    <el-icon class="el-icon--left"><EditPen /></el-icon>
+                  <ElDropdownItem divided @click="$router.push('/user/modify')">
+                    <ElIcon class="el-icon--left"><EditPen /></ElIcon>
                     {{ $t('modifyPersonalProfile') }}
-                  </el-dropdown-item>
-                  <el-dropdown-item
+                  </ElDropdownItem>
+                  <ElDropdownItem
                     v-if="loginInfo.character == 0"
                     @click="$router.push('/instance-settings')"
                   >
-                    <el-icon class="el-icon--left"><Setting /></el-icon>
+                    <ElIcon class="el-icon--left"><Setting /></ElIcon>
                     {{ $t('instanceSettings') }}
-                  </el-dropdown-item>
-                  <el-dropdown-item divided @click="logout"
-                    ><el-icon class="el-icon--left"><SwitchButton /></el-icon
-                    >{{ $t('logout') }}</el-dropdown-item
+                  </ElDropdownItem>
+                  <ElDropdownItem divided @click="logout"
+                    ><ElIcon class="el-icon--left"><SwitchButton /></ElIcon
+                    >{{ $t('logout') }}</ElDropdownItem
                   >
-                </el-dropdown-menu>
+                </ElDropdownMenu>
               </template>
-            </el-dropdown>
+            </ElDropdown>
           </div>
-        </el-col>
-        <el-col :span="12" v-else-if="loaded && !loginInfo.login">
+        </ElCol>
+        <ElCol :span="12" v-else-if="loaded && !loginInfo.login">
           <div>
-            <el-button @click="$router.push('/login')">
+            <ElButton @click="$router.push('/login')">
               {{ $t('login') }}
-            </el-button>
-            <el-button type="primary" @click="$router.push('/register')">
+            </ElButton>
+            <ElButton type="primary" @click="$router.push('/register')">
               {{ $t('register') }}
-            </el-button>
+            </ElButton>
           </div>
-        </el-col>
-      </el-row>
+        </ElCol>
+      </ElRow>
     </template>
-  </el-page-header>
+  </ElPageHeader>
 </template>
 
 <style scoped>
@@ -126,11 +143,5 @@ function logout() {
   margin: 0 auto;
   min-width: 20cm;
   max-width: 35cm;
-}
-.el-dropdown-link {
-  cursor: pointer;
-  color: var(--el-color-primary);
-  display: flex;
-  align-items: center;
 }
 </style>
