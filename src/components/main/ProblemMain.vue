@@ -19,7 +19,15 @@ import SemiText from '../semiText/SemiText.vue'
 import { ProblemInfo } from '@/types/problem'
 import MarkdownText from '../MarkdownText.vue'
 import SampleView from '../SampleView.vue'
-import { ChatLineRound, Cpu, Delete, Download, Edit, Promotion } from '@element-plus/icons-vue'
+import {
+  ChatLineRound,
+  Cpu,
+  Delete,
+  Download,
+  Edit,
+  Promotion,
+  Star
+} from '@element-plus/icons-vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -233,6 +241,22 @@ function deleteProblem() {
               @click="deleteProblem"
               >{{ $t('delete') }}</ElButton
             >
+          </div>
+          <div>
+            <ElButton
+              style="margin-top: 12px"
+              type="warning"
+              :icon="Star"
+              v-if="loginInfo.login && loginInfo.character <= 2"
+              @click="
+                $router.push({
+                  name: 'problem-evaluate',
+                  params: $route.params
+                })
+              "
+            >
+              {{ $t('evaluation') }}
+            </ElButton>
           </div>
         </template>
         <div>

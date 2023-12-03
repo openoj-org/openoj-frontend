@@ -69,6 +69,7 @@
   "warning": "Warning",
   "dangerousAction": "{{value}} is a dangerous operation, are you sure to execute it?",
   "cancel": "Cancel",
+  "cancelSomething": "Cancel {{value}}",
   "instanceSettings": "Instance Settings",
   "onlyRootCanManageInstanceHint": "Only root can perform instance management operations.",
   "instanceInfo": "Instance Info",
@@ -131,5 +132,14 @@
   "workProblem": "Workshop Problem",
   "import": "Import",
   "importWorkToProblem": "Import Problem to Problemset",
-  "inputImportIdHint": "Please enter problemset ID you want to import to"
+  "inputImportIdHint": "Please enter problemset ID you want to import to",
+  "evaluation": "Evaluation",
+  "evaluate": "Evaluate",
+  "onlyTrustedUserCanEvaluateHint": "Only trusted users and above can perform evaluation operations.",
+  "difficultyRating": "Difficulty Rating",
+  "difficultyVeryEasy": "Very Easy",
+  "difficultyEasy": "Easy",
+  "difficultyNormal": "Normal",
+  "difficultyHard": "Hard",
+  "difficultyVeryHard": "Very Hard"
 }

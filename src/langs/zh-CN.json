@@ -69,6 +69,7 @@
   "warning": "警告",
   "dangerousAction": "{{value}}是一个危险操作，确认执行吗？",
   "cancel": "取消",
+  "cancelSomething": "取消{{value}}",
   "instanceSettings": "实例设置",
   "onlyRootCanManageInstanceHint": "只有root才能进行实例设置操作。",
   "instanceInfo": "实例信息",
@@ -133,5 +134,14 @@
   "workProblem": "创意工坊题目",
   "import": "导入",
   "importWorkToProblem": "导入题目至官方题库",
-  "inputImportIdHint": "请输入想要导入到的官方题库ID"
+  "inputImportIdHint": "请输入想要导入到的官方题库ID",
+  "evaluation": "评价",
+  "evaluate": "评价",
+  "onlyTrustedUserCanEvaluateHint": "只有受信用户及以上用户才能进行评价操作。",
+  "difficultyRating": "难度评价",
+  "difficultyVeryEasy": "非常简单",
+  "difficultyEasy": "简单",
+  "difficultyNormal": "适中",
+  "difficultyHard": "困难",
+  "difficultyVeryHard": "非常困难"
 }

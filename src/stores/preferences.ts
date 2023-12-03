@@ -7,7 +7,7 @@ export const usePreferencesStore = defineStore(
   () => {
     const menuCollapse = ref(true)
     const language = ref('')
-    const evaluation = ref(false)
+    const evaluation = ref(true)
     function flip() {
       menuCollapse.value = !menuCollapse.value
     }
