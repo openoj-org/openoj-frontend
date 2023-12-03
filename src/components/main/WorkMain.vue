@@ -28,7 +28,8 @@ import {
   Delete,
   Download,
   Edit,
-  Promotion
+  Promotion,
+  Star
 } from '@element-plus/icons-vue'
 
 const route = useRoute()
@@ -284,6 +285,22 @@ function importWork() {
               @click="deleteWork"
               >{{ $t('delete') }}</ElButton
             >
+          </div>
+          <div>
+            <ElButton
+              style="margin-top: 12px"
+              type="warning"
+              :icon="Star"
+              v-if="loginInfo.login && loginInfo.character <= 2"
+              @click="
+                $router.push({
+                  name: 'work-evaluate',
+                  params: $route.params
+                })
+              "
+            >
+              {{ $t('evaluation') }}
+            </ElButton>
           </div>
         </template>
         <div>

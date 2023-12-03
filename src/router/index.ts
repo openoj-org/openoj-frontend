@@ -18,6 +18,7 @@ import ProblemsetCreateView from '@/views/ProblemsetCreateView.vue'
 import WorkView from '@/views/WorkView.vue'
 import WorkshopCreateView from '@/views/WorkshopCreateView.vue'
 import WorkModifyView from '@/views/WorkModifyView.vue'
+import WorkEvaluateView from '@/views/WorkEvaluateView.vue'
 import ProblemEvaluateView from '@/views/ProblemEvaluateView.vue'
 
 const router = createRouter({
@@ -87,6 +88,11 @@ const router = createRouter({
       path: '/work/:id/modify',
       name: 'work-modify',
       component: WorkModifyView
+    },
+    {
+      path: '/work/:id/evaluate',
+      name: 'work-evaluate',
+      component: WorkEvaluateView
     },
     {
       path: '/submissions',
