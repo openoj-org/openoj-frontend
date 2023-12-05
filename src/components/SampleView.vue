@@ -66,4 +66,3 @@ clipboard.on('error', () => {
     ></MarkdownText>
   </div>
 </template>
-@/types/types @/types/problem
