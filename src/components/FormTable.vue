@@ -23,6 +23,7 @@ const props = defineProps<{
   count: number
   searchMeta: {
     name: string
+    showName?: string
     icon: any
   }[]
   columnMeta: ColumnMeta[]
@@ -87,7 +88,7 @@ function sortChange(arg: any) {
       >
         <ElInput
           v-model="tableMeta[`${meta.name}Keyword`]"
-          :placeholder="$t('keywordOfSomething', { value: $t(meta.name) })"
+          :placeholder="$t('keywordOfSomething', { value: $t(meta.showName ?? meta.name) })"
         >
           <template #prefix>
             <ElIcon class="el-input__icon"><component :is="meta.icon" /></ElIcon>
