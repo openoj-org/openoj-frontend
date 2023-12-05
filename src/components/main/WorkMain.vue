@@ -181,6 +181,10 @@ function importWork() {
       ElMessage.info(t('cancel'))
     })
 }
+
+function submit() {
+  router.push({ name: 'work-submit', params: route.params })
+}
 </script>
 
 <template>
@@ -244,6 +248,7 @@ function importWork() {
               type="success"
               :icon="Promotion"
               v-if="loginInfo.login"
+              @click="submit"
               >{{ $t('submit') }}</ElButton
             >
             <ElButton

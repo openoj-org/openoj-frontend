@@ -21,6 +21,7 @@ import WorkModifyView from '@/views/WorkModifyView.vue'
 import WorkEvaluateView from '@/views/WorkEvaluateView.vue'
 import ProblemEvaluateView from '@/views/ProblemEvaluateView.vue'
 import ProblemSubmitView from '@/views/ProblemSubmitView.vue'
+import WorkSubmitView from '@/views/WorkSubmitView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -99,6 +100,11 @@ const router = createRouter({
       path: '/work/:id/evaluate',
       name: 'work-evaluate',
       component: WorkEvaluateView
+    },
+    {
+      path: '/work/:id/submit',
+      name: 'work-submit',
+      component: WorkSubmitView
     },
     {
       path: '/submissions',
