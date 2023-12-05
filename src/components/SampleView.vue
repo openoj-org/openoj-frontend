@@ -12,6 +12,7 @@ defineProps<{
   value: Sample
 }>()
 
+// TODO: fix bug that message will show multiple times after back and re-enter page
 const clipboard = new ClipboardJS('.copy-btn')
 clipboard.on('success', () => {
   ElMessage.success(t('somethingSuccess', { value: t('copySomething', { value: t('sample') }) }))

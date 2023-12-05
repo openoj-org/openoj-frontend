@@ -185,11 +185,11 @@ export interface Sample {
   output?: string
 }
 
-function convertTimeLimit(data: number) {
+export function convertTimeLimit(data: number) {
   if (data >= 1000) return `${data / 1000}s`
   return `${data}ms`
 }
-function convertMemoryLimit(data: number) {
+export function convertMemoryLimit(data: number) {
   if (data >= 1024) return `${data / 1024}GB`
   return `${data}MB`
 }

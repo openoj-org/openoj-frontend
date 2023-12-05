@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ArrowRight } from '@element-plus/icons-vue'
 import BaseView from './BaseView.vue'
-import HomeMain from '@/components/main/ProblemsetMain.vue'
+import ProblemsetMain from '@/components/main/ProblemsetMain.vue'
 </script>
 
 <template>
@@ -13,6 +13,6 @@ import HomeMain from '@/components/main/ProblemsetMain.vue'
         </el-breadcrumb-item>
       </el-breadcrumb>
     </template>
-    <HomeMain />
+    <ProblemsetMain />
   </BaseView>
 </template>

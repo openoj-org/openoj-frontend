@@ -145,5 +145,12 @@
   "difficultyNormal": "适中",
   "difficultyHard": "困难",
   "difficultyVeryHard": "非常困难",
-  "chooseLanguageHint": "选择语言"
+  "chooseLanguageHint": "选择语言",
+  "problemTitle": "题目名称",
+  "submitter": "提交者",
+  "status": "状态",
+  "submitTime": "提交时间",
+  "language": "语言",
+  "timeCost": "用时",
+  "memoryCost": "内存"
 }

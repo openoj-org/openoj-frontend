@@ -109,4 +109,3 @@ const getTable = (tableMeta: { [index: string]: any }) => {
     </template>
   </FormTable>
 </template>
-@/types/types @/types/problem

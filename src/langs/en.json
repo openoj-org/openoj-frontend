@@ -143,5 +143,12 @@
   "difficultyNormal": "Normal",
   "difficultyHard": "Hard",
   "difficultyVeryHard": "Very Hard",
-  "chooseLanguageHint": "Choose Language"
+  "chooseLanguageHint": "Choose Language",
+  "problemTitle": "Problem Title",
+  "submitter": "Submitter",
+  "status": "Status",
+  "submitTime": "Submit Time",
+  "language": "Language",
+  "timeCost": "Time Cost",
+  "memoryCost": "Memory Cost"
 }

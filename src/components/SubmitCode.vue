@@ -8,6 +8,7 @@ import { useRequestPost } from '@/script/service'
 import { useLoginInfoStore } from '@/stores/loginInfo'
 import { ElButton, ElMessage, ElOption, ElSelect } from 'element-plus'
 import { t } from 'i18next'
+import { languages } from '@/types/submission'
 
 const router = useRouter()
 const loginInfo = useLoginInfoStore()
@@ -16,17 +17,6 @@ const props = defineProps<{
   type: number
   problemId: any
 }>()
-
-const languages = [
-  {
-    value: 'C++11',
-    label: 'C++11'
-  },
-  {
-    value: 'Python3',
-    label: 'Python3'
-  }
-]
 
 const code = ref('')
 const language = ref('')

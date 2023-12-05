@@ -11,6 +11,9 @@ export interface LinkBody {
   head: string
   idName: string
 }
+// TODO: remove deprecated linkbody
+
+import { type RouteLocationRaw } from 'vue-router'
 
 /**
  * meta info of a FormTable's column
@@ -27,4 +30,5 @@ export interface ColumnMeta {
   sortable: boolean
   type?: string
   linkbody?: LinkBody
+  linkCallback?: (scope: any) => RouteLocationRaw
 }

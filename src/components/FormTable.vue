@@ -8,26 +8,40 @@ import {
   ElFormItem,
   ElIcon,
   ElInput,
+  ElOption,
+  ElSelect,
   ElSkeleton,
   ElTable,
   ElTableColumn
 } from 'element-plus'
 import SemiText from './semiText/SemiText.vue'
 import type { ColumnMeta } from '@/types/table'
+import { useRouter, type RouteLocationRaw } from 'vue-router'
+
+const router = useRouter()
 
 const eachpageCount = 10
 
 const props = defineProps<{
   title: string
+  defaultOrderKey?: string
+  defaultIncrease?: boolean
   loaded: boolean
   count: number
   searchMeta: {
     name: string
     showName?: string
     icon: any
+    type?: string
+    options?: {
+      value: string
+      label: string
+    }[]
   }[]
   columnMeta: ColumnMeta[]
   tableData: any[]
+  linkCallback?: (row: any) => RouteLocationRaw
+  // TODO: set linkCallback as a necessary value
 }>()
 
 const currentPage = ref(1)
@@ -40,11 +54,12 @@ const end = computed(() => {
 })
 
 let searchData: { [index: string]: any } = {
-  order: 'id',
-  increase: true
+  order: props.defaultOrderKey ?? 'id',
+  increase: props.defaultIncrease ?? true
 }
 for (let i = 0; i < props.searchMeta.length; i++) {
-  searchData[`${props.searchMeta[i].name}Keyword`] = ''
+  if (props.searchMeta[i].type == 'select') searchData[props.searchMeta[i].name] = ''
+  else searchData[`${props.searchMeta[i].name}Keyword`] = ''
 }
 
 const tableMeta = reactive(searchData)
@@ -75,6 +90,10 @@ function sortChange(arg: any) {
     getTable()
   }
 }
+
+function rowClick(row: any) {
+  if (props.linkCallback) router.push(props.linkCallback(toRaw(row)))
+}
 </script>
 
 <template>
@@ -86,9 +105,27 @@ function sortChange(arg: any) {
         :key="meta.name"
         style="margin-left: 0; margin-right: 12px"
       >
+        <ElSelect
+          clearable
+          v-model="tableMeta[meta.name]"
+          :placeholder="$t(meta.showName ?? meta.name)"
+          v-if="meta.type == 'select'"
+        >
+          <template #prefix>
+            <ElIcon><component :is="meta.icon" /></ElIcon>
+          </template>
+          <ElOption
+            v-for="item in meta.options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          >
+          </ElOption>
+        </ElSelect>
         <ElInput
           v-model="tableMeta[`${meta.name}Keyword`]"
           :placeholder="$t('keywordOfSomething', { value: $t(meta.showName ?? meta.name) })"
+          v-else
         >
           <template #prefix>
             <ElIcon class="el-input__icon"><component :is="meta.icon" /></ElIcon>
@@ -101,7 +138,13 @@ function sortChange(arg: any) {
     </ElForm>
     <el-skeleton :rows="5" animated v-if="!loaded" />
     <div v-show="loaded">
-      <ElTable :data="tableData" style="width: 100%" @sort-change="sortChange">
+      <ElTable
+        :data="tableData"
+        style="width: 100%"
+        @sort-change="sortChange"
+        table-layout="auto"
+        @row-click="rowClick"
+      >
         <ElTableColumn
           v-for="column in columnMeta"
           :key="column.name"
@@ -116,7 +159,9 @@ function sortChange(arg: any) {
               :link="
                 column.type == 'link'
                   ? column.linkbody == undefined
-                    ? `/${props.title}/${scope.row.id}`
+                    ? column.linkCallback == undefined
+                      ? `/${props.title}/${scope.row.id}`
+                      : column.linkCallback(scope)
                     : `/${column.linkbody.head}/${scope.row[column.linkbody.idName]}`
                   : undefined
               "
