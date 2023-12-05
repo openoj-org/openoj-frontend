@@ -142,5 +142,6 @@
   "difficultyEasy": "Easy",
   "difficultyNormal": "Normal",
   "difficultyHard": "Hard",
-  "difficultyVeryHard": "Very Hard"
+  "difficultyVeryHard": "Very Hard",
+  "chooseLanguageHint": "Choose Language"
 }

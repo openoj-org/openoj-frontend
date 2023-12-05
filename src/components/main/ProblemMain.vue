@@ -145,6 +145,10 @@ function deleteProblem() {
     '/problemset'
   )
 }
+
+function submit() {
+  router.push({ name: 'problem-submit', params: route.params })
+}
 </script>
 
 <template>
@@ -208,6 +212,7 @@ function deleteProblem() {
               type="success"
               :icon="Promotion"
               v-if="loginInfo.login"
+              @click="submit"
               >{{ $t('submit') }}</ElButton
             >
             <ElButton
