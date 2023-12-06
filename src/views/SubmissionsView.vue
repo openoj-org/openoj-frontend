@@ -40,26 +40,35 @@ const searchMeta = [
 const columnMeta: ColumnMeta[] = [
   {
     name: 'id',
-    sortable: false
+    sortable: false,
+    type: 'link',
+    linkCallback: (scope) => {
+      return {
+        name: 'submission',
+        params: {
+          id: scope.row.id
+        }
+      }
+    }
   },
   {
     name: 'problemTitle',
     sortable: false,
     type: 'link',
     linkCallback: (scope) => {
-      switch (scope.type) {
+      switch (scope.row.type) {
         case 0:
           return {
             name: 'problem',
             params: {
-              id: scope.problemId
+              id: scope.row.problemId
             }
           }
         case 1:
           return {
             name: 'work',
             params: {
-              id: scope.problemId
+              id: scope.row.problemId
             }
           }
         default:
@@ -75,7 +84,9 @@ const columnMeta: ColumnMeta[] = [
     linkCallback: (scope) => {
       return {
         name: 'user',
-        params: scope.userId
+        params: {
+          id: scope.row.userId
+        }
       }
     }
   },
@@ -135,15 +146,6 @@ const getTable = (tableMeta: { [index: string]: any }) => {
       ElMessage.error(t('unknownError'))
     })
 }
-
-function click(row: any) {
-  return {
-    name: 'submission',
-    params: {
-      id: row.id
-    }
-  }
-}
 </script>
 
 <template>
@@ -165,7 +167,6 @@ function click(row: any) {
       :search-meta="searchMeta"
       :column-meta="columnMeta"
       :table-data="tableData"
-      :link-callback="click"
       @flush-table-data="
         (tableMeta) => {
           getTable(tableMeta)

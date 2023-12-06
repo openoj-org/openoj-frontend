@@ -156,5 +156,9 @@
   "dataWithId": "Data #{{id}}",
   "input": "Input",
   "output": "Output",
-  "answer": "Answer"
+  "answer": "Answer",
+  "originalPoster": "Original Poster",
+  "postTime": "Post Time",
+  "followUpTime": "Follow Up Time",
+  "postCount": "Post Count"
 }

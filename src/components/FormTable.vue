@@ -41,8 +41,6 @@ const props = defineProps<{
   }[]
   columnMeta: ColumnMeta[]
   tableData: any[]
-  linkCallback?: (row: any) => RouteLocationRaw
-  // TODO: set linkCallback as a necessary value
 }>()
 
 const currentPage = ref(1)
@@ -91,10 +89,6 @@ function sortChange(arg: any) {
     getTable()
   }
 }
-
-function rowClick(row: any) {
-  if (props.linkCallback) router.push(props.linkCallback(toRaw(row)))
-}
 </script>
 
 <template>
@@ -139,13 +133,7 @@ function rowClick(row: any) {
     </ElForm>
     <el-skeleton :rows="5" animated v-if="!loaded" />
     <div v-show="loaded">
-      <ElTable
-        :data="tableData"
-        style="width: 100%"
-        @sort-change="sortChange"
-        table-layout="auto"
-        @row-click="rowClick"
-      >
+      <ElTable :data="tableData" style="width: 100%" @sort-change="sortChange" table-layout="auto">
         <ElTableColumn
           v-for="column in columnMeta"
           :key="column.name"

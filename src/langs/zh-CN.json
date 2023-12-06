@@ -158,5 +158,9 @@
   "dataWithId": "数据#{{id}}",
   "input": "输入",
   "output": "输出",
-  "answer": "答案"
+  "answer": "答案",
+  "originalPoster": "楼主",
+  "postTime": "发帖时间",
+  "followUpTime": "跟帖时间",
+  "postCount": "楼层数量"
 }
