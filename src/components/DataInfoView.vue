@@ -7,7 +7,8 @@ import { useRequestGetFull } from '@/script/service'
 
 defineProps<{
   dataInfo: JudgeResult[]
-  tab: boolean
+  tab?: boolean
+  noScore?: boolean
 }>()
 
 const loaded = ref(false)
@@ -40,7 +41,12 @@ function dataChange(activeNames: any) {
   <ElCollapse accordion @change="dataChange">
     <ElCollapseItem v-for="(item, index) in dataInfo" :key="item.id" :name="item.id">
       <template #title>
-        <JudgeResultView tab :title="$t('dataWithId', { id: index + 1 })" :value="item" />
+        <JudgeResultView
+          :tab="tab"
+          :no-score="noScore"
+          :title="$t('dataWithId', { id: index + 1 })"
+          :value="item"
+        />
       </template>
       <ElDescriptions :title="$t('input')"></ElDescriptions>
       <ElCard shadow="never">

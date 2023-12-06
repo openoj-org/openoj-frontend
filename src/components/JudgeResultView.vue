@@ -8,6 +8,7 @@ defineProps<{
   title: string
   value: JudgeBaseResult
   tab?: boolean
+  noScore?: boolean
 }>()
 </script>
 
@@ -25,7 +26,7 @@ defineProps<{
       <StatusText :value="value.status" />
     </ElCol>
     <ElCol :span="4">
-      <ScoreText :value="value.score" />
+      <ScoreText :value="value.score" v-if="noScore != true" />
     </ElCol>
     <ElCol :span="4">
       <SemiText :value="value.timeCost" type="timeCost" />

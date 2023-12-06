@@ -36,7 +36,7 @@ function subtaskChange(activeNames: any) {
       <template #title>
         <JudgeResultView :title="$t('subtaskWithId', { id: index + 1 })" :value="item" />
       </template>
-      <DataInfoView tab :dataInfo="subtaskDataInfo" v-if="subtaskLoaded" />
+      <DataInfoView tab no-score :dataInfo="subtaskDataInfo" v-if="subtaskLoaded" />
       <ElCollapse v-else>
         <ElCollapseItem>
           <template #title>
