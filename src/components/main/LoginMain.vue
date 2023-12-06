@@ -68,6 +68,7 @@ async function login(formEl: FormInstance | undefined) {
   await formEl.validate((valid, fields) => {
     if (valid) {
       const passwordHash = sha512(form.password).toString()
+      // TODO: clean all useRequestPost
       useRequestPost('/user/login', {
         usernameOrMail: form.usernameOrMail,
         passwordCode: passwordHash

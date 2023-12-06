@@ -152,5 +152,11 @@
   "submitTime": "提交时间",
   "language": "语言",
   "timeCost": "用时",
-  "memoryCost": "内存"
+  "memoryCost": "内存",
+  "submissionResult": "评测结果",
+  "subtaskWithId": "子任务#{{id}}",
+  "dataWithId": "数据#{{id}}",
+  "input": "输入",
+  "output": "输出",
+  "answer": "答案"
 }

@@ -14,7 +14,7 @@ import {
   SwitchButton,
   User
 } from '@element-plus/icons-vue'
-import { useRequestPost } from '@/script/service'
+import { useRequestPostFull } from '@/script/service'
 import {
   ElButton,
   ElCol,
@@ -41,20 +41,11 @@ const toMain = () => {
 const searchContent = ref('')
 
 function logout() {
-  useRequestPost('/user/logout', { cookie: loginInfo.cookie })
-    .then((result) => {
-      if (result.data.success == false) {
-        ElMessage.error(result.data.message)
-      } else {
-        ElMessage.success(t('somethingSuccess', { value: t('logout') }))
-        loginInfo.setLogout()
-        router.push('/')
-      }
-    })
-    .catch((err) => {
-      console.log(err)
-      ElMessage.error(t('unknownError'))
-    })
+  useRequestPostFull('/user/logout', { cookie: loginInfo.cookie }, () => {
+    ElMessage.success(t('somethingSuccess', { value: t('logout') }))
+    loginInfo.setLogout()
+    router.push('/')
+  })
 }
 </script>
 

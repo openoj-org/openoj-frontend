@@ -150,5 +150,11 @@
   "submitTime": "Submit Time",
   "language": "Language",
   "timeCost": "Time Cost",
-  "memoryCost": "Memory Cost"
+  "memoryCost": "Memory Cost",
+  "submissionResult": "Submission Result",
+  "subtaskWithId": "Subtask #{{id}}",
+  "dataWithId": "Data #{{id}}",
+  "input": "Input",
+  "output": "Output",
+  "answer": "Answer"
 }

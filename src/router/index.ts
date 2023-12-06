@@ -22,7 +22,9 @@ import WorkEvaluateView from '@/views/WorkEvaluateView.vue'
 import ProblemEvaluateView from '@/views/ProblemEvaluateView.vue'
 import ProblemSubmitView from '@/views/ProblemSubmitView.vue'
 import WorkSubmitView from '@/views/WorkSubmitView.vue'
+import SubmissionView from '@/views/SubmissionView.vue'
 
+// TODO: modify all router push from path to name
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -110,6 +112,11 @@ const router = createRouter({
       path: '/submissions',
       name: 'submissions',
       component: SubmissionsView
+    },
+    {
+      path: '/submission/:id',
+      name: 'submission',
+      component: SubmissionView
     },
     {
       path: '/users',

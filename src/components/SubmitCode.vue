@@ -4,7 +4,7 @@ import { useRouter } from 'vue-router'
 import { Codemirror } from 'vue-codemirror'
 import { cpp } from '@codemirror/lang-cpp'
 import { python } from '@codemirror/lang-python'
-import { useRequestPost } from '@/script/service'
+import { useRequestPostFull } from '@/script/service'
 import { useLoginInfoStore } from '@/stores/loginInfo'
 import { ElButton, ElMessage, ElOption, ElSelect } from 'element-plus'
 import { t } from 'i18next'
@@ -27,26 +27,21 @@ const extensions = computed(() => {
 })
 
 function submit() {
-  useRequestPost('/judge/submit', {
-    cookie: loginInfo.cookie,
-    type: props.type,
-    problemId: props.problemId,
-    language: language.value,
-    sourceCode: code.value
-  })
-    .then((result) => {
-      if (result.data.success == false) {
-        ElMessage.error(result.data.message)
-      } else {
-        ElMessage.success(t('somethingSuccess', { value: t('submit') }))
-        const submissionId = result.data.id
-        router.push({ name: 'submission', params: { id: submissionId } })
-      }
-    })
-    .catch((error) => {
-      console.log(error)
-      ElMessage.error(t('unknownError'))
-    })
+  useRequestPostFull(
+    '/judge/submit',
+    {
+      cookie: loginInfo.cookie,
+      type: props.type,
+      problemId: props.problemId,
+      language: language.value,
+      sourceCode: code.value
+    },
+    (data) => {
+      ElMessage.success(t('somethingSuccess', { value: t('submit') }))
+      const submissionId = data.id
+      router.push({ name: 'submission', params: { id: submissionId } })
+    }
+  )
 }
 </script>
 

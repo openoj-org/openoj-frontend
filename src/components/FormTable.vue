@@ -33,6 +33,7 @@ const props = defineProps<{
     showName?: string
     icon: any
     type?: string
+    // TODO: complete full status show (e.g. color and icon) in select option
     options?: {
       value: string
       label: string
