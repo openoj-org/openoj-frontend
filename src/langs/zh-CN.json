@@ -161,6 +161,9 @@
   "answer": "答案",
   "originalPoster": "楼主",
   "postTime": "发帖时间",
+  "followUp": "跟帖",
+  "replyPost": "回帖",
   "followUpTime": "跟帖时间",
-  "postCount": "楼层数量"
+  "postCount": "楼层数量",
+  "release": "发布"
 }

@@ -290,4 +290,3 @@ function submit() {
   align-items: center;
 }
 </style>
-@/types/types @/types/problem

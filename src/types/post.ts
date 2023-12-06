@@ -37,3 +37,21 @@ export class PostListInfo extends PostBaseInfo {
     return result
   }
 }
+
+export class PostContent {
+  userId: string
+  username: string
+  content: string
+  time: number
+  constructor(data: any) {
+    this.userId = data.userId ?? ''
+    this.username = data.username ?? ''
+    this.content = data.content ?? ''
+    this.time = data.time ?? 0
+  }
+  static list(data: any[]) {
+    const result: PostContent[] = []
+    for (let i = 0; i < data.length; i++) result.push(new PostContent(data[i]))
+    return result
+  }
+}

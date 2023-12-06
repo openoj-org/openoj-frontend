@@ -1,19 +1,10 @@
 <script setup lang="ts">
-import {
-  ArrowRight,
-  ChatDotSquare,
-  Postcard,
-  QuestionFilled,
-  User,
-  Files
-} from '@element-plus/icons-vue'
+import { ArrowRight, Postcard, User, Files } from '@element-plus/icons-vue'
 import BaseView from './BaseView.vue'
-import { SubmissionListInfo, languages, status } from '@/types/submission'
 import { ref, type Ref } from 'vue'
 import type { ColumnMeta } from '@/types/table'
-import { useRequestGet, useRequestGetFull } from '@/script/service'
-import { ElBreadcrumb, ElBreadcrumbItem, ElMessage } from 'element-plus'
-import { t } from 'i18next'
+import { useRequestGetFull } from '@/script/service'
+import { ElBreadcrumb, ElBreadcrumbItem } from 'element-plus'
 import FormTable from '@/components/FormTable.vue'
 import { PostListInfo } from '@/types/post'
 

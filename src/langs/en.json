@@ -159,6 +159,9 @@
   "answer": "Answer",
   "originalPoster": "Original Poster",
   "postTime": "Post Time",
+  "followUp": "Follow Up",
+  "replyPost": "Reply",
   "followUpTime": "Follow Up Time",
-  "postCount": "Post Count"
+  "postCount": "Post Count",
+  "release": "Release"
 }
