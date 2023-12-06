@@ -46,6 +46,7 @@ const postInfo: Ref<PostBaseInfo> = ref(new PostBaseInfo({}))
 const postContents: Ref<PostContent[]> = ref([])
 
 function getContent() {
+  loaded.value = false
   useRequestGetFull(
     '/forum/info',
     {
@@ -190,69 +191,73 @@ function reply() {
         </ElBreadcrumbItem>
       </ElBreadcrumb>
     </template>
-    <ElContainer v-if="loaded">
-      <ElMain style="padding-right: 60px">
-        <ElCard style="margin-bottom: 20px" v-for="(content, index) in postContents" :key="index">
-          <template #header>
-            <div class="card-header">
-              <SemiText
-                type="link"
-                :value="content.username"
-                :link="{ name: 'user', params: { id: content.userId } }"
-              />
-              <div>
-                <SemiText type="time" :value="content.time" />
-                <ElButton
-                  type="primary"
-                  :icon="RefreshLeft"
-                  style="margin-left: 12px"
-                  @click="replyFocus(content)"
-                  >{{ $t('replyPost') }}</ElButton
-                >
-              </div>
-            </div>
-          </template>
-          <MdPreview :editor-id="'content' + index" :model-value="content.content"></MdPreview>
-        </ElCard>
-        <ElPagination
-          :page-size="eachpageCount"
-          v-model:current-page="currentPage"
-          @update:current-page="currentChange"
-          layout="prev, pager, next"
-          :total="count"
-        />
-      </ElMain>
-      <ElAside style="width: 310px">
-        <ElCard>
-          <template #header>
-            <ElDescriptions :title="postInfo.title" :column="1">
-              <ElDescriptionsItem
-                :label="$t(item.showName == undefined ? item.name : item.showName)"
-                v-for="item in columnMeta"
-                :key="item.name"
-              >
+    <div v-if="loaded">
+      <ElContainer>
+        <ElMain style="padding-right: 60px">
+          <ElCard style="margin-bottom: 20px" v-for="(content, index) in postContents" :key="index">
+            <template #header>
+              <div class="card-header">
                 <SemiText
-                  :type="item.type"
-                  :value="postInfo[item.name as keyof PostBaseInfo]"
-                  :link="item.type == 'link' ? item.linkCallback!(postInfo) : ''"
-                ></SemiText>
-              </ElDescriptionsItem>
-            </ElDescriptions>
-          </template>
-          <ElButton type="primary" :icon="Plus" v-if="loginInfo.login" @click="focus">{{
-            $t('followUp')
-          }}</ElButton>
-        </ElCard>
-      </ElAside>
-    </ElContainer>
-    <ElDivider />
-    <MdEditor
-      editor-id="reply"
-      v-model="replyContent"
-      ref="editorRef"
-      :language="i18next.language"
-    />
-    <ElButton type="success" style="margin-top: 12px" @click="reply">{{ $t('release') }}</ElButton>
+                  type="link"
+                  :value="content.username"
+                  :link="{ name: 'user', params: { id: content.userId } }"
+                />
+                <div>
+                  <SemiText type="time" :value="content.time" />
+                  <ElButton
+                    type="primary"
+                    :icon="RefreshLeft"
+                    style="margin-left: 12px"
+                    @click="replyFocus(content)"
+                    >{{ $t('replyPost') }}</ElButton
+                  >
+                </div>
+              </div>
+            </template>
+            <MdPreview :editor-id="'content' + index" :model-value="content.content"></MdPreview>
+          </ElCard>
+          <ElPagination
+            :page-size="eachpageCount"
+            v-model:current-page="currentPage"
+            @update:current-page="currentChange"
+            layout="prev, pager, next"
+            :total="count"
+          />
+        </ElMain>
+        <ElAside style="width: 310px">
+          <ElCard>
+            <template #header>
+              <ElDescriptions :title="postInfo.title" :column="1">
+                <ElDescriptionsItem
+                  :label="$t(item.showName == undefined ? item.name : item.showName)"
+                  v-for="item in columnMeta"
+                  :key="item.name"
+                >
+                  <SemiText
+                    :type="item.type"
+                    :value="postInfo[item.name as keyof PostBaseInfo]"
+                    :link="item.type == 'link' ? item.linkCallback!(postInfo) : ''"
+                  ></SemiText>
+                </ElDescriptionsItem>
+              </ElDescriptions>
+            </template>
+            <ElButton type="primary" :icon="Plus" v-if="loginInfo.login" @click="focus">{{
+              $t('followUp')
+            }}</ElButton>
+          </ElCard>
+        </ElAside>
+      </ElContainer>
+      <ElDivider />
+      <MdEditor
+        editor-id="reply"
+        v-model="replyContent"
+        ref="editorRef"
+        :language="i18next.language"
+      />
+      <ElButton type="success" style="margin-top: 12px" @click="reply">{{
+        $t('release')
+      }}</ElButton>
+    </div>
   </BaseView>
 </template>
 
