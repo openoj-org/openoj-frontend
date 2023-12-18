@@ -164,5 +164,6 @@
   "followUpTime": "Follow Up Time",
   "postCount": "Post Count",
   "release": "Release",
-  "problemRelatedSwitch": "Related to a problem"
+  "problemRelatedSwitch": "Related to a problem",
+  "usersSomething": "User {{value}}"
 }
