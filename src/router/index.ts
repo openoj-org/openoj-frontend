@@ -24,6 +24,7 @@ import ProblemSubmitView from '@/views/ProblemSubmitView.vue'
 import WorkSubmitView from '@/views/WorkSubmitView.vue'
 import SubmissionView from '@/views/SubmissionView.vue'
 import PostView from '@/views/PostView.vue'
+import ForumCreateView from '@/views/ForumCreateView.vue'
 
 // TODO: modify all router push from path to name
 const router = createRouter({
@@ -143,6 +144,11 @@ const router = createRouter({
       path: '/forum',
       name: 'forum',
       component: ForumView
+    },
+    {
+      path: '/forum-create',
+      name: 'forum-create',
+      component: ForumCreateView
     },
     {
       path: '/post/:id',

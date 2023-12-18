@@ -153,7 +153,6 @@ function flushTableData(tableMeta: { [index: string]: any }) {
   if (route.query.problemType != undefined) tableMeta.problemType = route.query.problemType
   if (route.query.problemId != undefined) tableMeta.problemId = route.query.problemId
   if (route.query.userId != undefined) tableMeta.userId = route.query.userId
-  console.log(tableMeta)
   getTable(tableMeta)
 }
 </script>

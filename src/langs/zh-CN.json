@@ -165,5 +165,6 @@
   "replyPost": "回帖",
   "followUpTime": "跟帖时间",
   "postCount": "楼层数量",
-  "release": "发布"
+  "release": "发布",
+  "problemRelatedSwitch": "是否为题目相关讨论"
 }

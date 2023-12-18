@@ -344,4 +344,3 @@ function goToForum() {
   align-items: center;
 }
 </style>
-@/types/types @/types/problem
