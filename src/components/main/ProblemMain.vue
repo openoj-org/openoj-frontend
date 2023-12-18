@@ -29,6 +29,8 @@ import {
   Star
 } from '@element-plus/icons-vue'
 
+const TYPE = 0
+
 const route = useRoute()
 const router = useRouter()
 const loginInfo = useLoginInfoStore()
@@ -149,6 +151,14 @@ function deleteProblem() {
 function submit() {
   router.push({ name: 'problem-submit', params: route.params })
 }
+
+function goToSubmissions() {
+  router.push({ name: 'submissions', query: { problemType: TYPE, problemId: route.params.id } })
+}
+
+function goToForum() {
+  router.push({ name: 'forum', query: { sourceType: TYPE, sourceId: route.params.id } })
+}
 </script>
 
 <template>
@@ -265,12 +275,12 @@ function submit() {
           </div>
         </template>
         <div>
-          <ElButton text type="primary" :icon="Cpu">{{
+          <ElButton text type="primary" :icon="Cpu" @click="goToSubmissions">{{
             $t('problemsSomething', { value: $t('submissions') })
           }}</ElButton>
         </div>
         <div style="margin-top: 12px">
-          <ElButton text type="primary" :icon="ChatLineRound">{{
+          <ElButton text type="primary" :icon="ChatLineRound" @click="goToForum">{{
             $t('problemsSomething', { value: $t('talks') })
           }}</ElButton>
         </div>

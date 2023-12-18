@@ -8,7 +8,9 @@ import { useRequestGet } from '@/script/service'
 import { ElMessage } from 'element-plus'
 import { t } from 'i18next'
 import FormTable from '@/components/FormTable.vue'
+import { useRoute } from 'vue-router'
 
+const route = useRoute()
 const loaded = ref(false)
 const count = ref(0)
 
@@ -146,6 +148,14 @@ const getTable = (tableMeta: { [index: string]: any }) => {
       ElMessage.error(t('unknownError'))
     })
 }
+
+function flushTableData(tableMeta: { [index: string]: any }) {
+  if (route.query.problemType != undefined) tableMeta.problemType = route.query.problemType
+  if (route.query.problemId != undefined) tableMeta.problemId = route.query.problemId
+  if (route.query.userId != undefined) tableMeta.userId = route.query.userId
+  console.log(tableMeta)
+  getTable(tableMeta)
+}
 </script>
 
 <template>
@@ -167,11 +177,7 @@ const getTable = (tableMeta: { [index: string]: any }) => {
       :search-meta="searchMeta"
       :column-meta="columnMeta"
       :table-data="tableData"
-      @flush-table-data="
-        (tableMeta) => {
-          getTable(tableMeta)
-        }
-      "
+      @flush-table-data="flushTableData"
     />
   </BaseView>
 </template>
