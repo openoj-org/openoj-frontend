@@ -27,8 +27,8 @@ if (loginInfo.login && loginInfo.character == 0) {
         .then((result) => {
           haveList.value = result.data.haveList
           haveListSwitch.value = result.data.haveList
-          suffixList.value = result.data.suffixList
-          dynamicTags.value = result.data.suffixList
+          suffixList.value = result.data.suffixList ?? []
+          dynamicTags.value = result.data.suffixList ?? []
           loaded.value = true
         })
         .catch((error) => {
@@ -83,12 +83,12 @@ function mailSuffixLimitSet(newHaveList: boolean, newSuffixList?: string[]) {
     newHaveList
       ? {
           cookie: loginInfo.cookie,
-          haveList: newHaveList
+          haveList: newHaveList,
+          suffixList: newSuffixList
         }
       : {
           cookie: loginInfo.cookie,
-          haveList: newHaveList,
-          suffixList: newSuffixList
+          haveList: newHaveList
         },
     t('modifySomething', { value: t('mailSuffixLimit') }),
     router,
