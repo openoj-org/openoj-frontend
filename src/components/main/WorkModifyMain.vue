@@ -2,17 +2,21 @@
 import { useLoginInfoStore } from '@/stores/loginInfo'
 import { ref } from 'vue'
 import DenyDialog from '../DenyDialog.vue'
-import { ProblemInfoCreateInput, ProblemInfoCreateQuery } from '@/types/problem'
-import { useRequestDangerousAction } from '@/script/service'
+import { WorkInfoInput, WorkInfoQuery } from '@/types/problem'
+import { useRequestGet, useRequestDangerousAction } from '@/script/service'
+import { useRoute } from 'vue-router'
+import { usePreferencesStore } from '@/stores/preferences'
 import { t } from 'i18next'
 import {
   type FormInstance,
   ElButton,
   ElOption,
+  ElMessage,
   ElForm,
   ElFormItem,
   ElInput,
   ElSelect,
+  ElDivider,
   ElUpload,
   ElTabs,
   ElTabPane
@@ -21,25 +25,57 @@ import { MdEditor } from 'md-editor-v3'
 import i18next from 'i18next'
 import { genFileId } from 'element-plus'
 import type { UploadInstance, UploadProps, UploadRawFile, UploadRequestHandler } from 'element-plus'
-import { Plus } from '@element-plus/icons-vue'
-import { useRouter } from 'vue-router'
+import { Upload } from '@element-plus/icons-vue'
 
-const router = useRouter()
+const route = useRoute()
 const loginInfo = useLoginInfoStore()
+const preferences = usePreferencesStore()
 const dialogVisible = ref(false)
-dialogVisible.value = !loginInfo.login || loginInfo.character > 1
 
-const problemTypeOptions = [
+const workTypeOptions = [
   {
     label: t('traditionalType'),
     value: 0
   }
 ]
 
+const loaded = ref(false)
+
 const activeName = ref('regular')
 
 const formRef = ref<FormInstance>()
-const form = ref(new ProblemInfoCreateInput({}))
+const form = ref(new WorkInfoInput({}))
+
+useRequestGet(
+  '/workshop/info',
+  loginInfo.login
+    ? { id: route.params.id, evaluation: preferences.evaluation, cookie: loginInfo.cookie }
+    : { id: route.params.id, evaluation: preferences.evaluation }
+)
+  .then((result) => {
+    if (result.data.success == false) {
+      ElMessage.error(result.data.message)
+    } else {
+      dialogVisible.value = !loginInfo.login || loginInfo.id != result.data.userId
+      form.value = new WorkInfoInput(result.data)
+      loaded.value = true
+    }
+  })
+  .catch((error) => {
+    console.log(error)
+    ElMessage.error(t('unknownError'))
+  })
+
+function changeMeta() {
+  let query: { [index: string]: any } = new WorkInfoQuery(form.value)
+  query.cookie = loginInfo.cookie
+  query.id = route.params.id
+  useRequestDangerousAction(
+    '/workshop/change-meta',
+    query,
+    t('modifySomething', { value: t('metaData') })
+  )
+}
 
 const dataFile = ref<UploadInstance>()
 
@@ -50,55 +86,45 @@ const dataFileHandleExceed: UploadProps['onExceed'] = (files) => {
   dataFile.value!.handleStart(file)
 }
 
-const regularModeSubmit = () => {
+const dataFileSubmit = () => {
   dataFile.value!.submit()
 }
 
-const regularModeCreate: UploadRequestHandler = (options: any) => {
-  let query: { [index: string]: any } = new ProblemInfoCreateQuery(form.value)
-  query.cookie = loginInfo.cookie
+const dataFileUpload: UploadRequestHandler = (options: any) => {
   const formData = new FormData()
-  for (const [key, value] of Object.entries(query)) {
-    formData.append(key, value.toString())
-  }
+  formData.append('cookie', loginInfo.cookie)
+  formData.append('id', route.params.id as string)
   formData.append('data', options.file)
   useRequestDangerousAction(
-    '/problem/create',
+    '/workshop/change-data',
     formData,
-    t('createSomething', { value: t('problem') }),
-    router,
-    '/problemset'
+    t('modifySomething', { value: t('dataFile') })
   )
   return {} as any
 }
 
-const fileModeFormRef = ref<FormInstance>()
-const fileModeForm = ref({ id: 0 })
+const workFile = ref<UploadInstance>()
 
-const problemFile = ref<UploadInstance>()
-
-const problemFileHandleExceed: UploadProps['onExceed'] = (files) => {
-  problemFile.value!.clearFiles()
+const workFileHandleExceed: UploadProps['onExceed'] = (files) => {
+  workFile.value!.clearFiles()
   const file = files[0] as UploadRawFile
   file.uid = genFileId()
-  problemFile.value!.handleStart(file)
+  workFile.value!.handleStart(file)
 }
 
-const fileModeSubmit = () => {
-  problemFile.value!.submit()
+const workFileSubmit = () => {
+  workFile.value!.submit()
 }
 
-const fileModeCreate: UploadRequestHandler = (options: any) => {
+const workFileUpload: UploadRequestHandler = (options: any) => {
   const formData = new FormData()
   formData.append('cookie', loginInfo.cookie)
-  formData.append('id', fileModeForm.value.id.toString())
+  formData.append('id', route.params.id as string)
   formData.append('data', options.file)
   useRequestDangerousAction(
-    '/problem/create-by-file',
+    '/work/change-by-file',
     formData,
-    t('createSomething', { value: t('problem') }),
-    router,
-    '/problemset'
+    t('modifySomething', { value: t('workFile') })
   )
   return {} as any
 }
@@ -106,15 +132,12 @@ const fileModeCreate: UploadRequestHandler = (options: any) => {
 
 <template>
   <DenyDialog :visible="dialogVisible">
-    {{ $t('onlyManagerCanCreateProblemHint') }}
+    {{ $t('onlyAuthorCanModifyProblemHint') }}
   </DenyDialog>
-  <div class="box">
+  <div class="box" v-if="loaded">
     <ElTabs v-model="activeName" type="card">
       <ElTabPane style="margin-top: 20px" :label="$t('problemRegularMode')" name="regular">
         <ElForm :inline="true" ref="formRef" :model="form">
-          <ElFormItem :label="$t('id')" prop="id">
-            <ElInput type="number" v-model="form.id"></ElInput>
-          </ElFormItem>
           <ElFormItem :label="$t('title')" prop="title">
             <ElInput v-model="form.title"></ElInput>
           </ElFormItem>
@@ -124,7 +147,7 @@ const fileModeCreate: UploadRequestHandler = (options: any) => {
           <ElFormItem :label="$t('problemType')" prop="type">
             <ElSelect v-model="form.type">
               <ElOption
-                v-for="option in problemTypeOptions"
+                v-for="option in workTypeOptions"
                 :key="option.value"
                 :label="option.label"
                 :value="option.value"
@@ -177,42 +200,51 @@ const fileModeCreate: UploadRequestHandler = (options: any) => {
           v-model="form.rangeAndHint"
           :language="i18next.language"
         ></MdEditor>
+        <ElButton style="margin-top: 24px" type="danger" @click="changeMeta">{{
+          $t('modifySomething', { value: $t('metaData') })
+        }}</ElButton>
+        <ElDivider />
         <h4>{{ $t('dataFile') }}</h4>
         <ElUpload
           ref="dataFile"
           :limit="1"
           :on-exceed="dataFileHandleExceed"
           :auto-upload="false"
-          :http-request="regularModeCreate"
+          :http-request="dataFileUpload"
         >
           <template #trigger>
             <ElButton type="primary">{{ $t('selectFile') }}</ElButton>
           </template>
-          <ElButton style="margin-left: 12px" type="danger" :icon="Plus" @click="regularModeSubmit">
-            {{ $t('createSomething', { value: $t('problem') }) }}
+          <ElButton style="margin-left: 12px" type="danger" :icon="Upload" @click="dataFileSubmit">
+            {{ $t('uploadFile') }}
           </ElButton>
+          <template #tip>
+            <div class="el-upload__tip">
+              {{ $t('dataFileOverwriteHint') }}
+            </div>
+          </template>
         </ElUpload>
       </ElTabPane>
-      <ElTabPane style="margin-top: 20px" :label="$t('problemFileMode')" name="file">
-        <ElForm :inline="true" ref="fileModeFormRef" :model="fileModeForm">
-          <ElFormItem :label="$t('id')" prop="id">
-            <ElInput type="number" v-model="fileModeForm.id"></ElInput>
-          </ElFormItem>
-        </ElForm>
+      <ElTabPane :label="$t('problemFileMode')" name="file">
         <h4>{{ $t('problemFile') }}</h4>
         <ElUpload
-          ref="problemFile"
+          ref="workFile"
           :limit="1"
-          :on-exceed="problemFileHandleExceed"
+          :on-exceed="workFileHandleExceed"
           :auto-upload="false"
-          :http-request="fileModeCreate"
+          :http-request="workFileUpload"
         >
           <template #trigger>
             <ElButton type="primary">{{ $t('selectFile') }}</ElButton>
           </template>
-          <ElButton style="margin-left: 12px" type="danger" :icon="Plus" @click="fileModeSubmit">
-            {{ $t('createSomething', { value: $t('problem') }) }}
+          <ElButton style="margin-left: 12px" type="danger" :icon="Upload" @click="workFileSubmit">
+            {{ $t('uploadFile') }}
           </ElButton>
+          <template #tip>
+            <div class="el-upload__tip">
+              {{ $t('problemFileOverwriteHint') }}
+            </div>
+          </template>
         </ElUpload>
       </ElTabPane>
     </ElTabs>

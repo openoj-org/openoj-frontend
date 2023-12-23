@@ -1,10 +1,12 @@
-export interface ColumnMeta {
-  name: string
-  showName?: string
-  sortable: boolean
-  type?: string
-}
-
+/**
+ * input form type when modify problem
+ * @date 2023/11/29 - 09:56:40
+ * @author Mr_Spade
+ *
+ * @export
+ * @class ProblemInfoInput
+ * @typedef {ProblemInfoInput}
+ */
 export class ProblemInfoInput {
   title: string
   titleEn: string
@@ -32,6 +34,18 @@ export class ProblemInfoInput {
   }
 }
 
+export class WorkInfoInput extends ProblemInfoInput {}
+
+/**
+ * input form type when create problem
+ * @date 2023/11/29 - 09:58:07
+ * @author Mr_Spade
+ *
+ * @export
+ * @class ProblemInfoCreateInput
+ * @typedef {ProblemInfoCreateInput}
+ * @extends {ProblemInfoInput}
+ */
 export class ProblemInfoCreateInput extends ProblemInfoInput {
   id: number
   constructor(data: any) {
@@ -40,6 +54,17 @@ export class ProblemInfoCreateInput extends ProblemInfoInput {
   }
 }
 
+export class WorkInfoCreateInput extends WorkInfoInput {}
+
+/**
+ * query params type when modify problem
+ * @date 2023/11/29 - 09:58:51
+ * @author Mr_Spade
+ *
+ * @export
+ * @class ProblemInfoQuery
+ * @typedef {ProblemInfoQuery}
+ */
 export class ProblemInfoQuery {
   title: string
   titleEn: string
@@ -67,11 +92,33 @@ export class ProblemInfoQuery {
   }
 }
 
+export class WorkInfoQuery extends ProblemInfoQuery {
+  constructor(data: WorkInfoInput) {
+    super(data)
+  }
+}
+
+/**
+ * query params type when create problem
+ * @date 2023/11/29 - 09:59:21
+ * @author Mr_Spade
+ *
+ * @export
+ * @class ProblemInfoCreateQuery
+ * @typedef {ProblemInfoCreateQuery}
+ * @extends {ProblemInfoQuery}
+ */
 export class ProblemInfoCreateQuery extends ProblemInfoQuery {
   id: number
   constructor(data: ProblemInfoCreateInput) {
     super(data)
     this.id = data.id
+  }
+}
+
+export class WorkInfoCreateQuery extends WorkInfoQuery {
+  constructor(data: WorkInfoCreateInput) {
+    super(data)
   }
 }
 
@@ -94,6 +141,18 @@ export class ProblemBaseInfo {
   }
 }
 
+export class WorkBaseInfo extends ProblemBaseInfo {
+  userId: string
+  username: string
+  recommendation: number
+  constructor(data: any) {
+    super(data)
+    this.userId = data.userId == undefined ? '' : data.userId
+    this.username = data.username == undefined ? '' : data.username
+    this.recommendation = data.recommendation == undefined ? 0 : data.recommendation
+  }
+}
+
 export class ProblemListInfo extends ProblemBaseInfo {
   id: string
   constructor(data: any) {
@@ -107,10 +166,32 @@ export class ProblemListInfo extends ProblemBaseInfo {
   }
 }
 
+export class WorkListInfo extends WorkBaseInfo {
+  id: string
+  constructor(data: any) {
+    super(data)
+    this.id = data.id == undefined ? '' : data.id
+  }
+  static list(data: any[]) {
+    const result: WorkListInfo[] = []
+    for (let i = 0; i < data.length; i++) result.push(new WorkListInfo(data[i]))
+    return result
+  }
+}
+
 export interface Sample {
   display: boolean
   input?: string
   output?: string
+}
+
+export function convertTimeLimit(data: number) {
+  if (data >= 1000) return `${data / 1000}s`
+  return `${data}ms`
+}
+export function convertMemoryLimit(data: number) {
+  if (data >= 1024) return `${data / 1024}GB`
+  return `${data}MB`
 }
 
 export class ProblemInfo extends ProblemBaseInfo {
@@ -124,21 +205,38 @@ export class ProblemInfo extends ProblemBaseInfo {
   outputStatement: string
   rangeAndHint: string
   samples: Sample[]
-  static convertTimeLimit(data: number) {
-    if (data >= 1000) return `${data / 1000}s`
-    return `${data}ms`
-  }
-  static convertMemoryLimit(data: number) {
-    if (data >= 1024) return `${data / 1024}GB`
-    return `${data}MB`
-  }
   constructor(data: any) {
     super(data)
     this.titleEn = data.titleEn == undefined ? '' : data.titleEn
     this.type = data.type == undefined ? 0 : data.type
-    this.timeLimit = data.timeLimit == undefined ? '' : ProblemInfo.convertTimeLimit(data.timeLimit)
-    this.memoryLimit =
-      data.memoryLimit == undefined ? '' : ProblemInfo.convertMemoryLimit(data.memoryLimit)
+    this.timeLimit = data.timeLimit == undefined ? '' : convertTimeLimit(data.timeLimit)
+    this.memoryLimit = data.memoryLimit == undefined ? '' : convertMemoryLimit(data.memoryLimit)
+    if (data.background != undefined) this.background = data.background
+    this.statement = data.statement == undefined ? '' : data.statement
+    this.inputStatement = data.inputStatement == undefined ? '' : data.inputStatement
+    this.outputStatement = data.outputStatement == undefined ? '' : data.outputStatement
+    this.rangeAndHint = data.rangeAndHint == undefined ? '' : data.rangeAndHint
+    this.samples = data.samples == undefined ? [] : data.samples
+  }
+}
+
+export class WorkInfo extends WorkBaseInfo {
+  titleEn: string
+  type: 0
+  timeLimit: string
+  memoryLimit: string
+  background?: string
+  statement: string
+  inputStatement: string
+  outputStatement: string
+  rangeAndHint: string
+  samples: Sample[]
+  constructor(data: any) {
+    super(data)
+    this.titleEn = data.titleEn == undefined ? '' : data.titleEn
+    this.type = data.type == undefined ? 0 : data.type
+    this.timeLimit = data.timeLimit == undefined ? '' : convertTimeLimit(data.timeLimit)
+    this.memoryLimit = data.memoryLimit == undefined ? '' : convertMemoryLimit(data.memoryLimit)
     if (data.background != undefined) this.background = data.background
     this.statement = data.statement == undefined ? '' : data.statement
     this.inputStatement = data.inputStatement == undefined ? '' : data.inputStatement

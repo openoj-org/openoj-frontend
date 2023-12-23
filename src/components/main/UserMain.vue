@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
-import { ElMessage } from 'element-plus'
+import { ElMessage, ElButton, ElDivider } from 'element-plus'
+import { ChatLineRound, Cpu } from '@element-plus/icons-vue'
 import { useRequestGet } from '@/script/service'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { t } from 'i18next'
 import { useLoginInfoStore } from '@/stores/loginInfo'
 import { characterTranslate, timeIntToString } from '@/script/transform'
 const route = useRoute()
+const router = useRouter()
 const loginInfo = useLoginInfoStore()
 const loaded = ref(false)
 const userInfo = reactive({
@@ -36,6 +38,14 @@ useRequestGet('/user/info', { id: route.params.id })
     console.log(error)
     ElMessage.error(t('unknownError'))
   })
+
+function goToSubmissions() {
+  router.push({ name: 'submissions', query: { userId: route.params.id } })
+}
+
+function goToForum() {
+  router.push({ name: 'forum', query: { authorId: route.params.id } })
+}
 </script>
 
 <template>
@@ -69,6 +79,17 @@ useRequestGet('/user/info', { id: route.params.id })
     >
       {{ $t('authorityManagement') }}
     </el-button>
+    <ElDivider />
+    <div>
+      <ElButton text type="primary" :icon="Cpu" @click="goToSubmissions">{{
+        $t('usersSomething', { value: $t('submissions') })
+      }}</ElButton>
+    </div>
+    <div style="margin-top: 12px">
+      <ElButton text type="primary" :icon="ChatLineRound" @click="goToForum">{{
+        $t('usersSomething', { value: $t('talks') })
+      }}</ElButton>
+    </div>
   </div>
 </template>
 

@@ -2,8 +2,10 @@ import './assets/main.css'
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
+import '@/assets/element-plus.css'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import i18next from 'i18next'
 import I18NextVue from 'i18next-vue'
@@ -15,8 +17,6 @@ import '@/assets/markdown.css'
 
 import en from './langs/en.json'
 import zh_CN from './langs/zh-CN.json'
-import { usePreferencesStore } from './stores/preferences'
-import { useLoginInfoStore } from './stores/loginInfo'
 
 i18next.use(LanguageDetector).init({
   detection: {
@@ -40,14 +40,12 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component)
 }
 
-app.use(createPinia())
+const pinia = createPinia()
+pinia.use(piniaPluginPersistedstate)
+
+app.use(pinia)
 app.use(router)
 app.use(ElementPlus)
 app.use(I18NextVue, { i18next })
-
-const loginInfo = useLoginInfoStore()
-loginInfo.flush()
-const preferences = usePreferencesStore()
-preferences.flush()
 
 app.mount('#app')

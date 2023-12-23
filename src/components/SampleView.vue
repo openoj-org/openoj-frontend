@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Sample } from '@/script/types'
+import type { Sample } from '@/types/problem'
 import { CopyDocument } from '@element-plus/icons-vue'
 import { ElButton, ElCard, ElCol, ElDescriptions, ElMessage, ElRow } from 'element-plus'
 import ClipboardJS from 'clipboard'
@@ -12,6 +12,7 @@ defineProps<{
   value: Sample
 }>()
 
+// TODO: fix bug that message will show multiple times after back and re-enter page
 const clipboard = new ClipboardJS('.copy-btn')
 clipboard.on('success', () => {
   ElMessage.success(t('somethingSuccess', { value: t('copySomething', { value: t('sample') }) }))
@@ -23,7 +24,7 @@ clipboard.on('error', () => {
 
 <template>
   <h4 style="margin-block-end: 0">{{ $t('sampleWithId', { id: id }) }}</h4>
-  <ElRow style="margin-top: 12px" v-if="value.display" :gutter="60">
+  <ElRow style="margin-top: 12px; max-width: 1000px" v-if="value.display" :gutter="60">
     <ElCol :span="12">
       <ElDescriptions :title="$t('sampleInputWithId', { id: id })" size="small">
         <template #extra>

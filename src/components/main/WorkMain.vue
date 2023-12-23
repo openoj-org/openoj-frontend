@@ -10,16 +10,19 @@ import {
   ElDescriptions,
   ElDescriptionsItem,
   ElMain,
-  ElMessage
+  ElMessage,
+  ElMessageBox
 } from 'element-plus'
 import { t } from 'i18next'
 import { ref, type Ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import SemiText from '../semiText/SemiText.vue'
-import { ProblemInfo } from '@/types/problem'
+import { WorkInfo } from '@/types/problem'
+import { type LinkBody } from '@/types/table'
 import MarkdownText from '../MarkdownText.vue'
 import SampleView from '../SampleView.vue'
 import {
+  ArrowRight,
   ChatLineRound,
   Cpu,
   Delete,
@@ -29,14 +32,14 @@ import {
   Star
 } from '@element-plus/icons-vue'
 
-const TYPE = 0
+const TYPE = 1
 
 const route = useRoute()
 const router = useRouter()
 const loginInfo = useLoginInfoStore()
 const preferences = usePreferencesStore()
 
-const problemBaseMeta = (
+const workBaseMeta = (
   [
     {
       name: 'titleEn',
@@ -50,11 +53,21 @@ const problemBaseMeta = (
     },
     {
       name: 'source'
+    },
+    {
+      name: 'username',
+      showName: 'author',
+      type: 'link',
+      linkBody: {
+        head: 'user',
+        idName: 'userId'
+      }
     }
   ] as {
-    name: keyof ProblemInfo
+    name: keyof WorkInfo
     showName?: string
     type?: string
+    linkBody?: LinkBody
   }[]
 )
   .concat(
@@ -89,7 +102,7 @@ const problemBaseMeta = (
       : []
   )
 
-const problemStatementMeta = [
+const workStatementMeta = [
   {
     name: 'background',
     showName: 'problemBackground'
@@ -109,15 +122,15 @@ const problemStatementMeta = [
     suffix: true
   }
 ] as {
-  name: keyof ProblemInfo
+  name: keyof WorkInfo
   showName?: string
   suffix?: boolean
 }[]
 
 const loaded = ref(false)
-const problemInfo: Ref<ProblemInfo> = ref(new ProblemInfo({}))
+const workInfo: Ref<WorkInfo> = ref(new WorkInfo({}))
 useRequestGet(
-  '/problem/info',
+  '/workshop/info',
   loginInfo.login
     ? { id: route.params.id, evaluation: preferences.evaluation, cookie: loginInfo.cookie }
     : { id: route.params.id, evaluation: preferences.evaluation }
@@ -126,7 +139,7 @@ useRequestGet(
     if (result.data.success == false) {
       ElMessage.error(result.data.message)
     } else {
-      problemInfo.value = new ProblemInfo(result.data)
+      workInfo.value = new WorkInfo(result.data)
       loaded.value = true
     }
   })
@@ -135,21 +148,44 @@ useRequestGet(
     ElMessage.error(t('unknownError'))
   })
 
-function deleteProblem() {
+function deleteWork() {
   useRequestDangerousAction(
-    '/problem/delete',
+    '/workshop/delete',
     {
       cookie: loginInfo.cookie,
       id: route.params.id
     },
     t('deleteSomething', { value: t('problem') }),
     router,
-    '/problemset'
+    '/workshop'
   )
 }
 
+function importWork() {
+  ElMessageBox.prompt(t('inputImportIdHint'), t('tips'), {
+    confirmButtonText: t('confirm'),
+    cancelButtonText: t('cancel')
+  })
+    .then(({ value }) => {
+      useRequestDangerousAction(
+        '/workshop/import',
+        {
+          cookie: loginInfo.cookie,
+          sourceId: route.params.id,
+          targetId: value
+        },
+        t('import'),
+        router,
+        `/problem/${value}`
+      )
+    })
+    .catch(() => {
+      ElMessage.info(t('cancel'))
+    })
+}
+
 function submit() {
-  router.push({ name: 'problem-submit', params: route.params })
+  router.push({ name: 'work-submit', params: route.params })
 }
 
 function goToSubmissions() {
@@ -165,39 +201,31 @@ function goToForum() {
   <ElContainer v-if="loaded">
     <ElMain style="padding-right: 60px">
       <div class="box">
-        <div v-for="item in problemStatementMeta" :key="item.name">
+        <div v-for="item in workStatementMeta" :key="item.name">
           <div
             v-if="
-              problemInfo[item.name] != undefined &&
-              problemInfo[item.name] != '' &&
-              item.suffix != true
+              workInfo[item.name] != undefined && workInfo[item.name] != '' && item.suffix != true
             "
           >
             <h4 style="margin-block-end: 0">
               {{ $t(item.showName == undefined ? item.name : item.showName) }}
             </h4>
-            <MarkdownText :id="item.name" :value="problemInfo[item.name]" />
+            <MarkdownText :id="item.name" :value="workInfo[item.name]" />
           </div>
         </div>
-        <div
-          style="margin-bottom: 24px"
-          v-for="(sample, index) in problemInfo.samples"
-          :key="index"
-        >
-          <SampleView :title="problemInfo.titleEn" :id="index + 1" :value="sample" />
+        <div style="margin-bottom: 24px" v-for="(sample, index) in workInfo.samples" :key="index">
+          <SampleView :title="workInfo.titleEn" :id="index + 1" :value="sample" />
         </div>
-        <div v-for="item in problemStatementMeta" :key="item.name">
+        <div v-for="item in workStatementMeta" :key="item.name">
           <div
             v-if="
-              problemInfo[item.name] != undefined &&
-              problemInfo[item.name] != '' &&
-              item.suffix == true
+              workInfo[item.name] != undefined && workInfo[item.name] != '' && item.suffix == true
             "
           >
             <h4 style="margin-block-end: 0">
               {{ $t(item.showName == undefined ? item.name : item.showName) }}
             </h4>
-            <MarkdownText :id="item.name" :value="problemInfo[item.name]" />
+            <MarkdownText :id="item.name" :value="workInfo[item.name]" />
           </div>
         </div>
       </div>
@@ -206,13 +234,21 @@ function goToForum() {
       <ElCard class="box-card">
         <template #header>
           <div class="card-header">
-            <ElDescriptions :title="problemInfo.title" :column="1">
+            <ElDescriptions :title="workInfo.title" :column="1">
               <ElDescriptionsItem
                 :label="$t(item.showName == undefined ? item.name : item.showName)"
-                v-for="item in problemBaseMeta"
+                v-for="item in workBaseMeta"
                 :key="item.name"
               >
-                <SemiText :type="item.type" :value="problemInfo[item.name]"></SemiText>
+                <SemiText
+                  :type="item.type"
+                  :value="workInfo[item.name]"
+                  :link="
+                    item.linkBody == undefined
+                      ? undefined
+                      : `/${item.linkBody.head}/${workInfo[item.linkBody.idName as keyof WorkInfo]}`
+                  "
+                ></SemiText>
               </ElDescriptionsItem>
             </ElDescriptions>
           </div>
@@ -231,9 +267,9 @@ function goToForum() {
               :icon="Download"
               @click="
                 useRequestDownload(
-                  '/problem/samples',
+                  '/workshop/samples',
                   { id: $route.params.id },
-                  `${problemInfo.titleEn}.zip`
+                  `${workInfo.titleEn}.zip`
                 )
               "
               >{{ $t('attach') }}</ElButton
@@ -243,9 +279,17 @@ function goToForum() {
             <ElButton
               style="margin-top: 12px"
               type="danger"
-              :icon="Edit"
+              :icon="ArrowRight"
               v-if="loginInfo.login && loginInfo.character <= 1"
-              @click="$router.push(`/problem/${$route.params.id}/modify`)"
+              @click="importWork"
+              >{{ $t('import') }}
+            </ElButton>
+            <ElButton
+              style="margin-top: 12px"
+              type="danger"
+              :icon="Edit"
+              v-if="loginInfo.login && loginInfo.id == workInfo.userId"
+              @click="$router.push(`/work/${$route.params.id}/modify`)"
               >{{ $t('modify') }}</ElButton
             >
             <ElButton
@@ -253,7 +297,7 @@ function goToForum() {
               type="danger"
               :icon="Delete"
               v-if="loginInfo.login && loginInfo.character <= 0"
-              @click="deleteProblem"
+              @click="deleteWork"
               >{{ $t('delete') }}</ElButton
             >
           </div>
@@ -265,7 +309,7 @@ function goToForum() {
               v-if="loginInfo.login && loginInfo.character <= 2"
               @click="
                 $router.push({
-                  name: 'problem-evaluate',
+                  name: 'work-evaluate',
                   params: $route.params
                 })
               "

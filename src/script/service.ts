@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios, { type AxiosResponse } from 'axios'
 import global from '@/assets/global.json'
 import FileSaver from 'file-saver'
 import { ElMessage, ElMessageBox } from 'element-plus'
@@ -14,8 +14,38 @@ export function useRequestGet(url: string, query: object) {
   return request.get(url, { params: query })
 }
 
+export function useRequestGetFull(url: string, query: object, callback: (data: any) => void) {
+  useRequestGet(url, query)
+    .then((result) => {
+      if (result.data.success == false) {
+        ElMessage.error(result.data.message)
+      } else {
+        callback(result.data)
+      }
+    })
+    .catch((error) => {
+      console.log(error)
+      ElMessage.error(t('unknownError'))
+    })
+}
+
 export function useRequestPost(url: string, query: object) {
   return request.post(url, query)
+}
+
+export function useRequestPostFull(url: string, query: object, callback: (data: any) => void) {
+  useRequestPost(url, query)
+    .then((result) => {
+      if (result.data.success == false) {
+        ElMessage.error(result.data.message)
+      } else {
+        callback(result.data)
+      }
+    })
+    .catch((error) => {
+      console.log(error)
+      ElMessage.error(t('unknownError'))
+    })
 }
 
 export function useRequestDownload(url: string, query: object, filename: string) {

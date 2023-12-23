@@ -37,7 +37,7 @@
 <script setup lang="ts">
 import global from '@/assets/global.json'
 import { ref, reactive } from 'vue'
-import { useRequestPost } from '@/script/service'
+import { useRequestPostFull } from '@/script/service'
 import { ElMessage } from 'element-plus'
 import { t } from 'i18next'
 import type { FormInstance, FormRules } from 'element-plus'
@@ -119,19 +119,10 @@ async function sendPasscode(formEl: FormInstance | undefined) {
   await formEl.validate((valid, fields) => {
     if (valid) {
       const address = mailForm.mail
-      useRequestPost('/user/prepare-mail-code', { address: address, scene: 2 })
-        .then((result) => {
-          if (result.data.success == false) {
-            ElMessage.error(result.data.message)
-          } else {
-            ElMessage.success(t('somethingSuccess', { value: t('sendPasscode') }))
-            sessionId1 = result.data.sessionId
-          }
-        })
-        .catch((error) => {
-          console.log(error)
-          ElMessage.error(t('unknownError'))
-        })
+      useRequestPostFull('/user/prepare-mail-code', { address: address, scene: 2 }, (data) => {
+        ElMessage.success(t('somethingSuccess', { value: t('sendPasscode') }))
+        sessionId1 = data.sessionId
+      })
     } else {
       console.log('error submit!', fields)
     }
@@ -142,35 +133,25 @@ async function resetPassword(formEl: FormInstance | undefined) {
   if (!formEl) return
   await formEl.validate((valid, fields) => {
     if (valid) {
-      useRequestPost('/verify-mail-code', { sessionId: sessionId1, code: form.passcode })
-        .then((result) => {
-          if (result.data.success == false) {
-            ElMessage.error(result.data.message)
-          } else {
-            sessionId2 = result.data.sessionId
-            const passwordHash = sha512(form.password).toString()
-            useRequestPost('/user/reset-password', {
+      useRequestPostFull(
+        '/verify-mail-code',
+        { sessionId: sessionId1, code: form.passcode },
+        (data) => {
+          sessionId2 = data.sessionId
+          const passwordHash = sha512(form.password).toString()
+          useRequestPostFull(
+            '/user/reset-password',
+            {
               sessionId: sessionId2,
               passwordCode: passwordHash
-            })
-              .then((result) => {
-                if (result.data.success == false) {
-                  ElMessage.error(result.data.message)
-                } else {
-                  ElMessage.success(t('somethingSuccess', { value: t('resetPassword') }))
-                  router.push('/login')
-                }
-              })
-              .catch((error) => {
-                console.log(error)
-                ElMessage.error(t('unknownError'))
-              })
-          }
-        })
-        .catch((error) => {
-          console.log(error)
-          ElMessage.error(t('unknownError'))
-        })
+            },
+            () => {
+              ElMessage.success(t('somethingSuccess', { value: t('resetPassword') }))
+              router.push('/login')
+            }
+          )
+        }
+      )
     } else {
       console.log('error submit!', fields)
     }

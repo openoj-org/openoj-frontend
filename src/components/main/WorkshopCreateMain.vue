@@ -2,7 +2,7 @@
 import { useLoginInfoStore } from '@/stores/loginInfo'
 import { ref } from 'vue'
 import DenyDialog from '../DenyDialog.vue'
-import { ProblemInfoCreateInput, ProblemInfoCreateQuery } from '@/types/problem'
+import { WorkInfoCreateInput, WorkInfoCreateQuery } from '@/types/problem'
 import { useRequestDangerousAction } from '@/script/service'
 import { t } from 'i18next'
 import {
@@ -27,9 +27,9 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 const loginInfo = useLoginInfoStore()
 const dialogVisible = ref(false)
-dialogVisible.value = !loginInfo.login || loginInfo.character > 1
+dialogVisible.value = !loginInfo.login
 
-const problemTypeOptions = [
+const workTypeOptions = [
   {
     label: t('traditionalType'),
     value: 0
@@ -39,7 +39,7 @@ const problemTypeOptions = [
 const activeName = ref('regular')
 
 const formRef = ref<FormInstance>()
-const form = ref(new ProblemInfoCreateInput({}))
+const form = ref(new WorkInfoCreateInput({}))
 
 const dataFile = ref<UploadInstance>()
 
@@ -55,7 +55,7 @@ const regularModeSubmit = () => {
 }
 
 const regularModeCreate: UploadRequestHandler = (options: any) => {
-  let query: { [index: string]: any } = new ProblemInfoCreateQuery(form.value)
+  let query: { [index: string]: any } = new WorkInfoCreateQuery(form.value)
   query.cookie = loginInfo.cookie
   const formData = new FormData()
   for (const [key, value] of Object.entries(query)) {
@@ -63,42 +63,38 @@ const regularModeCreate: UploadRequestHandler = (options: any) => {
   }
   formData.append('data', options.file)
   useRequestDangerousAction(
-    '/problem/create',
+    '/workshop/create',
     formData,
     t('createSomething', { value: t('problem') }),
     router,
-    '/problemset'
+    '/workshop'
   )
   return {} as any
 }
 
-const fileModeFormRef = ref<FormInstance>()
-const fileModeForm = ref({ id: 0 })
+const workFile = ref<UploadInstance>()
 
-const problemFile = ref<UploadInstance>()
-
-const problemFileHandleExceed: UploadProps['onExceed'] = (files) => {
-  problemFile.value!.clearFiles()
+const workFileHandleExceed: UploadProps['onExceed'] = (files) => {
+  workFile.value!.clearFiles()
   const file = files[0] as UploadRawFile
   file.uid = genFileId()
-  problemFile.value!.handleStart(file)
+  workFile.value!.handleStart(file)
 }
 
 const fileModeSubmit = () => {
-  problemFile.value!.submit()
+  workFile.value!.submit()
 }
 
 const fileModeCreate: UploadRequestHandler = (options: any) => {
   const formData = new FormData()
   formData.append('cookie', loginInfo.cookie)
-  formData.append('id', fileModeForm.value.id.toString())
   formData.append('data', options.file)
   useRequestDangerousAction(
-    '/problem/create-by-file',
+    '/workshop/create-by-file',
     formData,
     t('createSomething', { value: t('problem') }),
     router,
-    '/problemset'
+    '/workshop'
   )
   return {} as any
 }
@@ -106,15 +102,12 @@ const fileModeCreate: UploadRequestHandler = (options: any) => {
 
 <template>
   <DenyDialog :visible="dialogVisible">
-    {{ $t('onlyManagerCanCreateProblemHint') }}
+    {{ $t('notLoginHint') }}
   </DenyDialog>
   <div class="box">
     <ElTabs v-model="activeName" type="card">
       <ElTabPane style="margin-top: 20px" :label="$t('problemRegularMode')" name="regular">
         <ElForm :inline="true" ref="formRef" :model="form">
-          <ElFormItem :label="$t('id')" prop="id">
-            <ElInput type="number" v-model="form.id"></ElInput>
-          </ElFormItem>
           <ElFormItem :label="$t('title')" prop="title">
             <ElInput v-model="form.title"></ElInput>
           </ElFormItem>
@@ -124,7 +117,7 @@ const fileModeCreate: UploadRequestHandler = (options: any) => {
           <ElFormItem :label="$t('problemType')" prop="type">
             <ElSelect v-model="form.type">
               <ElOption
-                v-for="option in problemTypeOptions"
+                v-for="option in workTypeOptions"
                 :key="option.value"
                 :label="option.label"
                 :value="option.value"
@@ -194,16 +187,11 @@ const fileModeCreate: UploadRequestHandler = (options: any) => {
         </ElUpload>
       </ElTabPane>
       <ElTabPane style="margin-top: 20px" :label="$t('problemFileMode')" name="file">
-        <ElForm :inline="true" ref="fileModeFormRef" :model="fileModeForm">
-          <ElFormItem :label="$t('id')" prop="id">
-            <ElInput type="number" v-model="fileModeForm.id"></ElInput>
-          </ElFormItem>
-        </ElForm>
         <h4>{{ $t('problemFile') }}</h4>
         <ElUpload
-          ref="problemFile"
+          ref="workFile"
           :limit="1"
-          :on-exceed="problemFileHandleExceed"
+          :on-exceed="workFileHandleExceed"
           :auto-upload="false"
           :http-request="fileModeCreate"
         >

@@ -8,6 +8,7 @@ export function characterTranslate(type: number): string {
   return t('bannedUser')
 }
 
+// TODO: use SemiText instead of transform
 export function timeIntToString(time: number): string {
   const date = new Date(time)
   return t('timeFormat', {

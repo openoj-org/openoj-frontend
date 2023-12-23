@@ -61,9 +61,9 @@ import { t } from 'i18next'
 import type { FormInstance, FormRules } from 'element-plus'
 import sha512 from 'crypto-js/sha512'
 import { useRouter } from 'vue-router'
-import { useSetItem } from '@/stores/local'
 import { useLoginInfoStore } from '@/stores/loginInfo'
 import DenyDialog from '../DenyDialog.vue'
+import { LoginInfo } from '@/types/user'
 
 const router = useRouter()
 const loginInfo = useLoginInfoStore()
@@ -229,12 +229,10 @@ async function submit(formEl: FormInstance | undefined) {
                   ElMessage.error(result.data.message)
                 } else {
                   ElMessage.success(t('somethingSuccess', { value: t('register') }))
-                  useSetItem('login', 'true')
-                  useSetItem('username', username)
-                  useSetItem('character', '3')
-                  useSetItem('id', result.data.id)
-                  useSetItem('cookie', result.data.cookie)
-                  loginInfo.flush()
+                  const data: LoginInfo = new LoginInfo(result.data)
+                  data.character = 3
+                  data.username = username
+                  loginInfo.setLogin(data)
                   router.push('/')
                 }
               })

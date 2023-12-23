@@ -8,7 +8,8 @@ import { Files, Plus, Postcard, PriceTag } from '@element-plus/icons-vue'
 import FormTable from '../FormTable.vue'
 import { usePreferencesStore } from '@/stores/preferences'
 import { useLoginInfoStore } from '@/stores/loginInfo'
-import { ProblemListInfo, type ColumnMeta } from '@/script/types'
+import { ProblemListInfo } from '@/types/problem'
+import { type ColumnMeta } from '@/types/table'
 
 const loginInfo = useLoginInfoStore()
 const preferences = usePreferencesStore()
@@ -95,13 +96,16 @@ const getTable = (tableMeta: { [index: string]: any }) => {
         getTable(tableMeta)
       }
     "
-  ></FormTable>
-  <ElButton
-    style="margin-top: 12px"
-    type="danger"
-    :icon="Plus"
-    v-if="loginInfo.login && loginInfo.character <= 1"
-    @click="$router.push('/problemset/create')"
-    >{{ $t('createSomething', { value: $t('problem') }) }}</ElButton
   >
+    <template #extra>
+      <ElButton
+        style="margin-top: 12px"
+        type="danger"
+        :icon="Plus"
+        v-if="loginInfo.login && loginInfo.character <= 1"
+        @click="$router.push('/problemset/create')"
+        >{{ $t('createSomething', { value: $t('problem') }) }}</ElButton
+      >
+    </template>
+  </FormTable>
 </template>

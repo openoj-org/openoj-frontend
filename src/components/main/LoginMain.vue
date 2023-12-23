@@ -1,24 +1,24 @@
 <template>
   <div class="form-box">
     <div>
-      <el-form ref="formRef" :model="form" :rules="rules" label-width="120px">
-        <el-form-item :label="$t('usernameOrMail')" prop="usernameOrMail">
-          <el-input type="username" v-model="form.usernameOrMail"></el-input>
-        </el-form-item>
-        <el-form-item :label="$t('password')" prop="password">
-          <el-input type="password" v-model="form.password"></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="login(formRef)">{{ $t('login') }}</el-button>
-          <el-button type="primary" text @click="$router.push('/forget-password')">{{
+      <ElForm ref="formRef" :model="form" :rules="rules" label-width="120px">
+        <ElFormItem :label="$t('usernameOrMail')" prop="usernameOrMail">
+          <ElInput type="username" v-model="form.usernameOrMail"></ElInput>
+        </ElFormItem>
+        <ElFormItem :label="$t('password')" prop="password">
+          <ElInput type="password" v-model="form.password"></ElInput>
+        </ElFormItem>
+        <ElFormItem>
+          <ElButton type="primary" @click="login(formRef)">{{ $t('login') }}</ElButton>
+          <ElButton type="primary" text @click="$router.push('/forget-password')">{{
             $t('forgetPassword')
-          }}</el-button>
-        </el-form-item>
-      </el-form>
+          }}</ElButton>
+        </ElFormItem>
+      </ElForm>
       <div class="text-center">
-        <el-text>
+        <ElText>
           {{ global.ojName + '·' + $t('slogan') }}
-        </el-text>
+        </ElText>
       </div>
     </div>
   </div>
@@ -28,13 +28,13 @@
 import global from '@/assets/global.json'
 import { ref, reactive } from 'vue'
 import { useRequestPost } from '@/script/service'
-import { ElMessage } from 'element-plus'
+import { ElText, ElButton, ElForm, ElFormItem, ElInput, ElMessage } from 'element-plus'
 import { t } from 'i18next'
 import type { FormInstance, FormRules } from 'element-plus'
 import sha512 from 'crypto-js/sha512'
 import { useRouter } from 'vue-router'
-import { useSetItem } from '@/stores/local'
 import { useLoginInfoStore } from '@/stores/loginInfo'
+import { LoginInfo } from '@/types/user'
 
 const router = useRouter()
 const loginInfo = useLoginInfoStore()
@@ -68,6 +68,7 @@ async function login(formEl: FormInstance | undefined) {
   await formEl.validate((valid, fields) => {
     if (valid) {
       const passwordHash = sha512(form.password).toString()
+      // TODO: clean all useRequestPost
       useRequestPost('/user/login', {
         usernameOrMail: form.usernameOrMail,
         passwordCode: passwordHash
@@ -77,12 +78,7 @@ async function login(formEl: FormInstance | undefined) {
             ElMessage.error(result.data.message)
           } else {
             ElMessage.success(t('somethingSuccess', { value: t('login') }))
-            useSetItem('login', 'true')
-            useSetItem('username', result.data.username)
-            useSetItem('character', result.data.character)
-            useSetItem('id', result.data.id)
-            useSetItem('cookie', result.data.cookie)
-            loginInfo.flush()
+            loginInfo.setLogin(new LoginInfo(result.data))
             router.push('/')
           }
         })
