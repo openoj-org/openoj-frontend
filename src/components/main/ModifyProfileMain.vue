@@ -363,7 +363,7 @@ function changeSignature() {
             :disabled="remainTime.mail > 0"
             >{{ $t('sendPasscode') }}</el-button
           >
-          <el-text v-if="remainTime.username > 0">{{
+          <el-text v-if="remainTime.mail > 0">{{
             $t('remainModifyTime', { value: timeDeltaIntToString(remainTime.mail) })
           }}</el-text>
         </el-form-item>
