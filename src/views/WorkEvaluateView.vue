@@ -190,13 +190,13 @@ function recommend(value: boolean) {
   <BaseView :title="$t('instanceSettings')">
     <template #breadcrumb>
       <ElBreadcrumb :separator-icon="ArrowRight" v-if="loaded">
-        <ElBreadcrumbItem :to="{ name: 'problemset' }">
-          {{ $t('problemSet') }}
+        <ElBreadcrumbItem :to="{ name: 'workshop' }">
+          {{ $t('workshop') }}
         </ElBreadcrumbItem>
-        <ElBreadcrumbItem :to="{ name: 'problem', params: $route.params }">
+        <ElBreadcrumbItem :to="{ name: 'work', params: $route.params }">
           {{ title }}
         </ElBreadcrumbItem>
-        <ElBreadcrumbItem :to="{ name: 'problem-evaluate', params: $route.params }">
+        <ElBreadcrumbItem :to="{ name: 'work-evaluate', params: $route.params }">
           {{ $t('evaluation') }}
         </ElBreadcrumbItem>
       </ElBreadcrumb>
