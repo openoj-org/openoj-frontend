@@ -39,7 +39,7 @@ const typeOptions = [
 
 const haveSourceSwitch = ref(route.query.sourceId != undefined)
 const postMeta = reactive({
-  type: route.query.sourceType == undefined ? parseInt(route.query.sourceType! as string) : 0,
+  type: route.query.sourceType != undefined ? parseInt(route.query.sourceType! as string) : 0,
   problemId: (route.query.sourceId as string) ?? '',
   title: ''
 })

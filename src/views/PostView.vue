@@ -37,7 +37,7 @@ const start = computed(() => {
   return (currentPage.value - 1) * eachpageCount
 })
 const end = computed(() => {
-  return currentPage.value * eachpageCount
+  return currentPage.value * eachpageCount - 1
 })
 
 const loaded = ref(false)
