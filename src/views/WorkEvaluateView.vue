@@ -33,7 +33,7 @@ const recommended = ref(false)
 
 const dynamicTags: Ref<string[]> = ref([])
 
-useRequestGet('/problem/info', { id: route.params.id, evaluation: true })
+useRequestGet('/workshop/info', { id: route.params.id, evaluation: true })
   .then((result) => {
     if (result.data.success == false) {
       ElMessage.error(result.data.message)
