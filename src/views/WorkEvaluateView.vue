@@ -33,7 +33,7 @@ const recommended = ref(false)
 
 const dynamicTags: Ref<string[]> = ref([])
 
-useRequestGet('/problem/info', { id: route.params.id, evaluation: true })
+useRequestGet('/workshop/info', { id: route.params.id, evaluation: true })
   .then((result) => {
     if (result.data.success == false) {
       ElMessage.error(result.data.message)
@@ -56,7 +56,7 @@ useRequestGet('/problem/info', { id: route.params.id, evaluation: true })
               haveRate.value = false
               rate.value = 0
             }
-            useRequestGet('/evaluation/get-recommend', {
+            useRequestGet('/evaluate/get-recommend', {
               cookie: loginInfo.cookie,
               problemId: route.params.id
             })
@@ -148,7 +148,7 @@ const handleInputConfirm = () => {
 
 function changeTags() {
   useRequestDangerousAction(
-    '/evaluation/edit-tag',
+    '/evaluate/edit-tag',
     {
       cookie: loginInfo.cookie,
       type: 1,
@@ -160,7 +160,7 @@ function changeTags() {
 }
 
 function recommend(value: boolean) {
-  useRequestPost('/evaluation/recommend', {
+  useRequestPost('/evaluate/recommend', {
     cookie: loginInfo.cookie,
     id: route.params.id,
     recommend: value
@@ -190,13 +190,13 @@ function recommend(value: boolean) {
   <BaseView :title="$t('instanceSettings')">
     <template #breadcrumb>
       <ElBreadcrumb :separator-icon="ArrowRight" v-if="loaded">
-        <ElBreadcrumbItem :to="{ name: 'problemset' }">
-          {{ $t('problemSet') }}
+        <ElBreadcrumbItem :to="{ name: 'workshop' }">
+          {{ $t('workshop') }}
         </ElBreadcrumbItem>
-        <ElBreadcrumbItem :to="{ name: 'problem', params: $route.params }">
+        <ElBreadcrumbItem :to="{ name: 'work', params: $route.params }">
           {{ title }}
         </ElBreadcrumbItem>
-        <ElBreadcrumbItem :to="{ name: 'problem-evaluate', params: $route.params }">
+        <ElBreadcrumbItem :to="{ name: 'work-evaluate', params: $route.params }">
           {{ $t('evaluation') }}
         </ElBreadcrumbItem>
       </ElBreadcrumb>

@@ -122,7 +122,7 @@ const workFileUpload: UploadRequestHandler = (options: any) => {
   formData.append('id', route.params.id as string)
   formData.append('data', options.file)
   useRequestDangerousAction(
-    '/work/change-by-file',
+    '/workshop/change-by-file',
     formData,
     t('modifySomething', { value: t('workFile') })
   )

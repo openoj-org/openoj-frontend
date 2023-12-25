@@ -132,7 +132,7 @@ const handleInputConfirm = () => {
 
 function changeTags() {
   useRequestDangerousAction(
-    '/evaluation/edit-tag',
+    '/evaluate/edit-tag',
     {
       cookie: loginInfo.cookie,
       type: 0,
