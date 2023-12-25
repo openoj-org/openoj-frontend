@@ -56,7 +56,7 @@ useRequestGet('/problem/info', { id: route.params.id, evaluation: true })
               haveRate.value = false
               rate.value = 0
             }
-            useRequestGet('/evaluation/get-recommend', {
+            useRequestGet('/evaluate/get-recommend', {
               cookie: loginInfo.cookie,
               problemId: route.params.id
             })
@@ -148,7 +148,7 @@ const handleInputConfirm = () => {
 
 function changeTags() {
   useRequestDangerousAction(
-    '/evaluation/edit-tag',
+    '/evaluate/edit-tag',
     {
       cookie: loginInfo.cookie,
       type: 1,
@@ -160,7 +160,7 @@ function changeTags() {
 }
 
 function recommend(value: boolean) {
-  useRequestPost('/evaluation/recommend', {
+  useRequestPost('/evaluate/recommend', {
     cookie: loginInfo.cookie,
     id: route.params.id,
     recommend: value
