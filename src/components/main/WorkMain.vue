@@ -176,7 +176,7 @@ function importWork() {
         },
         t('import'),
         router,
-        `/problem/${value}`
+        `/workshop/${value}`
       )
     })
     .catch(() => {
