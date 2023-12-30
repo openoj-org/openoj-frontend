@@ -204,6 +204,9 @@ const fileModeCreate: UploadRequestHandler = (options: any) => {
         </ElUpload>
       </ElTabPane>
     </ElTabs>
+    <ElButton type="primary" text @click="$router.push({ name: 'problem-file-statement' })">{{
+      $t('problemFileStatement')
+    }}</ElButton>
   </div>
 </template>
 

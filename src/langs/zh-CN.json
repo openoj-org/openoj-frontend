@@ -167,5 +167,6 @@
   "postCount": "楼层数量",
   "release": "发布",
   "problemRelatedSwitch": "是否为题目相关讨论",
-  "usersSomething": "用户{{value}}"
+  "usersSomething": "用户{{value}}",
+  "problemFileStatement": "题目创建规范"
 }

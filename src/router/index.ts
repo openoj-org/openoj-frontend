@@ -25,6 +25,7 @@ import WorkSubmitView from '@/views/WorkSubmitView.vue'
 import SubmissionView from '@/views/SubmissionView.vue'
 import PostView from '@/views/PostView.vue'
 import ForumCreateView from '@/views/ForumCreateView.vue'
+import ProblemFileStatementView from '@/views/ProblemFileStatementView.vue'
 
 // TODO: modify all router push from path to name
 const router = createRouter({
@@ -159,6 +160,11 @@ const router = createRouter({
       path: '/instance-settings',
       name: 'instance-settings',
       component: InstanceSettingsView
+    },
+    {
+      path: '/problem-file-statement',
+      name: 'problem-file-statement',
+      component: ProblemFileStatementView
     }
     // {
     //   path: '/about',
