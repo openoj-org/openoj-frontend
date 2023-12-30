@@ -60,71 +60,62 @@ function logout() {
       <slot></slot>
     </template>
     <template #extra>
-      <ElRow :gutter="12" justify="space-evenly">
-        <ElCol :span="12">
-          <ElInput v-model="searchContent" :placeholder="$t('searchHint')">
-            <template #append>
-              <ElButton :icon="Search" />
-            </template>
-          </ElInput>
-        </ElCol>
-        <ElCol :span="9" v-if="loaded && loginInfo.login">
-          <div>
-            <ElDropdown>
-              <ElButton text type="primary">
-                <ElIcon class="el-icon--left"><User /></ElIcon>
-                {{ loginInfo.username }}
-                <ElIcon class="el-icon--right"><ArrowDown /></ElIcon>
-              </ElButton>
-              <template #dropdown>
-                <ElDropdownMenu>
-                  <ElDropdownItem @click="$router.push(`/user/${loginInfo.id}`)"
-                    ><ElIcon class="el-icon--left"><Document /></ElIcon
-                    >{{ $t('myProfile') }}</ElDropdownItem
-                  >
-                  <ElDropdownItem divided
-                    ><ElIcon class="el-icon--left"><MagicStick /></ElIcon
-                    >{{ $t('myWorkshop') }}</ElDropdownItem
-                  >
-                  <ElDropdownItem
-                    ><ElIcon class="el-icon--left"><Cpu /></ElIcon
-                    >{{ $t('mySubmission') }}</ElDropdownItem
-                  >
-                  <ElDropdownItem
-                    ><ElIcon class="el-icon--left"><ChatLineRound /></ElIcon
-                    >{{ $t('myDiscussion') }}</ElDropdownItem
-                  >
-                  <ElDropdownItem divided @click="$router.push('/user/modify')">
-                    <ElIcon class="el-icon--left"><EditPen /></ElIcon>
-                    {{ $t('modifyPersonalProfile') }}
-                  </ElDropdownItem>
-                  <ElDropdownItem
-                    v-if="loginInfo.character == 0"
-                    @click="$router.push('/instance-settings')"
-                  >
-                    <ElIcon class="el-icon--left"><Setting /></ElIcon>
-                    {{ $t('instanceSettings') }}
-                  </ElDropdownItem>
-                  <ElDropdownItem divided @click="logout"
-                    ><ElIcon class="el-icon--left"><SwitchButton /></ElIcon
-                    >{{ $t('logout') }}</ElDropdownItem
-                  >
-                </ElDropdownMenu>
-              </template>
-            </ElDropdown>
-          </div>
-        </ElCol>
-        <ElCol :span="12" v-else-if="loaded && !loginInfo.login">
-          <div>
-            <ElButton @click="$router.push('/login')">
-              {{ $t('login') }}
-            </ElButton>
-            <ElButton type="primary" @click="$router.push('/register')">
-              {{ $t('register') }}
-            </ElButton>
-          </div>
-        </ElCol>
-      </ElRow>
+      <div v-if="loaded && loginInfo.login">
+        <ElDropdown>
+          <ElButton text type="primary">
+            <ElIcon class="el-icon--left"><User /></ElIcon>
+            {{ loginInfo.username }}
+            <ElIcon class="el-icon--right"><ArrowDown /></ElIcon>
+          </ElButton>
+          <template #dropdown>
+            <ElDropdownMenu>
+              <ElDropdownItem @click="$router.push(`/user/${loginInfo.id}`)"
+                ><ElIcon class="el-icon--left"><Document /></ElIcon
+                >{{ $t('myProfile') }}</ElDropdownItem
+              >
+              <ElDropdownItem
+                divided
+                @click="$router.push({ name: 'workshop', query: { authorId: loginInfo.id } })"
+                ><ElIcon class="el-icon--left"><MagicStick /></ElIcon
+                >{{ $t('myWorkshop') }}</ElDropdownItem
+              >
+              <ElDropdownItem
+                @click="$router.push({ name: 'submissions', query: { userId: loginInfo.id } })"
+                ><ElIcon class="el-icon--left"><Cpu /></ElIcon
+                >{{ $t('mySubmission') }}</ElDropdownItem
+              >
+              <ElDropdownItem
+                @click="$router.push({ name: 'forum', query: { authorId: loginInfo.id } })"
+                ><ElIcon class="el-icon--left"><ChatLineRound /></ElIcon
+                >{{ $t('myDiscussion') }}</ElDropdownItem
+              >
+              <ElDropdownItem divided @click="$router.push('/user/modify')">
+                <ElIcon class="el-icon--left"><EditPen /></ElIcon>
+                {{ $t('modifyPersonalProfile') }}
+              </ElDropdownItem>
+              <ElDropdownItem
+                v-if="loginInfo.character == 0"
+                @click="$router.push('/instance-settings')"
+              >
+                <ElIcon class="el-icon--left"><Setting /></ElIcon>
+                {{ $t('instanceSettings') }}
+              </ElDropdownItem>
+              <ElDropdownItem divided @click="logout"
+                ><ElIcon class="el-icon--left"><SwitchButton /></ElIcon
+                >{{ $t('logout') }}</ElDropdownItem
+              >
+            </ElDropdownMenu>
+          </template>
+        </ElDropdown>
+      </div>
+      <div v-else-if="loaded && !loginInfo.login">
+        <ElButton @click="$router.push('/login')">
+          {{ $t('login') }}
+        </ElButton>
+        <ElButton type="primary" @click="$router.push('/register')">
+          {{ $t('register') }}
+        </ElButton>
+      </div>
     </template>
   </ElPageHeader>
 </template>

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { type Ref } from 'vue'
 import { ref } from 'vue'
+import { useRoute } from 'vue-router'
 import { ElButton, ElMessage } from 'element-plus'
 import { useRequestGet } from '@/script/service'
 import { t } from 'i18next'
@@ -11,6 +12,7 @@ import { useLoginInfoStore } from '@/stores/loginInfo'
 import { WorkListInfo } from '@/types/problem'
 import { type ColumnMeta } from '@/types/table'
 
+const route = useRoute()
 const loginInfo = useLoginInfoStore()
 const preferences = usePreferencesStore()
 
@@ -85,6 +87,7 @@ const getTable = (tableMeta: { [index: string]: any }) => {
   let meta = tableMeta
   meta.evaluation = preferences.evaluation
   if (loginInfo.login) meta.cookie = loginInfo.cookie
+  if (route.query.authorId != undefined) meta.authorId = route.query.authorId
   useRequestGet('/workshop/list', meta)
     .then((result) => {
       if (result.data.success == false) {
