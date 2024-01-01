@@ -52,17 +52,17 @@ function dataChange(activeNames: any) {
       <ElCard shadow="never">
         <pre class="content" style="margin: 0"><code>{{ dataInputPart }}</code></pre>
       </ElCard>
-      <ElDescriptions style="margin-top: 12px" :title="$t('output')"></ElDescriptions>
+      <!-- <ElDescriptions style="margin-top: 12px" :title="$t('output')"></ElDescriptions>
       <ElCard shadow="never">
         <pre class="content" style="margin: 0"><code>{{ dataOutputPart }}</code></pre>
-      </ElCard>
+      </ElCard> -->
       <ElDescriptions style="margin-top: 12px" :title="$t('answer')"></ElDescriptions>
       <ElCard shadow="never">
         <pre class="content" style="margin: 0"><code>{{ dataAnswerPart }}</code></pre>
       </ElCard>
-      <div style="margin-top: 12px; margin-bottom: 12px">
+      <!-- <div style="margin-top: 12px; margin-bottom: 12px">
         <ElText>{{ dataJudgeContent }}</ElText>
-      </div>
+      </div> -->
     </ElCollapseItem>
   </ElCollapse>
 </template>
